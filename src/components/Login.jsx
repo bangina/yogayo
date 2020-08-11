@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { login } from "../../src/redux/member"; //액션객체 생성함수
+import { useDispatch } from "react-redux";
+
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
+// import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -18,8 +22,8 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
+        Yogayo
+      </Link>
       {new Date().getFullYear()}
       {"."}
     </Typography>
@@ -48,7 +52,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignIn() {
   const classes = useStyles();
-
+  const [memberState, setMemberState] = useState({
+    email: "",
+    password: "",
+  });
+  const onInputChange = (e) => {
+    setMemberState({ ...memberState, [e.target.name]: e.target.value });
+  };
+  const dispatch = useDispatch();
+  const onLogin = () => {
+    dispatch(login(memberState.email, memberState.password));
+    // window.location = "/";
+  };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -59,17 +74,18 @@ export default function SignIn() {
         <Typography component="h1" variant="h5">
           로그인
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate action="#">
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label="이메일 주소"
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={onInputChange}
           />
           <TextField
             variant="outlined"
@@ -77,14 +93,15 @@ export default function SignIn() {
             required
             fullWidth
             name="password"
-            label="Password"
+            label="비밀번호 "
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={onInputChange}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            label="로그인 유지하기"
           />
           <Button
             type="submit"
@@ -92,18 +109,19 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={onLogin}
           >
-            Sign In
+            로그인 하기
           </Button>
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
-                Forgot password?
+                비밀번호를 잊어버렸어요.
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
+              <Link to="/" variant="body2">
+                아직 회원이 아니신가요? <strong>회원가입하기</strong>
               </Link>
             </Grid>
           </Grid>

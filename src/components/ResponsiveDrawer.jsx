@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -11,12 +12,16 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import Collapse from "@material-ui/core/Collapse";
+import StarBorder from "@material-ui/icons/StarBorder";
 import MailIcon from "@material-ui/icons/Mail";
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-
+import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -50,6 +55,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
+  nested: {
+    paddingLeft: theme.spacing(4),
+  },
 }));
 
 function ResponsiveDrawer(props) {
@@ -57,7 +65,11 @@ function ResponsiveDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
+  const handleClick = () => {
+    setOpen(!open);
+  };
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -65,9 +77,50 @@ function ResponsiveDrawer(props) {
   const drawer = (
     <div>
       <div className={classes.toolbar} />
+      <List>
+        <ListItemIcon>
+          <AccountCircleOutlinedIcon
+            style={{ margin: "0 auto", display: "block" }}
+          />
+          &nbsp; &nbsp; 솔방울 <br />
+          요가왕 요가원
+        </ListItemIcon>
+      </List>
       <Divider />
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+        <ListItem button onClick={handleClick}>
+          <ListItemIcon>
+            <InboxIcon />
+          </ListItemIcon>
+          <ListItemText primary="마이페이지" />
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItem button className={classes.nested}>
+              <ListItemIcon>
+                <StarBorder />
+              </ListItemIcon>
+              <ListItemText primary="수강권 정보" />
+            </ListItem>
+            <ListItem button className={classes.nested}>
+              <ListItemIcon>
+                <StarBorder />
+              </ListItemIcon>
+              <ListItemText primary="예약 현황" />
+            </ListItem>
+            <ListItem button className={classes.nested}>
+              <ListItemIcon>
+                <StarBorder />
+              </ListItemIcon>
+              <ListItemText primary="글 관리" />
+            </ListItem>
+          </List>
+        </Collapse>
+      </List>
+      <Divider />
+      <List>
+        {["커뮤니티"].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
               {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
@@ -78,7 +131,7 @@ function ResponsiveDrawer(props) {
       </List>
       <Divider />
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
+        {["수련일기"].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
               {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
@@ -108,7 +161,7 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Responsive drawer
+            <Link to="/">Yogayo</Link>
           </Typography>
         </Toolbar>
       </AppBar>
