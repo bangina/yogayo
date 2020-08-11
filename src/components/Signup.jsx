@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -48,7 +48,43 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Signup() {
   const classes = useStyles();
+  const alertRef = useRef();
+  const [memberState, setMemberState] = useState({
+    email: "",
+    password: "",
+    passwordCheck: "",
+    name: "",
+    mobile: "",
+  });
+  const onSubmit = (e) => {
+    e.preventDefault();
+    const emailRegex = /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
+    const passwordRegex = /^[A-Za-z0-9]{6,12}$/;
+    const mobileRegex = /^\d{3}-\d{3,4}-\d{4}$/;
 
+    if (
+      memberState.email === "" ||
+      memberState.password === "" ||
+      memberState.passwordCheck === "" ||
+      memberState.name === "" ||
+      memberState.mobile === ""
+    ) {
+      alert("모두 입력해 주세요");
+    } else if (!emailRegex.test(memberState.email)) {
+      alert("이메일 형식에 맞게 입력");
+    } else if (!passwordRegex.test(memberState.password)) {
+      alert("숫자와 문자 포함 형태의 6~12자리 이내");
+    } else if (!mobileRegex.test(memberState.mobile)) {
+      alert("핸드폰 번호 형식에 맞게 입력");
+    } else if (memberState.password !== memberState.passwordCheck) {
+      alert("비밀번호가 다릅니다.");
+    } else {
+      alert("유효성검사 완료!");
+    }
+  };
+  const onInputChange = (e) => {
+    setMemberState({ ...memberState, [e.target.name]: e.target.value });
+  };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -59,7 +95,7 @@ export default function Signup() {
         <Typography component="h1" variant="h5">
           회원가입
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={onSubmit}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -70,6 +106,8 @@ export default function Signup() {
                 label="이름"
                 name="name"
                 autoComplete="name"
+                ref={alertRef}
+                onChange={onInputChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -81,6 +119,7 @@ export default function Signup() {
                 label="이메일 주소"
                 name="email"
                 autoComplete="email"
+                onChange={onInputChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -92,6 +131,7 @@ export default function Signup() {
                 label="휴대폰 번호"
                 name="mobile"
                 autoComplete="mobile"
+                onChange={onInputChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -103,6 +143,7 @@ export default function Signup() {
                 label="비밀번호"
                 type="password"
                 id="password"
+                onChange={onInputChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -114,6 +155,7 @@ export default function Signup() {
                 label="비밀번호 확인"
                 type="password"
                 id="passwordCheck"
+                onChange={onInputChange}
               />
             </Grid>
             <Grid item xs={12}>
