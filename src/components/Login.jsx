@@ -60,7 +60,8 @@ export default function SignIn() {
     setMemberState({ ...memberState, [e.target.name]: e.target.value });
   };
   const dispatch = useDispatch();
-  const onLogin = () => {
+  const onLogin = (e) => {
+    e.preventDefault();
     dispatch(login(memberState.email, memberState.password));
     // window.location = "/";
   };
@@ -120,7 +121,7 @@ export default function SignIn() {
               </Link>
             </Grid>
             <Grid item>
-              <Link to="/" variant="body2">
+              <Link to="/signup" variant="body2">
                 아직 회원이 아니신가요? <strong>회원가입하기</strong>
               </Link>
             </Grid>

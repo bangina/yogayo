@@ -35,6 +35,7 @@ const initialState = {
       mobile: "010-3333-3333",
     },
   ],
+  loginMember: {},
 };
 
 //리듀서 함수 정의
@@ -60,6 +61,10 @@ const memberReducer = (memberState = initialState, action) => {
       );
       if (loginMember.length === 1) {
         setSession(loginMember[0]);
+        return {
+          ...memberState,
+          loginMember: loginMember,
+        };
         console.log(loginMember[0], "로그인 성공");
       } else {
         let cookies = new Cookies();
