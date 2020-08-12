@@ -8,12 +8,11 @@ function App() {
   return (
     <div>
       <Router>
-        <ResponsiveDrawer />
-        <Switch>
+        <ResponsiveDrawer>
           <Route path="/" component={Login} exact={true}></Route>
           <Route path="/login" component={Login} exact={true}></Route>
           <Route path="/signup" component={Signup}></Route>
-        </Switch>
+        </ResponsiveDrawer>
       </Router>
     </div>
   );

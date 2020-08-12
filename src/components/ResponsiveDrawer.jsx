@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Children } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
@@ -198,6 +198,7 @@ function ResponsiveDrawer(props) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
+        {props.children}
       </main>
     </div>
   );
