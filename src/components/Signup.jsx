@@ -45,7 +45,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    margin: theme.spacing(3, 0, 3),
+    fontWeight: 600,
+    fontSize: "1rem",
+    lineHeight: 2.5,
   },
 }));
 
@@ -68,7 +71,7 @@ export default function Signup() {
   });
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const validCheck = () => {
     //유효성 검사
     const emailRegex = /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
     const passwordRegex = /^[A-Za-z0-9]{6,12}$/;
@@ -96,20 +99,9 @@ export default function Signup() {
     ) {
       setValid({ mobile: true });
     }
-
-    //2. 정규식 검사하여 에러 내용 알림
-    //email
-    // else if (!emailRegex.test(memberState.email)) {
-    //   alert("이메일 형식에 맞게 입력");
-    // } else if (!passwordRegex.test(memberState.password)) {
-    //   alert("숫자와 문자 포함 형태의 6~12자리 이내");
-    // } else if (!mobileRegex.test(memberState.mobile)) {
-    //   alert("핸드폰 번호 형식에 맞게 입력");
-    // } else if (memberState.password !== memberState.passwordCheck) {
-    //   alert("비밀번호가 다릅니다.");
-    // } else {
-    //   alert("유효성검사 완료!");
-    // }
+  };
+  useEffect(() => {
+    validCheck();
   }, [memberState]);
   const onSubmit = (e) => {
     e.preventDefault();
