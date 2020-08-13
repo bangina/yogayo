@@ -15,12 +15,13 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { useForm } from "react-hook-form";
 
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
+      <Link color="inherit" to="/">
         Your Website
       </Link>{" "}
       {new Date().getFullYear()}
@@ -53,59 +54,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Signup() {
+  const inputRef = useRef();
   const classes = useStyles();
-  const alertRef = useRef();
   const [memberState, setMemberState] = useState({
     name: "",
-    isNameValid: false,
     email: "",
-    isEmailValid: false,
     password: "",
-    isPwdValid: false,
     passwordCheck: "",
-    isPwdCkValid: false,
     mobile: "",
-    ismobileValid: false,
   });
 
   const dispatch = useDispatch();
+  const { register, handleSubmit, errors, trigger, isValid } = useForm({
+    mode: "onSubmit",
+  });
 
-  // const emailRegex = /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-  // const passwordRegex = /^[A-Za-z0-9]{6,12}$/;
-  // const mobileRegex = /^\d{3}-\d{3,4}-\d{4}$/;
-  const validateName = (nameEntered) => {
-    if (nameEntered.length > 4) {
-      setMemberState({ ...memberState, name: nameEntered, isNameValid: true });
-    } else {
-      setMemberState({ ...memberState, name: nameEntered, isNameValid: false });
-    }
-  };
-
-  const isEnteredNameValid = () => {
-    if (memberState.name) {
-      return memberState.isNameValid;
-    } else {
-      return true;
-    }
-  };
-
-  const inputClassNameHelper = (boolean) => {
-    switch (boolean) {
-      case true:
-        return "";
-      case false:
-        return "5글자 이상 입력하세요";
-      default:
-        return "";
-    }
-  };
-  const onSubmit = (e) => {
-    e.preventDefault();
-    //redux에 회원 정보 추가
+  const onSubmit = () => {
     dispatch(insertMember(memberState));
+    console.log(inputRef.current);
   };
   const onInputChange = (e) => {
     setMemberState({ ...memberState, [e.target.name]: e.target.value });
+  };
+  const checkFormValidity = (e) => {
+    console.log(isValid);
+    if (isValid) {
+      return false;
+    } else {
+      return true;
+    }
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -117,7 +94,11 @@ export default function Signup() {
         <Typography component="h1" variant="h5">
           회원가입
         </Typography>
-        <form className={classes.form} noValidate onSubmit={onSubmit}>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
@@ -127,11 +108,17 @@ export default function Signup() {
                 id="name"
                 label="이름"
                 name="name"
-                autoComplete="name"
-                onChange={(e) => validateName(e.target.value)}
-                helperText={inputClassNameHelper(isEnteredNameValid())}
-                error={!isEnteredNameValid()}
+                // autoComplete="name"
+                autoFocus
+                inputRef={register({
+                  minLength: 2,
+                  required: "error message",
+                })}
+                onChange={(e) => onInputChange(e)}
               />
+              {errors.name && (
+                <span className="error">이름을 입력해주세요.</span>
+              )}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -141,10 +128,18 @@ export default function Signup() {
                 id="email"
                 label="이메일 주소"
                 name="email"
-                autoComplete="email"
-                onChange={onInputChange}
-                // error={valid.email}
+                // autoComplete="email"
+                inputRef={register({
+                  pattern: /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i,
+                })}
+                onFocus={() => {
+                  trigger("name");
+                }}
+                ref={inputRef}
               />
+              {errors.email && (
+                <span className="error">이메일 형식에 맞게 작성해주세요.</span>
+              )}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -154,10 +149,20 @@ export default function Signup() {
                 id="mobile"
                 label="휴대폰 번호"
                 name="mobile"
-                autoComplete="mobile"
-                onChange={onInputChange}
-                // error={valid.mobile}
+                // autoComplete="mobile"
+                inputRef={register({
+                  pattern: /^\d{3}-\d{3,4}-\d{4}$/,
+                })}
+                onChange={(e) => onInputChange(e)}
+                onFocus={() => {
+                  trigger("email");
+                }}
               />
+              {errors.mobile && (
+                <span className="error">
+                  핸드폰 번호를 정확히 입력해주세요.
+                </span>
+              )}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -168,9 +173,19 @@ export default function Signup() {
                 label="비밀번호"
                 type="password"
                 id="password"
-                onChange={onInputChange}
-                // error={valid.password}
+                inputRef={register({
+                  pattern: /^[A-Za-z0-9]{6,12}$/,
+                })}
+                onChange={(e) => onInputChange(e)}
+                onFocus={() => {
+                  trigger("mobile");
+                }}
               />
+              {errors.password && (
+                <span className="error">
+                  비밀번호는 영문과 숫자의 조합으로 6자-12자리로 입력해주세요.
+                </span>
+              )}
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -181,9 +196,19 @@ export default function Signup() {
                 label="비밀번호 확인"
                 type="password"
                 id="passwordCheck"
-                onChange={onInputChange}
-                // error={valid.passwordCheck}
+                inputRef={register({
+                  pattern: /^[A-Za-z0-9]{6,12}$/,
+                })}
+                onChange={(e) => onInputChange(e)}
+                onFocus={() => {
+                  trigger("password");
+                }}
               />
+              {memberState.password === memberState.passwordCheck ? (
+                ""
+              ) : (
+                <span className="error">비밀번호가 일치하지 않습니다.</span>
+              )}
             </Grid>
             <Grid item xs={12}>
               <FormControlLabel
@@ -198,6 +223,10 @@ export default function Signup() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            // disabled={(e) => {
+            //   checkFormValidity(e);
+            // }}
+            disabled={false}
           >
             가입 하기
           </Button>
