@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import CameraIcon from "@material-ui/icons/PhotoCamera";
@@ -13,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
+import { Cookies } from "react-cookie";
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -51,6 +52,14 @@ const cards = [1, 2];
 const Main = () => {
   const classes = useStyles();
 
+  const getLoggedInUser = () => {
+    const cookies = new Cookies();
+    const user = cookies.get("member");
+    return user ? (typeof user == "object" ? user : JSON.parse(user)) : null;
+  };
+
+  const loginUser = getLoggedInUser();
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -66,7 +75,7 @@ const Main = () => {
               color="textPrimary"
               gutterBottom
             >
-              솔방울님
+              {loginUser ? loginUser.name : "~.~"}님
             </Typography>
             <Typography
               variant="h5"
