@@ -7,7 +7,6 @@ import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -16,17 +15,19 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import StarBorder from "@material-ui/icons/StarBorder";
-import MailIcon from "@material-ui/icons/Mail";
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import Avatar from "@material-ui/core/Avatar";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import AccountCircleOutlinedIcon from "@material-ui/icons/AccountCircleOutlined";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+  },
+  "& > * + *": {
+    marginTop: theme.spacing(2),
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
@@ -79,8 +80,10 @@ function ResponsiveDrawer(props) {
       <div className={classes.toolbar} />
       <List>
         <ListItemIcon>
-          <AccountCircleOutlinedIcon
-            style={{ margin: "0 auto", display: "block" }}
+          <Avatar
+            alt="Solbang"
+            src="/static/images/avatar/1.jpg"
+            className={classes.large}
           />
           &nbsp; &nbsp; 솔방울 <br />
           요가왕 요가원
@@ -88,20 +91,20 @@ function ResponsiveDrawer(props) {
       </List>
       <Divider />
       <List>
-        {["수업 예약하기", "커뮤니티", "수련일기"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <List>
+        <ListItem>
+          <ListItemIcon>아이콘</ListItemIcon>
+          <ListItemText primary="수업 예약하기" />
+        </ListItem>
+        <ListItem>
+          <ListItemIcon>아이콘</ListItemIcon>
+          <ListItemText primary="요기 모여라" />
+        </ListItem>
+        <ListItem>
+          <ListItemIcon>아이콘</ListItemIcon>
+          <ListItemText primary="수련 다이어리" />
+        </ListItem>
         <ListItem button onClick={handleClick}>
-          <ListItemIcon>
-            <InboxIcon />
-          </ListItemIcon>
+          <ListItemIcon>아이콘</ListItemIcon>
           <ListItemText primary="마이페이지" />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
@@ -124,6 +127,12 @@ function ResponsiveDrawer(props) {
                 <StarBorder />
               </ListItemIcon>
               <ListItemText primary="글 관리" />
+            </ListItem>
+            <ListItem button className={classes.nested}>
+              <ListItemIcon>
+                <StarBorder />
+              </ListItemIcon>
+              <ListItemText primary="댓글 알림" />
             </ListItem>
           </List>
         </Collapse>
