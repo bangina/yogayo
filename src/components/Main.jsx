@@ -50,15 +50,27 @@ const useStyles = makeStyles((theme) => ({
 const cards = [1, 2];
 
 const Main = () => {
-  const classes = useStyles();
-
-  const getLoggedInUser = () => {
-    const cookies = new Cookies();
-    const user = cookies.get("member");
-    return user ? (typeof user == "object" ? user : JSON.parse(user)) : null;
+  const loginMember = {
+    name: "test1",
+    email: "test1@gmail.com",
+    password: "test1",
+    mobile: "010-1111-1111",
+    Voucher: {
+      id: 1,
+      center: "솔방울 요가원",
+      VoucherName: "[특가] 6:1 3개월 24회 수강권",
+    },
   };
 
-  const loginUser = getLoggedInUser();
+  const classes = useStyles();
+
+  // const getLoggedInUser = () => {
+  //   const cookies = new Cookies();
+  //   const user = cookies.get("member");
+  //   return user ? (typeof user == "object" ? user : JSON.parse(user)) : null;
+  // };
+
+  // const loginUser = getLoggedInUser();
 
   return (
     <React.Fragment>
@@ -75,26 +87,28 @@ const Main = () => {
               color="textPrimary"
               gutterBottom
             >
-              {loginUser ? loginUser.name : "~.~"}님
+              {/* {loginUser ? loginUser.name : "~.~"}님 */}
+              {loginMember.name}님
             </Typography>
             <Typography
-              variant="h5"
+              // variant="h5"
               align="center"
               color="textSecondary"
               paragraph
             >
-              수강권 정보 없음
+              요가원 : {loginMember.Voucher.center} <br />
+              수강권 : {loginMember.Voucher.VoucherName}
             </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
                   <Button variant="contained" color="primary">
-                    수강권 등록하기
+                    수업 예약
                   </Button>
                 </Grid>
                 <Grid item>
                   <Button variant="outlined" color="primary">
-                    Secondary action
+                    마이페이지
                   </Button>
                 </Grid>
               </Grid>
@@ -104,34 +118,50 @@ const Main = () => {
         <Container className={classes.cardGrid} maxWidth="md">
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe
-                      the content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Edit
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
+            <Grid item xs={12} sm={6}>
+              <Card className={classes.card}>
+                <CardMedia
+                  className={classes.cardMedia}
+                  image="https://source.unsplash.com/random"
+                  title="Image title"
+                />
+                <CardContent className={classes.cardContent}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    요가 기록
+                  </Typography>
+                  <Typography>
+                    요가 기록 설명글 어쩌구 저쩌구 랄라블라
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small" color="primary">
+                    바로가기
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Card className={classes.card}>
+                <CardMedia
+                  className={classes.cardMedia}
+                  image="https://source.unsplash.com/random"
+                  title="Image title"
+                />
+                <CardContent className={classes.cardContent}>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    커뮤니티
+                  </Typography>
+                  <Typography>
+                    커뮤니티 설명글 와라랄ㄹ라라라라ㅏ라랄
+                  </Typography>
+                </CardContent>
+                <CardActions>
+                  <Button size="small" color="primary">
+                    바로가기
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
           </Grid>
         </Container>
       </main>
