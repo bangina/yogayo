@@ -1,5 +1,5 @@
 import React, { Children } from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -25,9 +25,6 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-  },
-  "& > * + *": {
-    marginTop: theme.spacing(2),
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
@@ -91,49 +88,59 @@ function ResponsiveDrawer(props) {
       </List>
       <Divider />
       <List>
-        <ListItem>
-          <ListItemIcon>아이콘</ListItemIcon>
-          <ListItemText primary="수업 예약하기" />
-        </ListItem>
-        <ListItem>
-          <ListItemIcon>아이콘</ListItemIcon>
-          <ListItemText primary="요기 모여라" />
-        </ListItem>
-        <ListItem>
-          <ListItemIcon>아이콘</ListItemIcon>
-          <ListItemText primary="수련 다이어리" />
-        </ListItem>
+        <RouterLink to="/booking">
+          <ListItem>
+            <ListItemText primary="수업 예약하기" />
+          </ListItem>
+        </RouterLink>
+        <RouterLink to="/community">
+          <ListItem>
+            <ListItemText primary="요기 모여라" />
+          </ListItem>
+        </RouterLink>
+        <RouterLink to="/diary">
+          <ListItem>
+            <ListItemText primary="수련 다이어리" />
+          </ListItem>
+        </RouterLink>
         <ListItem button onClick={handleClick}>
-          <ListItemIcon>아이콘</ListItemIcon>
           <ListItemText primary="마이페이지" />
           {open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItem button className={classes.nested}>
-              <ListItemIcon>
-                <StarBorder />
-              </ListItemIcon>
-              <ListItemText primary="수강권 정보" />
-            </ListItem>
-            <ListItem button className={classes.nested}>
-              <ListItemIcon>
-                <StarBorder />
-              </ListItemIcon>
-              <ListItemText primary="예약 현황" />
-            </ListItem>
-            <ListItem button className={classes.nested}>
-              <ListItemIcon>
-                <StarBorder />
-              </ListItemIcon>
-              <ListItemText primary="글 관리" />
-            </ListItem>
-            <ListItem button className={classes.nested}>
-              <ListItemIcon>
-                <StarBorder />
-              </ListItemIcon>
-              <ListItemText primary="댓글 알림" />
-            </ListItem>
+            <RouterLink to="/vouchers">
+              <ListItem button className={classes.nested}>
+                <ListItemIcon>
+                  <StarBorder />
+                </ListItemIcon>
+                <ListItemText primary="수강권 정보" />
+              </ListItem>
+            </RouterLink>
+            <RouterLink to="/bookings">
+              <ListItem button className={classes.nested}>
+                <ListItemIcon>
+                  <StarBorder />
+                </ListItemIcon>
+                <ListItemText primary="예약 현황" />
+              </ListItem>
+            </RouterLink>
+            <RouterLink to="/diaries">
+              <ListItem button className={classes.nested}>
+                <ListItemIcon>
+                  <StarBorder />
+                </ListItemIcon>
+                <ListItemText primary="글 관리" />
+              </ListItem>
+            </RouterLink>
+            <RouterLink to="/notifications">
+              <ListItem button className={classes.nested}>
+                <ListItemIcon>
+                  <StarBorder />
+                </ListItemIcon>
+                <ListItemText primary="댓글 알림" />
+              </ListItem>
+            </RouterLink>
           </List>
         </Collapse>
       </List>
@@ -162,7 +169,7 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            <Link to="/" style={{ color: "#fff" }}>
+            <RouterLink to="/" style={{ color: "#fff" }}>
               <svg
                 width="60"
                 height="36"
@@ -217,7 +224,7 @@ function ResponsiveDrawer(props) {
                   fill="white"
                 />
               </svg>
-            </Link>
+            </RouterLink>
           </Typography>
         </Toolbar>
       </AppBar>

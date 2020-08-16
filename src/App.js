@@ -8,7 +8,7 @@ import Booking from "./components/Booking";
 
 //Read me
 //컴포넌트 이름에 Styled 가 붙은 것들 ==> styled components 패키지로 css 적용된 컴포넌트임.
-
+//material-ui 의 Link = <Link> / react-router-dom의 Link는 RouterLink로 표시.
 function App() {
   return (
     <div>
