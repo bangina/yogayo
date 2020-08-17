@@ -22,9 +22,9 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       <Link color="inherit" to="/">
-        Your Website
-      </Link>{" "}
-      {new Date().getDate().getFullYear()}
+        Yogayo
+      </Link>
+      {new Date().getFullYear()}
       {"."}
     </Typography>
   );

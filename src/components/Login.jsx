@@ -24,7 +24,7 @@ function Copyright() {
       <Link color="inherit" href="https://material-ui.com/">
         Yogayo
       </Link>
-      {new Date().getDate().getFullYear()}
+      {new Date().getFullYear()}
       {"."}
     </Typography>
   );
