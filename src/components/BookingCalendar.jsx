@@ -1,11 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { changeDate } from "../redux/class";
+import { useDispatch } from "react-redux";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import styled from "styled-components";
 
 const BookingCalendar = () => {
+  const dispatch = useDispatch();
   //value state에 날짜 객체를 저장
-  const [value, onChange] = useState(new Date());
+  const [value, setValue] = useState(new Date());
+
+  //선택된 날짜를 redux에 보내기(=>selectedDate에 담김)
+  useEffect(() => {
+    dispatch(changeDate(value));
+    console.log(value);
+  }, [value]);
   const maxDate = new Date(new Date().setMonth(new Date().getMonth() + 1));
   const StyledCalendar = styled(Calendar)`
     border: none;
@@ -52,7 +61,7 @@ const BookingCalendar = () => {
     <div>
       <h2>{value.toLocaleDateString()}</h2>
       <StyledCalendar
-        onChange={onChange}
+        onChange={setValue}
         minDetail="month"
         defaultValue={new Date()}
         value={value}
@@ -65,7 +74,7 @@ const BookingCalendar = () => {
         prev2Label=""
         //수업 없는 날은 비활성화 시키는 기능 추가?
         tileDisabled={({ activeStartDate, date, view }) => date.getDay() === 0}
-        onClick={(value) => console.log("New date is: ", value)}
+        locale="ko"
       />
     </div>
   );

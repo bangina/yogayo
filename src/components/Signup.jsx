@@ -24,7 +24,7 @@ function Copyright() {
       <Link color="inherit" to="/">
         Your Website
       </Link>{" "}
-      {new Date().getFullYear()}
+      {new Date().getDate().getFullYear()}
       {"."}
     </Typography>
   );
@@ -72,7 +72,6 @@ export default function Signup() {
 
   const onSubmit = () => {
     dispatch(insertMember(memberState));
-    console.log(inputRef.current);
   };
   const onInputChange = (e) => {
     setMemberState({ ...memberState, [e.target.name]: e.target.value });
@@ -115,12 +114,6 @@ export default function Signup() {
     }
   };
 
-  // const phoneNum = document.getElementById("mobile");
-
-  // phoneNum.onkeyup = function () {
-  //   console.log(this.value);
-  //   this.value = autoHypenPhone(this.value);
-  // };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

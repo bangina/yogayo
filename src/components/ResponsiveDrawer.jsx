@@ -11,6 +11,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
@@ -76,15 +77,10 @@ function ResponsiveDrawer(props) {
     <div>
       <div className={classes.toolbar} />
       <List>
-        <ListItemIcon>
-          <Avatar
-            alt="Solbang"
-            src="/static/images/avatar/1.jpg"
-            className={classes.large}
-          />
-          &nbsp; &nbsp; 솔방울 <br />
-          요가왕 요가원
-        </ListItemIcon>
+        <ListItemAvatar>
+          <Avatar className={classes.orange}>SB</Avatar>
+        </ListItemAvatar>
+        <ListItemText primary="솔방울" secondary="요가왕 요가원" />
       </List>
       <Divider />
       <List>

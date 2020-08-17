@@ -1,4 +1,4 @@
-import { Cookies } from "react-cookie"; //액션타입 정의
+import { Cookies } from "react-cookie";
 
 const MEMBER_INSERT = "MEMBER_INSERT";
 const MEMBER_LOGIN = "MEMBER_LOGIN";

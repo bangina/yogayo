@@ -24,7 +24,7 @@ function Copyright() {
       <Link color="inherit" href="https://material-ui.com/">
         Yogayo
       </Link>
-      {new Date().getFullYear()}
+      {new Date().getDate().getFullYear()}
       {"."}
     </Typography>
   );
@@ -66,7 +66,6 @@ export default function SignIn() {
   const onLogin = (e) => {
     e.preventDefault();
     dispatch(login(memberState.email, memberState.password));
-    // window.location = "/";
   };
   return (
     <Container component="main" maxWidth="xs">

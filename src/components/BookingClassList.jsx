@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Timeline from "@material-ui/lab/Timeline";
 import TimelineItem from "@material-ui/lab/TimelineItem";
@@ -6,9 +7,6 @@ import TimelineSeparator from "@material-ui/lab/TimelineSeparator";
 import TimelineConnector from "@material-ui/lab/TimelineConnector";
 import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineDot from "@material-ui/lab/TimelineDot";
-import LaptopMacIcon from "@material-ui/icons/LaptopMac";
-import HotelIcon from "@material-ui/icons/Hotel";
-import RepeatIcon from "@material-ui/icons/Repeat";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
@@ -48,63 +46,12 @@ const StyledTimeline = styled(Timeline)`
 `;
 const BookingClassList = () => {
   const classes = useStyles();
-  const date = new Date();
-  const [klasses, setKlasses] = useState([
-    {
-      id: 1,
-      klassDate: date.getDate(),
-      startTime: "09:00",
-      endTime: "10:00",
-      place: "간디룸",
-      klassName: "빈야사 요가",
-    },
-    {
-      id: 2,
-      klassDate: date.getDate(),
-      startTime: "09:00",
-      endTime: "10:00",
-      place: "간디룸",
-      klassName: "빈야사 요가",
-    },
-    {
-      id: 3,
-      klassDate: date.getDate(),
-      startTime: "09:00",
-      endTime: "10:00",
-      place: "간디룸",
-      klassName: "빈야사 요가",
-    },
-    {
-      id: 4,
-      klassDate: date.getDate() + 1,
-      startTime: "09:00",
-      endTime: "10:00",
-      place: "간디룸",
-      klassName: "빈야사 요가",
-    },
-    {
-      id: 5,
-      klassDate: date.getDate() + 2,
-      startTime: "09:00",
-      endTime: "10:00",
-      place: "간디룸",
-      klassName: "빈야사 요가",
-    },
-    {
-      id: 6,
-      klassDate: new Date().getDate() + 3,
-      startTime: "09:00",
-      endTime: "10:00",
-      place: "간디룸",
-      klassName: "빈야사 요가",
-    },
-  ]);
-  const todayKlasses = klasses.filter(
-    (klass) => klass.klassDate === new Date().getDate()
+  const globalKlassReducer = useSelector((state) => state.klassReducer);
+  const todayKlasses = globalKlassReducer.klasses.filter(
+    (klass) =>
+      klass.klassDate.getDate() === globalKlassReducer.selectedDate.getDate()
   );
-  console.log(klasses[0]);
-  console.log(todayKlasses);
-  console.log(new Date());
+  console.log("todayklasses", globalKlassReducer[0]);
   return (
     <StyledTimeline>
       <Timeline>
