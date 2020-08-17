@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import styled from "styled-components";
+import moment from "moment";
 
 const BookingCalendar = () => {
   const dispatch = useDispatch();
@@ -59,7 +60,7 @@ const BookingCalendar = () => {
   `;
   return (
     <div>
-      <h2>{value.toLocaleDateString()}</h2>
+      <h2>{value.toString()}</h2>
       <StyledCalendar
         onChange={setValue}
         minDetail="month"

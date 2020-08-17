@@ -2,7 +2,7 @@ const DATE_CHANGE = "DATE_CHANGE";
 
 export const changeDate = (clickedDate) => ({
   type: DATE_CHANGE,
-  clickedDate,
+  clickedDate, //value
 });
 const initialState = {
   klasses: [
@@ -52,7 +52,23 @@ const initialState = {
       startTime: "11:00",
       endTime: "10:00",
       place: "간디룸",
-      klassName: "기촌초 요가",
+      klassName: "기초 요가",
+    },
+    {
+      id: 7,
+      klassDate: new Date(new Date().valueOf() + 1000 * 3600 * 24),
+      startTime: "11:00",
+      endTime: "10:00",
+      place: "간디룸",
+      klassName: "기초 요가",
+    },
+    {
+      id: 8,
+      klassDate: new Date(new Date().valueOf() + 1000 * 3600 * 24),
+      startTime: "11:00",
+      endTime: "10:00",
+      place: "간디룸",
+      klassName: "기초 요가",
     },
   ],
   selectedDate: new Date(),

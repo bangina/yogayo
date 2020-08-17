@@ -89,7 +89,7 @@ function ResponsiveDrawer(props) {
             <ListItemText primary="수업 예약하기" />
           </ListItem>
         </RouterLink>
-        <RouterLink to="/community">
+        <RouterLink to="/board">
           <ListItem>
             <ListItemText primary="요기 모여라" />
           </ListItem>
