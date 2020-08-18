@@ -138,10 +138,6 @@ export default function Board(props) {
           count={parseInt(globalPosts.length / 10) + 1}
           onChange={handlePage}
         />
-
-        <Button variant="contained" color="primary">
-          글쓰기
-        </Button>
       </div>
     </div>
   );
