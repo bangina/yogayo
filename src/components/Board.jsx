@@ -10,6 +10,8 @@ import TableCell from "@material-ui/core/TableCell";
 import Pagination from "@material-ui/lab/Pagination";
 import Button from "@material-ui/core/Button";
 import { useSelector } from "react-redux";
+import Typography from "@material-ui/core/Typography";
+import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   primaryTableHeader: {
@@ -81,6 +83,9 @@ export default function Board(props) {
 
   return (
     <div>
+      <Typography variant="h3" gutterBottom color="primary">
+        요기 모여라
+      </Typography>
       <div className={classes.tableResponsive}>
         <Table className={classes.table}>
           <colgroup>
@@ -115,7 +120,7 @@ export default function Board(props) {
                   {prop.map((prop, key) => {
                     return (
                       <TableCell className={classes.tableCell} key={key}>
-                        {prop}
+                        <RouterLink to="/">{prop}</RouterLink>
                       </TableCell>
                     );
                   })}
