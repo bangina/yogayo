@@ -1,21 +1,39 @@
-import React from 'react'
-import Table from './Table'
+import React from "react";
+import Table from "./Table";
+import { makeStyles } from "@material-ui/core/styles";
+import Pagination from "@material-ui/lab/Pagination";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& > *": {
+      marginTop: theme.spacing(2),
+    },
+  },
+}));
 
 export default function TableList() {
-    return (
-        <div>
-            <Table
-              tableHeaderColor="primary"
-              tableHead={["Name", "Country", "City", "Salary"]}
-              tableData={[
-                ["Dakota Rice", "Niger", "Oud-Turnhout", "$36,738"],
-                ["Minerva Hooper", "Curaçao", "Sinaai-Waas", "$23,789"],
-                ["Sage Rodriguez", "Netherlands", "Baileux", "$56,142"],
-                ["Philip Chaney", "Korea, South", "Overland Park", "$38,735"],
-                ["Doris Greene", "Malawi", "Feldkirchen in Kärnten", "$63,542"],
-                ["Mason Porter", "Chile", "Gloucester", "$78,615"]
-              ]}
-            />
-        </div>
-    )
+  const classes = useStyles();
+
+  return (
+    <div>
+      <Table
+        tableHeaderColor="primary"
+        tableHead={["글번호", "말머리", "글제목", "작성자", "등록일"]}
+        tableData={[
+          ["1", "[기타]", "요가 재밌어요~~", "요친놈", "2020-08-18"],
+          ["1", "[기타]", "요가 재밌어요~~", "요친놈", "2020-08-18"],
+          ["1", "[기타]", "요가 재밌어요~~", "요친놈", "2020-08-18"],
+          ["1", "[기타]", "요가 재밌어요~~", "요친놈", "2020-08-18"],
+          ["1", "[기타]", "요가 재밌어요~~", "요친놈", "2020-08-18"],
+          ["1", "[기타]", "요가 재밌어요~~", "요친놈", "2020-08-18"],
+          ["1", "[기타]", "요가 재밌어요~~", "요친놈", "2020-08-18"],
+          ["1", "[기타]", "요가 재밌어요~~", "요친놈", "2020-08-18"],
+          ["1", "[기타]", "요가 재밌어요~~", "요친놈", "2020-08-18"],
+        ]}
+      />
+      <div className={classes.root}>
+        <Pagination count={10} />
+      </div>
+    </div>
+  );
 }

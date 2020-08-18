@@ -5,7 +5,6 @@ import ResponsiveDrawer from "./components/ResponsiveDrawer";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Main from "./components/Main";
 import Booking from "./components/Booking";
-import Board from "./components/Board";
 import TableList from "./components/TableList";
 
 //Read me
