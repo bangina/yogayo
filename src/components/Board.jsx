@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,6 +9,9 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import Pagination from "@material-ui/lab/Pagination";
 import Button from "@material-ui/core/Button";
+import { useSelector } from "react-redux";
+import Typography from "@material-ui/core/Typography";
+import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   primaryTableHeader: {
@@ -65,45 +68,24 @@ export default function Board(props) {
 
   const tableHeaderColor = "primary";
   const tableHead = ["글번호", "말머리", "글제목", "작성자", "등록일"];
-  const tableData = [
-    [1, "gravida", "egestas. Aliquam", "Lacota", "Oct 26, 2020"],
-    [
-      2,
-      "dis",
-      "mauris a nunc. In at pede. Cras vulputate velit eu",
-      "Kyla",
-      "Jul 17, 2020",
-    ],
-    [3, "ridiculus", "lectus.", "Medge", "Feb 22, 2021"],
-    [
-      4,
-      "elementum",
-      "libero est, congue a, aliquet vel,",
-      "Justina",
-      "Apr 1, 2020",
-    ],
-    [5, "dolor", "felis eget varius ultrices,", "Hermione", "Apr 20, 2021"],
-    [
-      6,
-      "Vestibulum",
-      "commodo tincidunt nibh. Phasellus nulla.",
-      "Meredith",
-      "Nov 6, 2019",
-    ],
-    [7, "diam.", "nec", "Darryl", "Nov 13, 2019"],
-    [8, "sit", "in,", "Lysandra", "Nov 18, 2020"],
-    [
-      9,
-      "dictum.",
-      "Cras pellentesque. Sed dictum. Proin eget odio.",
-      "Xantha",
-      "Apr 15, 2020",
-    ],
-    [10, "sem", "feugiat nec, diam.", "Kelsie", "Dec 14, 2019"],
-  ];
+  const [tableData, setTableData] = useState([]);
+  const globalPosts = useSelector((state) => state.posts);
+
+  useEffect(() => {
+    setTableData(globalPosts.slice(0, 9));
+  }, [globalPosts]);
+
+  const handlePage = (event, value) => {
+    const startNum = (value - 1) * 10;
+    const endNum = value * 10 - 1;
+    setTableData(globalPosts.slice(startNum, endNum));
+  };
 
   return (
     <div>
+      <Typography variant="h3" gutterBottom color="primary">
+        요기 모여라
+      </Typography>
       <div className={classes.tableResponsive}>
         <Button variant="contained" color="primary" className="write-btn">
           글쓰기
@@ -141,7 +123,7 @@ export default function Board(props) {
                   {prop.map((prop, key) => {
                     return (
                       <TableCell className={classes.tableCell} key={key}>
-                        {prop}
+                        <RouterLink to="/">{prop}</RouterLink>
                       </TableCell>
                     );
                   })}
@@ -152,7 +134,14 @@ export default function Board(props) {
         </Table>
       </div>
       <div className={classes.root}>
-        <Pagination count={10} />
+        <Pagination
+          count={parseInt(globalPosts.length / 10) + 1}
+          onChange={handlePage}
+        />
+
+        <Button variant="contained" color="primary">
+          글쓰기
+        </Button>
       </div>
     </div>
   );
