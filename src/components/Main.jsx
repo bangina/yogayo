@@ -121,7 +121,7 @@ const Main = () => {
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.cardMedia}
-                  image="https://source.unsplash.com/random"
+                  image="./img/yoga.jpg"
                   title="Image title"
                 />
                 <CardContent className={classes.cardContent}>
@@ -143,7 +143,7 @@ const Main = () => {
               <Card className={classes.card}>
                 <CardMedia
                   className={classes.cardMedia}
-                  image="https://source.unsplash.com/random"
+                  image="./img/people.jpg"
                   title="Image title"
                 />
                 <CardContent className={classes.cardContent}>
