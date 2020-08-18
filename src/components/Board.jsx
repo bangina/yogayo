@@ -105,6 +105,9 @@ export default function Board(props) {
   return (
     <div>
       <div className={classes.tableResponsive}>
+        <Button variant="contained" color="primary" className="write-btn">
+          글쓰기
+        </Button>
         <Table className={classes.table}>
           <colgroup>
             <col style={{ width: "5%" }} />
@@ -150,10 +153,6 @@ export default function Board(props) {
       </div>
       <div className={classes.root}>
         <Pagination count={10} />
-
-        <Button variant="contained" color="primary">
-          글쓰기
-        </Button>
       </div>
     </div>
   );

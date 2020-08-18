@@ -13,11 +13,19 @@ a {
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas,w "Courier New",
+  font-family: source-code-pro, Menlo, Monaco, Consolas, w "Courier New",
     monospace;
 }
 
 span.error {
   color: #cf556c;
   padding-left: 3px;
+}
+
+.MuiPagination-ul {
+  justify-content: center;
+}
+
+.write-btn {
+  float: right !important;
 }

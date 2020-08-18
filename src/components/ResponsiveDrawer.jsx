@@ -113,7 +113,7 @@ function ResponsiveDrawer(props) {
                 <ListItemText primary="수강권 정보" />
               </ListItem>
             </RouterLink>
-            <RouterLink to="/bookings">
+            <RouterLink to="/mypage/bookings">
               <ListItem button className={classes.nested}>
                 <ListItemIcon>
                   <StarBorder />
