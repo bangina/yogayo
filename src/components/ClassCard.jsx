@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import Avatar from "@material-ui/core/Avatar";
+import CardMedia from "@material-ui/core/CardMedia";
 import Slider from "@material-ui/core/Slider";
 
 const useStyles = makeStyles(({ spacing, palette }) => {
@@ -16,6 +17,7 @@ const useStyles = makeStyles(({ spacing, palette }) => {
       minWidth: 288,
       borderRadius: 12,
       boxShadow: "0 2px 4px 0 rgba(138, 148, 159, 0.2)",
+      marginBottom: "10px",
       "& > *:nth-child(1)": {
         marginRight: spacing(2),
       },
@@ -63,22 +65,51 @@ const useSliderStyles = makeStyles(() => ({
     display: "none",
   },
 }));
-export const ClassCard = React.memo(function () {
+export const ClassCard = (props) => {
   const styles = useStyles();
   const sliderStyles = useSliderStyles();
+  const {
+    id,
+    klassDate,
+    startTime,
+    endTime,
+    place,
+    klassName,
+    companyName,
+    enrolledPeople,
+    maxPeople,
+  } = props.klass;
+
   return (
     <Card className={cx(styles.card)} elevation={0}>
-      <Avatar src={""} className={styles.avatar} />
+      <CardMedia
+        image="/static/images/cards/live-from-space.jpg"
+        title="Live from space album cover"
+      >
+        <Avatar>{klassDate.getDay()}</Avatar>
+      </CardMedia>
       <Box>
-        <h3 className={styles.heading}>소도구 필라테스A</h3>
-        <p className={styles.subheader}>요가왕 요가원 • 필테룸</p>
+        <h3 className={styles.heading}>{klassName}</h3>
+        <p variant="h5">
+          {klassDate.getMonth()}월 {klassDate.getDate()}일 {klassDate.getDay()}
+          요일 <br />
+          {startTime} - {endTime}
+        </p>
+        <p className={styles.subheader}>
+          {companyName} • {place}
+        </p>
         <Box display={"flex"} alignItems={"center"}>
-          <Slider classes={sliderStyles} value={10} />
-          <span className={styles.value}>3/10명 신청</span>
+          <Slider
+            classes={sliderStyles}
+            value={(enrolledPeople / maxPeople) * 100}
+          />
+          <span className={styles.value}>
+            {enrolledPeople}/{maxPeople}명 신청
+          </span>
         </Box>
       </Box>
     </Card>
   );
-});
+};
 
 export default ClassCard;

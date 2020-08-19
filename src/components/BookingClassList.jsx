@@ -51,7 +51,6 @@ const BookingClassList = () => {
     (klass) =>
       klass.klassDate.getDate() === globalKlassReducer.selectedDate.getDate()
   );
-  console.log("todayklasses", globalKlassReducer[0]);
   return (
     <StyledTimeline>
       <Timeline>
