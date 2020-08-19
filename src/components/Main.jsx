@@ -58,6 +58,8 @@ const Main = () => {
       id: 1,
       center: "솔방울 요가원",
       VoucherName: "[특가] 6:1 3개월 24회 수강권",
+      date:"2020.8.19 ~ 2020.10.19",
+      attendance : "24회 중 1회 출석"
     },
   };
 
@@ -95,8 +97,10 @@ const Main = () => {
               color="textSecondary"
               paragraph
             >
-              요가원 : {loginMember.Voucher.center} <br />
-              수강권 : {loginMember.Voucher.VoucherName}
+              {loginMember.Voucher.center} <br />
+              {loginMember.Voucher.VoucherName} <br />
+              {loginMember.Voucher.date} <br />
+              {loginMember.Voucher.attendance} <br />
             </Typography>
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
