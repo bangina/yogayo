@@ -1,5 +1,5 @@
 import React from "react";
-import DiaryCard from "./DiaryCard";
+import DiaryCard from "../components/DiaryCard";
 
 const Diary = () => {
   return (

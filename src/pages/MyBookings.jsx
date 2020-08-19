@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import ClassCard from "./ClassCard";
-import BookingTabs from "./BookingTabs";
+import ClassCard from "../components/ClassCard";
+import BookingTabs from "../components/BookingTabs";
 
 const MyBookings = () => {
   const globalklass = useSelector((state) => state.klass);

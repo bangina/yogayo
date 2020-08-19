@@ -1,14 +1,14 @@
 import React from "react";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 import ResponsiveDrawer from "./components/ResponsiveDrawer";
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import Main from "./components/Main";
-import Booking from "./components/Booking";
-import Board from "./components/Board";
-import MyBookings from "./components/MyBookings";
-import Diary from "./components/Diary";
-import Voucher from "./components/Voucher";
+import Main from "./pages/Main";
+import Booking from "./pages/Booking";
+import Board from "./pages/Board";
+import MyBookings from "./pages/MyBookings";
+import Diary from "./pages/Diary";
+import Voucher from "./pages/Voucher";
 
 //Read me
 //컴포넌트 이름에 Styled 가 붙은 것들 ==> styled components 패키지로 css 적용된 컴포넌트임.

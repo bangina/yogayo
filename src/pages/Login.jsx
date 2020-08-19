@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { login } from "../../src/redux/member"; //액션객체 생성함수
+import { login } from "../redux/member"; //액션객체 생성함수
 import { useDispatch } from "react-redux";
 
 import Avatar from "@material-ui/core/Avatar";
