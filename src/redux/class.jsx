@@ -144,7 +144,7 @@ const initialState = {
   selectedDate: new Date(),
 };
 
-const klassReducer = (klassState = initialState, action) => {
+const klass = (klassState = initialState, action) => {
   switch (action.type) {
     case DATE_CHANGE:
       return { ...klassState, selectedDate: action.clickedDate };
@@ -152,4 +152,4 @@ const klassReducer = (klassState = initialState, action) => {
       return klassState;
   }
 };
-export default klassReducer;
+export default klass;

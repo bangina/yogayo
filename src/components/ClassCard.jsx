@@ -5,6 +5,7 @@ import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import Avatar from "@material-ui/core/Avatar";
 import CardMedia from "@material-ui/core/CardMedia";
+import CardContent from "@material-ui/core/CardContent";
 import Slider from "@material-ui/core/Slider";
 
 const useStyles = makeStyles(({ spacing, palette }) => {
@@ -13,11 +14,14 @@ const useStyles = makeStyles(({ spacing, palette }) => {
   return {
     card: {
       display: "flex",
-      padding: spacing(2),
+      paddingLeft: 0,
       minWidth: 288,
       borderRadius: 12,
       boxShadow: "0 2px 4px 0 rgba(138, 148, 159, 0.2)",
       marginBottom: "10px",
+      "& > *": {
+        padding: spacing(1),
+      },
       "& > *:nth-child(1)": {
         marginRight: spacing(2),
       },
@@ -43,13 +47,32 @@ const useStyles = makeStyles(({ spacing, palette }) => {
       fontSize: 14,
       color: palette.grey[500],
     },
+    color1: {
+      color: "#fff",
+      backgroundColor: "#b12a5b",
+    },
+    color2: {
+      color: "#fff",
+      backgroundColor: "#ff8177",
+    },
+    color3: {
+      color: "#fff",
+      backgroundColor: "#cf556c ",
+    },
+    color4: {
+      color: "#fff",
+      backgroundColor: "#b12a5b ",
+    },
+    color5: {
+      color: "#fff",
+      backgroundColor: "#b12a5b ",
+    },
   };
 });
-
 const useSliderStyles = makeStyles(() => ({
   root: {
     height: 4,
-    width: "80%",
+    width: "70%",
   },
   rail: {
     borderRadius: 10,
@@ -59,7 +82,7 @@ const useSliderStyles = makeStyles(() => ({
   track: {
     borderRadius: 10,
     height: 4,
-    backgroundColor: "rgb(117,156,250)",
+    backgroundColor: "#b12a5b",
   },
   thumb: {
     display: "none",
@@ -79,15 +102,38 @@ export const ClassCard = (props) => {
     enrolledPeople,
     maxPeople,
   } = props.klass;
-
+  const printDay = (props) => {
+    switch (props) {
+      case 1:
+        return "월";
+      case 2:
+        return "화";
+      case 3:
+        return "수";
+      case 4:
+        return "목";
+      case 5:
+        return "금";
+      case 6:
+        return "토";
+      case 7:
+        return "일";
+      default:
+        return "";
+    }
+  };
   return (
     <Card className={cx(styles.card)} elevation={0}>
-      <CardMedia
-        image="/static/images/cards/live-from-space.jpg"
-        title="Live from space album cover"
-      >
-        <Avatar>{klassDate.getDay()}</Avatar>
-      </CardMedia>
+      <CardContent style={{ background: "pink" }}>
+        <CardMedia
+          image="/static/images/cards/live-from-space.jpg"
+          title="Live from space album cover"
+        >
+          <Avatar className={styles.color2}>
+            {printDay(klassDate.getDay())}
+          </Avatar>
+        </CardMedia>
+      </CardContent>
       <Box>
         <h3 className={styles.heading}>{klassName}</h3>
         <p variant="h5">

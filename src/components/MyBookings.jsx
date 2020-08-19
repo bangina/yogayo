@@ -4,14 +4,14 @@ import ClassCard from "./ClassCard";
 import BookingTabs from "./BookingTabs";
 
 const MyBookings = () => {
-  const globalKlassReducer = useSelector((state) => state.klassReducer);
-  const enrolledKlasses = globalKlassReducer.enrolledKlasses;
+  const globalklass = useSelector((state) => state.klass);
+  const enrolledKlasses = globalklass.enrolledKlasses;
   console.log(enrolledKlasses);
   return (
     <div>
       <BookingTabs />
-      {enrolledKlasses.map((enrolledKlass)=>(
-          <ClassCard key={enrolledKlass.id} klass={enrolledKlass} />
+      {enrolledKlasses.map((enrolledKlass) => (
+        <ClassCard key={enrolledKlass.id} klass={enrolledKlass} />
       ))}
     </div>
   );

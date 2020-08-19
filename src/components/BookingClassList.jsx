@@ -12,6 +12,8 @@ import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
+import BookingModal from "./BookingModal";
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: "6px 16px",
@@ -46,40 +48,63 @@ const StyledTimeline = styled(Timeline)`
 `;
 const BookingClassList = () => {
   const classes = useStyles();
-  const globalKlassReducer = useSelector((state) => state.klassReducer);
-  const todayKlasses = globalKlassReducer.klasses.filter(
-    (klass) =>
-      klass.klassDate.getDate() === globalKlassReducer.selectedDate.getDate()
+  const globalklass = useSelector((state) => state.klass);
+  const todayKlasses = globalklass.klasses.filter(
+    (klass) => klass.klassDate.getDate() === globalklass.selectedDate.getDate()
   );
+  const [selectedKlass, setSelectedKlass] = useState({
+    id: "",
+    klassDate: new Date(),
+    startTime: "",
+    endTime: "",
+    place: "",
+    klassName: "힐링 요가",
+    companyName: "",
+    maxPeople: "",
+    enrolledPeople: "",
+  });
+  const [open, setOpen] = useState(false);
+  const openModal = (e) => {
+    // setSelectedKlass(todayKlasses.filter((k) => k.id == e.target.value));
+    // console.log(e.target.value);
+  };
+
   return (
-    <StyledTimeline>
-      <Timeline>
-        {todayKlasses.map((klass) => (
-          <TimelineItem key={klass.id}>
-            <TimelineSeparator>
-              {/* <span>{klass.date}요일</span> */}
-              <TimelineDot color="secondary">{klass.startTime}</TimelineDot>
-              <TimelineConnector />
-            </TimelineSeparator>
-            <TimelineContent>
-              <Paper elevation={3} className={classes.paper}>
-                <Typography variant="h6" component="h1">
-                  {klass.klassName}
-                </Typography>
-                <Typography>
-                  {klass.startTime} - {klass.endTime} | {klass.place}
-                </Typography>
-                <Link to={`/register/${klass.id}`}>
-                  <Button variant="outlined" color="primary">
+    <>
+      <StyledTimeline>
+        <Timeline>
+          {todayKlasses.map((klass) => (
+            <TimelineItem key={klass.id}>
+              <TimelineSeparator>
+                <TimelineDot color="secondary">{klass.startTime}</TimelineDot>
+                <TimelineConnector />
+              </TimelineSeparator>
+              <TimelineContent>
+                <Paper elevation={3} className={classes.paper}>
+                  <Typography variant="h6" component="h1">
+                    {klass.klassName}
+                  </Typography>
+                  <Typography>
+                    {klass.startTime} - {klass.endTime} | {klass.place}
+                  </Typography>
+                  {/* <Link to={`/register/${klass.id}`}> */}
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={openModal}
+                    value={klass.id}
+                  >
                     수강신청
                   </Button>
-                </Link>
-              </Paper>
-            </TimelineContent>
-          </TimelineItem>
-        ))}
-      </Timeline>
-    </StyledTimeline>
+                  {/* </Link> */}
+                </Paper>
+              </TimelineContent>
+            </TimelineItem>
+          ))}
+        </Timeline>
+      </StyledTimeline>
+      <BookingModal open={open} selectedKlass={selectedKlass} />
+    </>
   );
 };
 
