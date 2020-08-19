@@ -8,6 +8,7 @@ import Booking from "./components/Booking";
 import Board from "./components/Board";
 import MyBookings from "./components/MyBookings";
 import Diary from "./components/Diary";
+import Voucher from "./components/Voucher";
 
 //Read me
 //컴포넌트 이름에 Styled 가 붙은 것들 ==> styled components 패키지로 css 적용된 컴포넌트임.
@@ -25,6 +26,7 @@ function App() {
           <Route path="/board" component={Board}></Route>
           <Route path="/diary" component={Diary}></Route>
           <Route path="/mypage/bookings" component={MyBookings}></Route>
+          <Route path="/vouchers" component={Voucher}></Route>
         </ResponsiveDrawer>
       </Router>
     </div>
