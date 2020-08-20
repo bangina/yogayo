@@ -123,7 +123,7 @@ export default function Board(props) {
                   {prop.map((prop, key) => {
                     return (
                       <TableCell className={classes.tableCell} key={key}>
-                        <RouterLink to="/">{prop}</RouterLink>
+                        <RouterLink to="/board/detail">{prop}</RouterLink>
                       </TableCell>
                     );
                   })}
