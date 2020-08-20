@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+export default function SignIn(props) {
   const classes = useStyles();
   const [memberState, setMemberState] = useState({
     email: "",
@@ -66,6 +66,7 @@ export default function SignIn() {
   const onLogin = (e) => {
     e.preventDefault();
     dispatch(login(memberState.email, memberState.password));
+    props.history.push("/");
   };
   return (
     <Container component="main" maxWidth="xs">

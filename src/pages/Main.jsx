@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import CameraIcon from "@material-ui/icons/PhotoCamera";
 import Card from "@material-ui/core/Card";
@@ -46,9 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const cards = [1, 2];
-
-const Main = () => {
+const Main = (props) => {
   const loginMember = {
     name: "test1",
     email: "test1@gmail.com",
@@ -58,20 +56,32 @@ const Main = () => {
       id: 1,
       center: "솔방울 요가원",
       VoucherName: "[특가] 6:1 3개월 24회 수강권",
-      date:"2020.8.19 ~ 2020.10.19",
-      attendance : "24회 중 1회 출석"
+      date: "2020.8.19 ~ 2020.10.19",
+      attendance: "24회 중 1회 출석",
     },
   };
 
   const classes = useStyles();
 
-  // const getLoggedInUser = () => {
-  //   const cookies = new Cookies();
-  //   const user = cookies.get("member");
-  //   return user ? (typeof user == "object" ? user : JSON.parse(user)) : null;
-  // };
+  const getLoggedInUser = () => {
+    const cookies = new Cookies();
+    const user = cookies.get("member");
+    return user ? (typeof user == "object" ? user : JSON.parse(user)) : null;
+  };
 
-  // const loginUser = getLoggedInUser();
+  const loginUser = getLoggedInUser();
+
+  useEffect(() => {
+    if (!loginUser) {
+      props.history.push("/login");
+    }
+  });
+
+  const onLogout = () => {
+    const cookies = new Cookies();
+    cookies.remove("member");
+    props.history.push("/login");
+  };
 
   return (
     <React.Fragment>
@@ -88,8 +98,7 @@ const Main = () => {
               color="textPrimary"
               gutterBottom
             >
-              {/* {loginUser ? loginUser.name : "~.~"}님 */}
-              {loginMember.name}님
+              {loginUser ? loginUser.name : ""}님{/* {loginMember.name}님 */}
             </Typography>
             <Typography
               // variant="h5"
@@ -105,13 +114,22 @@ const Main = () => {
             <div className={classes.heroButtons}>
               <Grid container spacing={2} justify="center">
                 <Grid item>
-                  <Button variant="contained" color="primary">
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => props.history.push("/booking")}
+                  >
                     수업 예약
                   </Button>
                 </Grid>
                 <Grid item>
-                  <Button variant="outlined" color="primary">
-                    마이페이지
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    name="logout"
+                    onClick={onLogout}
+                  >
+                    로그아웃
                   </Button>
                 </Grid>
               </Grid>
@@ -137,7 +155,11 @@ const Main = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" color="primary">
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={() => props.history.push("/diary")}
+                  >
                     바로가기
                   </Button>
                 </CardActions>
@@ -159,7 +181,11 @@ const Main = () => {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" color="primary">
+                  <Button
+                    size="small"
+                    color="primary"
+                    onClick={() => props.history.push("/board")}
+                  >
                     바로가기
                   </Button>
                 </CardActions>
