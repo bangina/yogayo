@@ -117,8 +117,9 @@ const BookingClassList = () => {
   const [selectedKlass, setSelectedKlass] = useState({});
   const [open, setOpen] = useState(false);
   const openModal = (e) => {
-    setSelectedKlass(todayKlasses.filter((k) => k.id == e.currentTarget.value));
-    console.log(e.currentTarget.value);
+    setSelectedKlass(
+      todayKlasses.filter((k) => k.id === e.currentTarget.value)
+    );
     setOpen(true);
     console.log(open);
   };
@@ -169,8 +170,9 @@ const BookingClassList = () => {
                     <Box>
                       <h3 className={styles.heading}>{klass.klassName}</h3>
                       <p variant="h5">
-                        {klass.klassDate.getMonth()}월
-                        {klass.klassDate.getDate()}일{klass.klassDate.getDay()}
+                        {klass.klassDate.getMonth()}월{" "}
+                        {klass.klassDate.getDate()}일{" "}
+                        {printDay(klass.klassDate.getDay())}
                         요일 <br />
                         {klass.startTime} - {klass.endTime}
                       </p>
