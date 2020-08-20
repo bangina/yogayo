@@ -51,22 +51,6 @@ const useStyles = makeStyles(({ spacing, palette }) => {
       color: "#fff",
       backgroundColor: "#b12a5b",
     },
-    color2: {
-      color: "#fff",
-      backgroundColor: "#ff8177",
-    },
-    color3: {
-      color: "#fff",
-      backgroundColor: "#cf556c ",
-    },
-    color4: {
-      color: "#fff",
-      backgroundColor: "#b12a5b ",
-    },
-    color5: {
-      color: "#fff",
-      backgroundColor: "#b12a5b ",
-    },
   };
 });
 const useSliderStyles = makeStyles(() => ({

@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import { appleTabsStylesHook } from "@mui-treasury/styles/tabs";
 const BookingTabs = () => {
-  const [tabIndex, setTabIndex] = React.useState(0);
+  const [tabIndex, setTabIndex] = useState(0);
   const tabsStyles = appleTabsStylesHook.useTabs();
   const tabItemStyles = appleTabsStylesHook.useTabItem();
   return (
@@ -12,6 +12,7 @@ const BookingTabs = () => {
         classes={tabsStyles}
         value={tabIndex}
         onChange={(e, index) => setTabIndex(index)}
+        style={{ marginBottom: "15px" }}
       >
         <Tab classes={tabItemStyles} disableRipple label={"예약한 수업"} />
         <Tab classes={tabItemStyles} disableRipple label={"지난 수업"} />
