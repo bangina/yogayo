@@ -1,9 +1,23 @@
 const DATE_CHANGE = "DATE_CHANGE";
+const MODAL_OPEN = "MODAL_OPEN";
+const MODAL_CLOSE = "MODAL_CLOSE";
+const SELECT_ENROLL_KLASS = "SELECT_ENROLL_KLASS";
 
 export const changeDate = (clickedDate) => ({
   type: DATE_CHANGE,
   clickedDate, //value
 });
+export const openModal = () => ({
+  type: MODAL_OPEN,
+});
+export const closeModal = () => ({
+  type: MODAL_CLOSE,
+});
+export const selectKlass = (selectedKlass) => ({
+  type: SELECT_ENROLL_KLASS,
+  selectedKlass,
+});
+
 const initialState = {
   klasses: [
     {
@@ -142,12 +156,20 @@ const initialState = {
     },
   ],
   selectedDate: new Date(),
+  isModalOpen: false,
+  enrollingKlass: {},
 };
 
 const klass = (klassState = initialState, action) => {
   switch (action.type) {
     case DATE_CHANGE:
       return { ...klassState, selectedDate: action.clickedDate };
+    case MODAL_OPEN:
+      return { ...klassState, isModalOpen: true };
+    case MODAL_CLOSE:
+      return { ...klassState, isModalOpen: false };
+    case SELECT_ENROLL_KLASS:
+      return { ...klassState, enrollingKlass: action.selectedKlass };
     default:
       return klassState;
   }

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { closeModal } from "../redux/class";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -54,33 +56,26 @@ const DialogActions = withStyles((theme) => ({
 }))(MuiDialogActions);
 
 const BookingModal = (props) => {
-  const [isOpen, setIsOpen] = useState(props.isOpen);
   const [selectedKlass, setSelectedKlass] = useState(props.selectedKlass);
+  const globalklass = useSelector((state) => state.klass);
+  const globalSelectedKlass = globalklass.enrollingKlass;
+  const dispatch = useDispatch();
   const handleClose = () => {
-    setIsOpen(false);
+    dispatch(closeModal());
   };
-  //부모 컴포넌트에서 props 업데이트 되면 모달에도 반영(바인딩 쫙 쪼여준댜)
-  useEffect(() => {
-    setIsOpen(props.isOpen);
-  }, [props]);
 
-  useEffect(() => {
-    setSelectedKlass(props.selectedKlass);
-  }, [props.selectedKlass]);
   return (
     <>
       <Dialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
-        open={isOpen}
+        open={globalklass.isModalOpen}
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          {selectedKlass.klassName}
+          {globalSelectedKlass.klassName}
         </DialogTitle>
         <DialogContent dividers>
-          <Typography gutterBottom>
-            취소와 변경 해당 예약은 당일 예약 변경 및 취소가 불가능합니다.
-          </Typography>
+          <Typography gutterBottom>{globalSelectedKlass.place}</Typography>
           <Typography gutterBottom>
             결석 무단 결석시 이용권의 남은 횟수가 차감됩니다. 수업 종료시간까지
             입장하지 않으면 자동결석처리 됩니다.

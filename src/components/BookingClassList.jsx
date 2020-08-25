@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Timeline from "@material-ui/lab/Timeline";
 import TimelineItem from "@material-ui/lab/TimelineItem";
@@ -18,6 +18,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Slider from "@material-ui/core/Slider";
 import cx from "clsx";
+import { openModal, selectKlass } from "../redux/class";
 
 const useStyles = makeStyles(({ spacing, palette }) => {
   const family =
@@ -111,6 +112,7 @@ const BookingClassList = () => {
   const styles = useStyles();
   const sliderStyles = useSliderStyles();
   const globalklass = useSelector((state) => state.klass);
+  const dispatch = useDispatch();
   const todayKlasses = globalklass.klasses.filter(
     (klass) => klass.klassDate.getDate() === globalklass.selectedDate.getDate()
   );
@@ -139,14 +141,11 @@ const BookingClassList = () => {
   };
 
   const onBtnClick = (e) => {
-    setIsOpen(true);
-    setSelectedKlass(
-      globalklass.klasses.filter(
-        (klass) => klass.id.toString() === e.currentTarget.value.toString()
-      )[0]
-      //filter 메소드는 결과물이 array로 리턴됨. id값 일치하는 수업은 1개 이므로 배열의 첫번째[0] object만 저장.
-    );
-    console.log(isOpen);
+    const selectedKlass = globalklass.klasses.filter(
+      (klass) => klass.id.toString() === e.currentTarget.value.toString()
+    )[0];
+    dispatch(openModal());
+    dispatch(selectKlass(selectedKlass));
   };
 
   return (
