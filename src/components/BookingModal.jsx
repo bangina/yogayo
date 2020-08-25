@@ -57,20 +57,16 @@ const BookingModal = (props) => {
   const [isOpen, setIsOpen] = useState(props.isOpen);
   const [selectedKlass, setSelectedKlass] = useState(props.selectedKlass);
   const handleClose = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(false);
   };
-  //부모 컴포넌트에서 props 업데이트 되면 모달에도 반영
+  //부모 컴포넌트에서 props 업데이트 되면 모달에도 반영(바인딩 쫙 쪼여준댜)
   useEffect(() => {
     setIsOpen(props.isOpen);
-    // setKlass(props.selectedKlass);
-    console.log("isOpen", isOpen);
-  }, [props.isOpen]);
+  }, [props]);
 
   useEffect(() => {
     setSelectedKlass(props.selectedKlass);
-    // setKlass(props.selectedKlass);
-    console.log("selectedKlass", selectedKlass);
-  }, [props.isOpen]);
+  }, [props.selectedKlass]);
   return (
     <>
       <Dialog
