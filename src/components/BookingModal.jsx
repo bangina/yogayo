@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -54,41 +54,49 @@ const DialogActions = withStyles((theme) => ({
 }))(MuiDialogActions);
 
 const BookingModal = (props) => {
-  const [open, setOpen] = useState(props.open);
-  const [klass, setkKlass] = useState(props.selectedKlass);
+  const [isOpen, setIsOpen] = useState(props.isOpen);
+  const [selectedKlass, setSelectedKlass] = useState(props.selectedKlass);
   const handleClose = () => {
-    setOpen(false);
+    setIsOpen(!isOpen);
   };
+  //부모 컴포넌트에서 props 업데이트 되면 모달에도 반영
+  useEffect(() => {
+    setIsOpen(props.isOpen);
+    // setKlass(props.selectedKlass);
+    console.log("isOpen", isOpen);
+  }, [props.isOpen]);
+
+  useEffect(() => {
+    setSelectedKlass(props.selectedKlass);
+    // setKlass(props.selectedKlass);
+    console.log("selectedKlass", selectedKlass);
+  }, [props.isOpen]);
   return (
     <>
       <Dialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
-        open={open}
+        open={isOpen}
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          {klass.klassName}
+          {selectedKlass.klassName}
         </DialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros.
+            취소와 변경 해당 예약은 당일 예약 변경 및 취소가 불가능합니다.
           </Typography>
           <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
-            auctor.
+            결석 무단 결석시 이용권의 남은 횟수가 차감됩니다. 수업 종료시간까지
+            입장하지 않으면 자동결석처리 됩니다.
           </Typography>
           <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo
-            cursus magna, vel scelerisque nisl consectetur et. Donec sed odio
-            dui. Donec ullamcorper nulla non metus auctor fringilla.
+            확인하고 수업을 예약하시겠습니까?
+            <input type="checkbox" />위 이용권 예약 정책에 동의합니다.
           </Typography>
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose} color="primary">
-            Save changes
+            예약완료
           </Button>
         </DialogActions>
       </Dialog>

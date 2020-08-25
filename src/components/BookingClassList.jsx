@@ -115,14 +115,8 @@ const BookingClassList = () => {
     (klass) => klass.klassDate.getDate() === globalklass.selectedDate.getDate()
   );
   const [selectedKlass, setSelectedKlass] = useState({});
-  const [open, setOpen] = useState(false);
-  const openModal = (e) => {
-    setSelectedKlass(
-      todayKlasses.filter((k) => k.id === e.currentTarget.value)
-    );
-    setOpen(true);
-    console.log(open);
-  };
+  const [isOpen, setIsOpen] = useState(false);
+
   const printDay = (props) => {
     switch (props) {
       case 1:
@@ -143,6 +137,19 @@ const BookingClassList = () => {
         return "";
     }
   };
+
+  const onBtnClick = (e) => {
+    setIsOpen(true);
+    setSelectedKlass(
+      todayKlasses.filter(
+        (klass) => klass.id.toString() === e.currentTarget.value.toString()
+      )[0]
+      //filter 메소드는 결과물이 array로 리턴됨. id값 일치하는 수업은 1개 이므로 배열의 첫번째[0] object만 저장.
+    );
+    console.log(isOpen);
+  };
+
+  console.log(selectedKlass);
   return (
     <>
       <StyledTimeline>
@@ -194,7 +201,7 @@ const BookingClassList = () => {
                             ? "outlined"
                             : "contained"
                         }
-                        onClick={(e) => openModal(e)}
+                        onClick={(e) => onBtnClick(e)}
                         value={klass.id}
                         color="primary"
                       >
@@ -210,14 +217,8 @@ const BookingClassList = () => {
           ))}
         </Timeline>
       </StyledTimeline>
-
-      {selectedKlass !== null ? (
-        <BookingModal open={open} selectedKlass={selectedKlass} />
-      ) : (
-        ""
-      )}
+      <BookingModal isOpen={isOpen} selectedKlass={selectedKlass} />;
     </>
   );
 };
-
 export default BookingClassList;

@@ -14,7 +14,6 @@ const BookingCalendar = () => {
   //선택된 날짜를 redux에 보내기(=>selectedDate에 담김)
   useEffect(() => {
     dispatch(changeDate(value));
-    console.log(value);
   }, [value]);
   const maxDate = new Date(new Date().setMonth(new Date().getMonth() + 1));
   const StyledCalendar = styled(Calendar)`
