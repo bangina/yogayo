@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import { Link as RouterLink } from "react-router-dom";
 import DropDown from "../components/DropDown";
+import SearchBar from "material-ui-search-bar";
 
 const useStyles = makeStyles((theme) => ({
   primaryTableHeader: {
@@ -92,7 +93,9 @@ export default function Board(props) {
         <Button variant="contained" color="primary" className="write-btn">
           글쓰기
         </Button>
-        <DropDown />
+        <DropDown onChange={(value) => console.log('Borad onChange',value)} />
+        
+        
       </div>
       
         <Table className={classes.table}>
@@ -143,6 +146,9 @@ export default function Board(props) {
           count={parseInt(globalPosts.length / 10) + 1}
           onChange={handlePage}
         />
+        <div style={{ width: '30ch'}} >
+        <SearchBar />
+        </div>
       </div>
       
     </div>

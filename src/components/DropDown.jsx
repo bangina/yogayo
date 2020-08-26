@@ -14,14 +14,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MultilineTextFields() {
+export default function MultilineTextFields(props) {
   const classes = useStyles();
-  const options = ["전체", "중고장터", "기타"]
-  const [selectedOption, setSelectedOption] = useState('전체');
+  const options = ["말머리 선택", "중고장터", "기타"]
+  const [selectedOption, setSelectedOption] = useState('말머리 선택');
 
   const handleChange = (event) => {
     setSelectedOption(event.target.value);
     console.log(event.target.value)
+    props.onChange(event.target.value)
   };
 
   return (
