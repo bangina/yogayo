@@ -12,6 +12,7 @@ import Button from "@material-ui/core/Button";
 import { useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import { Link as RouterLink } from "react-router-dom";
+import DropDown from "../components/DropDown";
 
 const useStyles = makeStyles((theme) => ({
   primaryTableHeader: {
@@ -87,9 +88,13 @@ export default function Board(props) {
         요기 모여라
       </Typography>
       <div className={classes.tableResponsive}>
+      <div>
         <Button variant="contained" color="primary" className="write-btn">
           글쓰기
         </Button>
+        <DropDown />
+      </div>
+      
         <Table className={classes.table}>
           <colgroup>
             <col style={{ width: "5%" }} />
@@ -139,6 +144,7 @@ export default function Board(props) {
           onChange={handlePage}
         />
       </div>
+      
     </div>
   );
 }
