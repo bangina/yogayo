@@ -156,8 +156,18 @@ const initialState = {
     },
   ],
   selectedDate: new Date(),
-  isModalOpen: false,
-  enrollingKlass: {},
+  isModalOpen: true,
+  enrollingKlass: {
+    id: 8,
+    klassDate: new Date(new Date().valueOf() + 1000 * 3600 * 24),
+    startTime: "11:00",
+    endTime: "10:00",
+    place: "간디룸",
+    klassName: "기초 요가",
+    companyName: "자메이카 요가 필라테스 센터",
+    maxPeople: 10,
+    enrolledPeople: 10,
+  },
 };
 
 const klass = (klassState = initialState, action) => {
