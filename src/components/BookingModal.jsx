@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { closeModal } from "../redux/class";
 import { withStyles } from "@material-ui/core/styles";
@@ -12,8 +12,13 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
+import PlaceIcon from "@material-ui/icons/Place";
+import FitnessCenterIcon from "@material-ui/icons/FitnessCenter";
 import Divider from "@material-ui/core/Divider";
 import { Box } from "@material-ui/core";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Alert from "@material-ui/lab/Alert";
 
 const styles = (theme) => ({
   root: {
@@ -91,10 +96,28 @@ const BookingModal = (props) => {
   const globalklass = useSelector((state) => state.klass);
   const globalSelectedKlass = globalklass.enrollingKlass;
   const dispatch = useDispatch();
+  const validityRef = useRef();
+  const [checked, SetChecked] = useState(false);
   const handleClose = () => {
     dispatch(closeModal());
   };
 
+  const handleSubmit = () => {
+    if (checked === true) {
+      // dispatch(closeModal());
+      validityRef.current.style.display = "none";
+    } else {
+      validityRef.current.style.display = "flex";
+    }
+  };
+  const handleChange = () => {
+    SetChecked(!checked);
+    //누를 시점에 false인 경우(즉 false->true로 바뀔 때)
+    //유효성 검사문구 숨기기
+    if (checked === false) {
+      validityRef.current.style.display = "none";
+    }
+  };
   return (
     <>
       <Dialog
@@ -123,27 +146,41 @@ const BookingModal = (props) => {
             <AccessTimeIcon fontSize="small"></AccessTimeIcon>
             {globalSelectedKlass.startTime} - {globalSelectedKlass.endTime}
           </Typography>
+          <Typography gutterBottom>
+            <PlaceIcon fontSize="small"></PlaceIcon>
+            {globalSelectedKlass.companyName} / {globalSelectedKlass.place}
+          </Typography>
+          <Typography gutterBottom>
+            <FitnessCenterIcon fontSize="small"></FitnessCenterIcon>
+            {globalSelectedKlass.klassName}
+          </Typography>
           <Divider light />
           <Typography component="div" gutterBottom>
             <Box fontSize={16} fontWeight="fontWeightMedium" mt={1} mb={1}>
               취소와 변경정책
             </Box>
-            <Box fontSize={14}>
+            <Box fontSize={13}>
               결석 무단 결석시 이용권의 남은 횟수가 차감됩니다. 수업
               종료시간까지 입장하지 않으면 자동결석처리 됩니다.
             </Box>
-            <Box fontSize={16} fontWeight="fontWeightMedium" mt={1} mb={1}>
-              결석에 대한 정책
-            </Box>
-            <Box fontSize={14}>
-              결석 무단 결석시 이용권의 남은 횟수가 차감됩니다. 수업
-              종료시간까지 입장하지 않으면 자동결석처리 됩니다.
-            </Box>
-            <Divider />
-            <input type="checkbox" />위 이용권 예약 정책에 동의합니다.
-            <Box fontSize={16} fontWeight="fontWeightMedium">
-              확인하고 수업을 예약하시겠습니까?
-            </Box>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={checked}
+                  onClick={(e) => handleChange(e)}
+                  name="checkedB"
+                  color="primary"
+                />
+              }
+              label="위 이용권 예약 정책에 동의합니다."
+            />
+            <Alert
+              severity="error"
+              ref={validityRef}
+              style={{ display: "none", width: "100%" }}
+            >
+              이용권 예약 정책에 동의해주세요.
+            </Alert>
           </Typography>
         </DialogContent>
         <DialogActions>
@@ -151,13 +188,13 @@ const BookingModal = (props) => {
             돌아가기
           </StyledButton>
           <StyledButton
-            onClick={handleClose}
+            onClick={handleSubmit}
             color="primary"
             variant="contained"
             size="large"
             classes="button"
           >
-            예약완료
+            예약하기
           </StyledButton>
         </DialogActions>
       </Dialog>
