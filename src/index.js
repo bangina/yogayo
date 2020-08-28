@@ -30,7 +30,20 @@ const theme = createMuiTheme({
       lineHeight: 2.5,
     },
   },
-  fontFamily: "roboto",
+  typography: {
+    fontFamily: [
+      "Nanum Gothic",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(","),
+  },
 });
 ReactDOM.render(
   <Provider store={store}>

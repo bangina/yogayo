@@ -4,6 +4,43 @@ import { useDispatch } from "react-redux";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import styled from "styled-components";
+const StyledCalendar = styled(Calendar)`
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.15);
+  .react-calendar__navigation {
+    button {
+      border-radius: 10px;
+    }
+  }
+  .react-calendar__tile {
+    border-radius: 10px;
+    font-size: 1rem;
+    color: #444;
+    &--active {
+      background: #cf556c !important;
+      color: #fff;
+      &:hover {
+        background: #cf556c;
+      }
+    }
+  }
+  .react-calendar__tile:disabled {
+    background: rgba(0, 0, 0, 0.02);
+    color: #999;
+  }
+  /* 캘린더 비활성화 버튼(YYYY M) */
+  .react-calendar__navigation button[disabled] {
+    background-color: #fff !important;
+  }
+
+  .react-calendar__navigation__arrow.react-calendar__navigation__prev-button[disabled] {
+    background-color: #f0f0f0 !important;
+  }
+`;
 
 const BookingCalendar = () => {
   const dispatch = useDispatch();
@@ -15,47 +52,6 @@ const BookingCalendar = () => {
     dispatch(changeDate(value));
   }, [value]);
   const maxDate = new Date(new Date().setMonth(new Date().getMonth() + 1));
-  const StyledCalendar = styled(Calendar)`
-    border: none;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 500px;
-    margin: auto;
-    box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.15);
-    .react-calendar__navigation {
-      button {
-        border-radius: 10px;
-      }
-    }
-    .react-calendar__tile {
-      border-radius: 10px;
-      font-size: 1rem;
-      color: #444;
-      &--active {
-        background: #cf556c;
-        color: #fff;
-        &:hover {
-          background: #cf556c;
-        }
-      }
-      &--now {
-        /* background: #cf556c; */
-        /* color: #fff; */
-      }
-    }
-    .react-calendar__tile:disabled {
-      background: rgba(0, 0, 0, 0.02);
-      color: #999;
-    }
-    /* 캘린더 비활성화 버튼(YYYY M) */
-    .react-calendar__navigation button[disabled] {
-      background-color: #fff !important;
-    }
-
-    .react-calendar__navigation__arrow.react-calendar__navigation__prev-button[disabled] {
-      background-color: #f0f0f0 !important;
-    }
-  `;
   return (
     <div>
       <h2>{value.toString()}</h2>

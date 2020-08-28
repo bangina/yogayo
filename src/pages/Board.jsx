@@ -86,7 +86,7 @@ export default function Board(props) {
   return (
     <div>
       <Typography variant="h3" gutterBottom color="primary">
-        요기 모여라
+        YOGI 모여라
       </Typography>
       <div className={classes.tableResponsive}>
       <div>
