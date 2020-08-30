@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import { Link as RouterLink } from "react-router-dom";
 import DropDown from "../components/DropDown";
+import SearchBar from "../components/SearchBar";
 
 const useStyles = makeStyles((theme) => ({
   primaryTableHeader: {
@@ -85,14 +86,17 @@ export default function Board(props) {
   return (
     <div>
       <Typography variant="h3" gutterBottom color="primary">
-        YOGI 모여라
+        요기 모여라
       </Typography>
       <div className={classes.tableResponsive}>
       <div>
         <Button variant="contained" color="primary" className="write-btn">
           글쓰기
         </Button>
-        <DropDown />
+        <DropDown onChange={(value) => console.log('Borad onChange',value)} />
+       
+        
+        
       </div>
       
         <Table className={classes.table}>
@@ -138,13 +142,15 @@ export default function Board(props) {
           </TableBody>
         </Table>
       </div>
+      
       <div className={classes.root}>
         <Pagination
           count={parseInt(globalPosts.length / 10) + 1}
           onChange={handlePage}
         />
       </div>
-      
+       
+      <SearchBar />
     </div>
   );
 }
