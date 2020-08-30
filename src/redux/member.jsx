@@ -39,7 +39,7 @@ const initialState = {
 };
 
 //리듀서 함수 정의
-const memberReducer = (memberState = initialState, action) => {
+const member = (memberState = initialState, action) => {
   const setSession = (member) => {
     let cookies = new Cookies();
     if (member) cookies.set("member", JSON.stringify(member), { path: "/" });
@@ -77,4 +77,4 @@ const memberReducer = (memberState = initialState, action) => {
   }
 };
 
-export default memberReducer;
+export default member;
