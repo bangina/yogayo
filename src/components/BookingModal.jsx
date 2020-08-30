@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { closeModal, nextModal } from "../redux/class";
+import { closeModal, nextModal, showResult } from "../redux/class";
 import { withStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
@@ -19,6 +19,7 @@ import { Box } from "@material-ui/core";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Alert from "@material-ui/lab/Alert";
+import SuccessMsg from "./SuccessMsg";
 
 const styles = (theme) => ({
   root: {
@@ -97,12 +98,14 @@ const BookingModal = (props) => {
   const globalSelectedKlass = globalklass.enrollingKlass;
   const dispatch = useDispatch();
   const validityRef = useRef();
+  //예약 정책 동의 check
   const [checked, SetChecked] = useState(false);
   const handleClose = () => {
     dispatch(closeModal());
   };
 
-  const handleInitSubmit = () => {
+  //예약하기 버튼 클릭시
+  const handleInitialSubmit = () => {
     if (checked === true) {
       validityRef.current.style.display = "none";
       dispatch(nextModal());
@@ -110,8 +113,13 @@ const BookingModal = (props) => {
       validityRef.current.style.display = "flex";
     }
   };
+  //예약완료 버튼 클릭시
+  const handleNextSubmit = () => {
+    dispatch(showResult());
+  };
   const handleSubmit = () => {
     //예약 완료
+    dispatch(closeModal());
   };
   const handleChange = () => {
     SetChecked(!checked);
@@ -146,50 +154,52 @@ const BookingModal = (props) => {
         </DialogTitle>
         {/* 모달 본문 area */}
         {/* 1단계 모달 */}
-        {globalklass.isModalOpen && !globalklass.isConfirmOpen && (
-          <DialogContent>
-            <Typography gutterBottom>
-              <AccessTimeIcon fontSize="small"></AccessTimeIcon>
-              {globalSelectedKlass.startTime} - {globalSelectedKlass.endTime}
-            </Typography>
-            <Typography gutterBottom>
-              <PlaceIcon fontSize="small"></PlaceIcon>
-              {globalSelectedKlass.companyName} / {globalSelectedKlass.place}
-            </Typography>
-            <Typography gutterBottom>
-              <FitnessCenterIcon fontSize="small"></FitnessCenterIcon>
-              {globalSelectedKlass.klassName}
-            </Typography>
-            <Divider light />
-            <Typography component="div" gutterBottom>
-              <Box fontSize={16} fontWeight="fontWeightMedium" mt={1} mb={1}>
-                취소와 변경정책
-              </Box>
-              <Box fontSize={13}>
-                결석 무단 결석시 이용권의 남은 횟수가 차감됩니다. 수업
-                종료시간까지 입장하지 않으면 자동결석처리 됩니다.
-              </Box>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={checked}
-                    onClick={(e) => handleChange(e)}
-                    name="checkedB"
-                    color="primary"
-                  />
-                }
-                label="위 이용권 예약 정책에 동의합니다."
-              />
-              <Alert
-                severity="error"
-                ref={validityRef}
-                style={{ display: "none", width: "100%" }}
-              >
-                이용권 예약 정책에 동의해주세요.
-              </Alert>
-            </Typography>
-          </DialogContent>
-        )}
+        {globalklass.isModalOpen &&
+          !globalklass.isConfirmOpen &&
+          !globalklass.isResultOpen && (
+            <DialogContent>
+              <Typography gutterBottom>
+                <AccessTimeIcon fontSize="small"></AccessTimeIcon>
+                {globalSelectedKlass.startTime} - {globalSelectedKlass.endTime}
+              </Typography>
+              <Typography gutterBottom>
+                <PlaceIcon fontSize="small"></PlaceIcon>
+                {globalSelectedKlass.companyName} / {globalSelectedKlass.place}
+              </Typography>
+              <Typography gutterBottom>
+                <FitnessCenterIcon fontSize="small"></FitnessCenterIcon>
+                {globalSelectedKlass.klassName}
+              </Typography>
+              <Divider light />
+              <Typography component="div" gutterBottom>
+                <Box fontSize={16} fontWeight="fontWeightMedium" mt={1} mb={1}>
+                  취소와 변경정책
+                </Box>
+                <Box fontSize={13}>
+                  결석 무단 결석시 이용권의 남은 횟수가 차감됩니다. 수업
+                  종료시간까지 입장하지 않으면 자동결석처리 됩니다.
+                </Box>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={checked}
+                      onClick={(e) => handleChange(e)}
+                      name="checkedB"
+                      color="primary"
+                    />
+                  }
+                  label="위 이용권 예약 정책에 동의합니다."
+                />
+                <Alert
+                  severity="error"
+                  ref={validityRef}
+                  style={{ display: "none", width: "100%" }}
+                >
+                  이용권 예약 정책에 동의해주세요.
+                </Alert>
+              </Typography>
+            </DialogContent>
+          )}
         {/* 2단계 모달 */}
         {globalklass.isConfirmOpen && (
           <DialogContent>
@@ -207,32 +217,57 @@ const BookingModal = (props) => {
             <Typography>신청하시겠습니까?</Typography>
           </DialogContent>
         )}
+        {/* 3-1. 예약 성공시 */}
+
+        {globalklass.isResultOpen && (
+          <DialogContent>
+            <SuccessMsg />
+          </DialogContent>
+        )}
 
         {/* 모달 버튼 area */}
         <DialogActions>
-          <StyledButton onClick={handleClose} variant="outlined" size="large">
-            돌아가기
-          </StyledButton>
-          {globalklass.isModalOpen && !globalklass.isConfirmOpen && (
-            <StyledButton
-              onClick={handleInitSubmit}
-              color="primary"
-              variant="contained"
-              size="large"
-              classes="button"
-            >
-              예약하기
+          {globalklass.isResultOpen || (
+            <StyledButton onClick={handleClose} variant="outlined" size="large">
+              돌아가기
             </StyledButton>
           )}
+
+          {globalklass.isModalOpen &&
+            !globalklass.isConfirmOpen &&
+            !globalklass.isResultOpen && (
+              <StyledButton
+                onClick={handleInitialSubmit}
+                color="primary"
+                variant="contained"
+                size="large"
+                classes="button"
+              >
+                예약하기
+              </StyledButton>
+            )}
           {globalklass.isConfirmOpen && (
             <StyledButton
-              onClick={handleSubmit}
+              onClick={handleNextSubmit}
               color="primary"
               variant="contained"
               size="large"
               classes="button"
             >
               예약완료
+            </StyledButton>
+          )}
+          {/* 예약 성공시 메시지 */}
+          {globalklass.isResultOpen && (
+            <StyledButton
+              onClick={handleSubmit}
+              color="primary"
+              variant="contained"
+              size="large"
+              classes="button"
+              style={{ width: "100%" }}
+            >
+              확인
             </StyledButton>
           )}
         </DialogActions>
