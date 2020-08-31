@@ -89,16 +89,20 @@ export default function Board(props) {
         요기 모여라
       </Typography>
       <div className={classes.tableResponsive}>
-      <div>
-        <Button variant="contained" color="primary" className="write-btn">
-          글쓰기
-        </Button>
-        <DropDown onChange={(value) => console.log('Borad onChange',value)} />
-       
-        
-        
-      </div>
-      
+        <div>
+          <Button
+            variant="contained"
+            color="primary"
+            className="write-btn"
+            onClick={() => props.history.push("/board/insert")}
+          >
+            글쓰기
+          </Button>
+          <DropDown
+            onChange={(value) => console.log("Borad onChange", value)}
+          />
+        </div>
+
         <Table className={classes.table}>
           <colgroup>
             <col style={{ width: "5%" }} />
@@ -142,14 +146,14 @@ export default function Board(props) {
           </TableBody>
         </Table>
       </div>
-      
+
       <div className={classes.root}>
         <Pagination
           count={parseInt(globalPosts.length / 10) + 1}
           onChange={handlePage}
         />
       </div>
-       
+
       <SearchBar />
     </div>
   );
