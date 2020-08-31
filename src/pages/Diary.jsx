@@ -1,11 +1,12 @@
 import React from "react";
 import DiaryCard from "../components/DiaryCard";
 import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
 
 const Diary = () => {
   return (
     <div>
-      <h2>오늘 수련은 어떠셨나요?</h2>
+      <h2>이번 수련은 어떠셨나요?</h2>
       <p>수련일기는 수련 후 24시간 이내에만 작성가능합니다.</p>
       {/* <p>(?)월경일 입력기능</p>
       <p>수련소감 좋음/보통/별로 체크->이 달의 통계 보여주기</p> */}
@@ -22,7 +23,13 @@ const Diary = () => {
       <br />
       <br />
       <br />
-      <DiaryCard />
+      <Grid container spacing={3}>
+        <DiaryCard />
+        <DiaryCard />
+        <DiaryCard />
+        <DiaryCard />
+        <DiaryCard />
+      </Grid>
     </div>
   );
 };

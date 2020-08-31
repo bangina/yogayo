@@ -19,11 +19,25 @@ import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfie
 import SentimentDissatisfiedIcon from "@material-ui/icons/SentimentDissatisfied";
 import SentimentSatisfiedIcon from "@material-ui/icons/SentimentSatisfied";
 import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissatisfied";
+import Grid from "@material-ui/core/Grid";
 const useStyles = makeStyles(() => ({
   root: {
     overflow: "initial",
-    maxWidth: 304,
+    maxWidth: 700,
     backgroundColor: "transparent",
+    paddingBottom: "1rem",
+    position: "relative",
+  },
+  imgBackground: {
+    backgroundColor: "rgba(0,0,0,0.2)",
+  },
+  date: {
+    position: "absolute",
+    right: 0,
+    color: "#fff",
+    fontWeight: "bold",
+    textShadow: "1px 1px 3px rgba(0,0,0,0.2)",
+    letterSpacing: "-0.05em",
   },
   title: {
     marginBottom: 0,
@@ -56,44 +70,51 @@ export const DiaryCard = React.memo(function ReviewCard() {
   const shadowStyles = useFadedShadowStyles();
   const gutterStyles = usePushingGutterStyles({ firstExcluded: true });
   return (
-    <Card elevation={0} className={styles.root}>
-      <CardMedia
-        classes={mediaStyles}
-        image={
-          "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80"
-        }
-      />
-      <CardContent className={cx(shadowStyles.root, styles.content)}>
-        <IconButton className={styles.favorite}>
-          <SentimentVerySatisfiedIcon />
-        </IconButton>
-        <h3 className={styles.title}>아쉬탕가 중급</h3>
-        <Box color={"grey.500"} display={"flex"} alignItems={"center"} mb={1}>
-          <LocationOn className={styles.locationIcon} />
-          <span>요가왕 요가원</span>
-        </Box>
-        <Typography color={"textSecondary"} variant={"body2"}>
-          오랜만의 아쉬탕가 수업이라 좀 버거웠다. 마리치아사나 C는 이제 한 80%
-          정도 되는 것 같다. 오늘 빡부장이 갈궈서인지 명상 시간에 머릿 속이 많이
-          어지러웠다. 내일은 조금 더 평안한 하루가 되길!
+    <Grid item xs={12} md={6} lg={4} xl={3}>
+      <Card elevation={1} className={styles.root}>
+        <Typography variant="h3" className={styles.date}>
+          08/31
         </Typography>
-        <Box
-          mt={2}
-          display={"flex"}
-          justifyContent={"space-between"}
-          alignItems={"center"}
-        >
-          <Box
-            display={"flex"}
-            alignItems={"center"}
-            className={gutterStyles.parent}
-          ></Box>
-          <IconButton size={"small"}>
-            <MoreHoriz />
+        <div className={styles.imgBackground}>
+          <CardMedia
+            classes={mediaStyles}
+            image={
+              "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80"
+            }
+          />
+        </div>
+        <CardContent className={cx(shadowStyles.root, styles.content)}>
+          <IconButton className={styles.favorite}>
+            <SentimentVerySatisfiedIcon />
           </IconButton>
-        </Box>
-      </CardContent>
-    </Card>
+          <h3 className={styles.title}>아쉬탕가 중급</h3>
+          <Box color={"grey.500"} display={"flex"} alignItems={"center"} mb={1}>
+            <LocationOn className={styles.locationIcon} />
+            <span>요가왕 요가원</span>
+          </Box>
+          <Typography color={"textSecondary"} variant={"body2"}>
+            오랜만의 아쉬탕가 수업이라 좀 버거웠다. 마리치아사나 C는 이제 한 80%
+            정도 되는 것 같다. 오늘 빡부장이 갈궈서인지 명상 시간에 머릿 속이
+            많이 어지러웠다. 내일은 조금 더 평안한 하루가 되길!
+          </Typography>
+          <Box
+            mt={2}
+            display={"flex"}
+            justifyContent={"space-between"}
+            alignItems={"center"}
+          >
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              className={gutterStyles.parent}
+            ></Box>
+            <IconButton size={"small"}>
+              <MoreHoriz />
+            </IconButton>
+          </Box>
+        </CardContent>
+      </Card>
+    </Grid>
   );
 });
 
