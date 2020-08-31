@@ -18,7 +18,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Slider from "@material-ui/core/Slider";
 import cx from "clsx";
-import { openModal, selectKlass } from "../redux/class";
+import { openModal, selectSession } from "../redux/session";
 
 const useStyles = makeStyles(({ spacing, palette }) => {
   const family =
@@ -108,15 +108,16 @@ const StyledTimeline = styled(Timeline)`
     border-radius: 50px;
   }
 `;
-const BookingClassList = () => {
+const BookingSessionList = () => {
   const styles = useStyles();
   const sliderStyles = useSliderStyles();
-  const globalklass = useSelector((state) => state.klass);
+  const globalSession = useSelector((state) => state.session);
   const dispatch = useDispatch();
-  const todayKlasses = globalklass.klasses.filter(
-    (klass) => klass.klassDate.getDate() === globalklass.selectedDate.getDate()
+  const todaySessions = globalSession.sessions.filter(
+    (session) =>
+      session.sessionDate.getDate() === globalSession.selectedDate.getDate()
   );
-  const [selectedKlass, setSelectedKlass] = useState({});
+  const [selectedSession, setSelectedSession] = useState({});
   const [isOpen, setIsOpen] = useState(false);
 
   const printDay = (props) => {
@@ -141,23 +142,25 @@ const BookingClassList = () => {
   };
 
   const onBtnClick = (e) => {
-    const selectedKlass = globalklass.klasses.filter(
-      (klass) => klass.id.toString() === e.currentTarget.value.toString()
+    const selectedSession = globalSession.sessions.filter(
+      (session) => session.id.toString() === e.currentTarget.value.toString()
     )[0];
     dispatch(openModal());
-    dispatch(selectKlass(selectedKlass));
+    dispatch(selectSession(selectedSession));
   };
 
   return (
     <>
       <StyledTimeline>
         <Timeline>
-          {todayKlasses.map((klass) => (
+          {todaySessions.map((session) => (
             <>
               {/* 카드 형식 */}
-              <TimelineItem key={klass.id}>
+              <TimelineItem key={session.id}>
                 <TimelineSeparator>
-                  <TimelineDot color="secondary">{klass.startTime}</TimelineDot>
+                  <TimelineDot color="secondary">
+                    {session.startTime}
+                  </TimelineDot>
                   <TimelineConnector />
                 </TimelineSeparator>
                 <TimelineContent>
@@ -168,42 +171,44 @@ const BookingClassList = () => {
                         title="Live from space album cover"
                       >
                         <Avatar className={styles.color2}>
-                          {printDay(klass.klassDate.getDay())}
+                          {printDay(session.sessionDate.getDay())}
                         </Avatar>
                       </CardMedia>
                     </CardContent>
                     <Box>
-                      <h3 className={styles.heading}>{klass.klassName}</h3>
+                      <h3 className={styles.heading}>{session.sessionName}</h3>
                       <p variant="h5">
-                        {klass.klassDate.getMonth()}월{" "}
-                        {klass.klassDate.getDate()}일{" "}
-                        {printDay(klass.klassDate.getDay())}
+                        {session.sessionDate.getMonth()}월{" "}
+                        {session.sessionDate.getDate()}일{" "}
+                        {printDay(session.sessionDate.getDay())}
                         요일 <br />
-                        {klass.startTime} - {klass.endTime}
+                        {session.startTime} - {session.endTime}
                       </p>
                       <p className={styles.subheader}>
-                        {klass.companyName} • {klass.place}
+                        {session.companyName} • {session.place}
                       </p>
                       <Box display={"flex"} alignItems={"center"}>
                         <Slider
                           classes={sliderStyles}
-                          value={(klass.enrolledPeople / klass.maxPeople) * 100}
+                          value={
+                            (session.enrolledPeople / session.maxPeople) * 100
+                          }
                         />
                         <span className={styles.value}>
-                          {klass.enrolledPeople}/{klass.maxPeople}명 신청
+                          {session.enrolledPeople}/{session.maxPeople}명 신청
                         </span>
                       </Box>
                       <Button
                         variant={
-                          klass.maxPeople === klass.enrolledPeople
+                          session.maxPeople === session.enrolledPeople
                             ? "outlined"
                             : "contained"
                         }
                         onClick={(e) => onBtnClick(e)}
-                        value={klass.id}
+                        value={session.id}
                         color="primary"
                       >
-                        {klass.maxPeople === klass.enrolledPeople
+                        {session.maxPeople === session.enrolledPeople
                           ? "대기하기"
                           : "수강신청"}
                       </Button>
@@ -215,8 +220,8 @@ const BookingClassList = () => {
           ))}
         </Timeline>
       </StyledTimeline>
-      <BookingModal isOpen={isOpen} selectedKlass={selectedKlass} />;
+      <BookingModal isOpen={isOpen} selectedSession={selectedSession} />;
     </>
   );
 };
-export default BookingClassList;
+export default BookingSessionList;

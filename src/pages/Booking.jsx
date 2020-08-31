@@ -1,7 +1,7 @@
 import React from "react";
 import "react-calendar/dist/Calendar.css";
 import BookingCalendar from "../components/BookingCalendar";
-import BookingClassList from "../components/BookingClassList";
+import BookingSessionList from "../components/BookingSessionList";
 
 const Booking = () => {
   return (
@@ -9,7 +9,7 @@ const Booking = () => {
       {/* onClick=>  set selectedDate  */}
       <BookingCalendar />
       {/* selectedDate로 필터해서 map돌리기 */}
-      <BookingClassList />
+      <BookingSessionList />
     </div>
   );
 };

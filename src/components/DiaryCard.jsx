@@ -64,11 +64,12 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const DiaryCard = React.memo(function ReviewCard() {
+export const DiaryCard = React.memo(function ReviewCard(props) {
   const styles = useStyles();
   const mediaStyles = useWideCardMediaStyles();
   const shadowStyles = useFadedShadowStyles();
   const gutterStyles = usePushingGutterStyles({ firstExcluded: true });
+  const imgNum = props.imgNum;
   return (
     <Grid item xs={12} md={6} lg={4} xl={3}>
       <Card elevation={1} className={styles.root}>
@@ -78,9 +79,8 @@ export const DiaryCard = React.memo(function ReviewCard() {
         <div className={styles.imgBackground}>
           <CardMedia
             classes={mediaStyles}
-            image={
-              "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80"
-            }
+            image={`./img/diary_img_0${imgNum}.png`}
+            style={{}}
           />
         </div>
         <CardContent className={cx(shadowStyles.root, styles.content)}>
@@ -93,9 +93,11 @@ export const DiaryCard = React.memo(function ReviewCard() {
             <span>요가왕 요가원</span>
           </Box>
           <Typography color={"textSecondary"} variant={"body2"}>
-            오랜만의 아쉬탕가 수업이라 좀 버거웠다. 마리치아사나 C는 이제 한 80%
-            정도 되는 것 같다. 오늘 빡부장이 갈궈서인지 명상 시간에 머릿 속이
-            많이 어지러웠다. 내일은 조금 더 평안한 하루가 되길!
+            눈이 없는 스키장 리조트에는 초록의 잔디가 한창이다. 구름 걷힌 하늘에
+            총총걸음으로 나가 아침해를 온 몸으로 받으며 짧게 몸을 풀었다. 밤새
+            이슬을 맞은 잔디에 물방울이 송글송글 맺히고, 그 사이를 벌레들이
+            부지런히 돌아다니는 아침. 덕분에 타올엔 풀물이 들고 엉덩이와 바지도
+            덩달아 젖어 버렸지만 기분은 따-봉👍🏽
           </Typography>
           <Box
             mt={2}

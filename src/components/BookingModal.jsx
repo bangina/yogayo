@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { closeModal, nextModal, showResult } from "../redux/class";
+import { closeModal, nextModal, showResult } from "../redux/session";
 import { withStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
@@ -94,8 +94,8 @@ const printDay = (props) => {
   }
 };
 const BookingModal = (props) => {
-  const globalklass = useSelector((state) => state.klass);
-  const globalSelectedKlass = globalklass.enrollingKlass;
+  const globalSession = useSelector((state) => state.session);
+  const globalSelectedSession = globalSession.enrollingSession;
   const dispatch = useDispatch();
   const validityRef = useRef();
   //예약 정책 동의 check
@@ -134,7 +134,7 @@ const BookingModal = (props) => {
       <Dialog
         onClose={handleClose}
         aria-labelledby="modal-title"
-        open={globalklass.isModalOpen}
+        open={globalSession.isModalOpen}
       >
         {/* 모달 상단 컬러바 area */}
         <DialogTitle
@@ -146,29 +146,31 @@ const BookingModal = (props) => {
           }}
         >
           <Typography variant="h4" gutterBottom>
-            {globalSelectedKlass.klassName}
+            {globalSelectedSession.sessionName}
           </Typography>
-          {globalSelectedKlass.klassDate.toLocaleDateString()} (
-          {printDay(globalSelectedKlass.klassDate.getDay())})&nbsp;
-          {globalSelectedKlass.startTime}
+          {globalSelectedSession.sessionDate.toLocaleDateString()} (
+          {printDay(globalSelectedSession.sessionDate.getDay())})&nbsp;
+          {globalSelectedSession.startTime}
         </DialogTitle>
         {/* 모달 본문 area */}
         {/* 1단계 모달 */}
-        {globalklass.isModalOpen &&
-          !globalklass.isConfirmOpen &&
-          !globalklass.isResultOpen && (
+        {globalSession.isModalOpen &&
+          !globalSession.isConfirmOpen &&
+          !globalSession.isResultOpen && (
             <DialogContent>
               <Typography gutterBottom>
                 <AccessTimeIcon fontSize="small"></AccessTimeIcon>
-                {globalSelectedKlass.startTime} - {globalSelectedKlass.endTime}
+                {globalSelectedSession.startTime} -{" "}
+                {globalSelectedSession.endTime}
               </Typography>
               <Typography gutterBottom>
                 <PlaceIcon fontSize="small"></PlaceIcon>
-                {globalSelectedKlass.companyName} / {globalSelectedKlass.place}
+                {globalSelectedSession.companyName} /{" "}
+                {globalSelectedSession.place}
               </Typography>
               <Typography gutterBottom>
                 <FitnessCenterIcon fontSize="small"></FitnessCenterIcon>
-                {globalSelectedKlass.klassName}
+                {globalSelectedSession.sessionName}
               </Typography>
               <Divider light />
               <Typography component="div" gutterBottom>
@@ -201,7 +203,7 @@ const BookingModal = (props) => {
             </DialogContent>
           )}
         {/* 2단계 모달 */}
-        {globalklass.isConfirmOpen && (
+        {globalSession.isConfirmOpen && (
           <DialogContent>
             <Typography gutterBottom>
               <AccessTimeIcon fontSize="small"></AccessTimeIcon>
@@ -219,7 +221,7 @@ const BookingModal = (props) => {
         )}
         {/* 3-1. 예약 성공시 */}
 
-        {globalklass.isResultOpen && (
+        {globalSession.isResultOpen && (
           <DialogContent>
             <SuccessMsg />
           </DialogContent>
@@ -227,15 +229,15 @@ const BookingModal = (props) => {
 
         {/* 모달 버튼 area */}
         <DialogActions>
-          {globalklass.isResultOpen || (
+          {globalSession.isResultOpen || (
             <StyledButton onClick={handleClose} variant="outlined" size="large">
               돌아가기
             </StyledButton>
           )}
 
-          {globalklass.isModalOpen &&
-            !globalklass.isConfirmOpen &&
-            !globalklass.isResultOpen && (
+          {globalSession.isModalOpen &&
+            !globalSession.isConfirmOpen &&
+            !globalSession.isResultOpen && (
               <StyledButton
                 onClick={handleInitialSubmit}
                 color="primary"
@@ -246,7 +248,7 @@ const BookingModal = (props) => {
                 예약하기
               </StyledButton>
             )}
-          {globalklass.isConfirmOpen && (
+          {globalSession.isConfirmOpen && (
             <StyledButton
               onClick={handleNextSubmit}
               color="primary"
@@ -258,7 +260,7 @@ const BookingModal = (props) => {
             </StyledButton>
           )}
           {/* 예약 성공시 메시지 */}
-          {globalklass.isResultOpen && (
+          {globalSession.isResultOpen && (
             <StyledButton
               onClick={handleSubmit}
               color="primary"

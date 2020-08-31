@@ -3,7 +3,7 @@ const MODAL_OPEN = "MODAL_OPEN";
 const MODAL_CLOSE = "MODAL_CLOSE";
 const MODAL_NEXT = "MODAL_NEXT";
 const MODAL_RESULT = "MODAL_RESULT";
-const SELECT_ENROLL_KLASS = "SELECT_ENROLL_KLASS";
+const SELECT_ENROLL_SESSION = "SELECT_ENROLL_SESSION";
 
 export const changeDate = (clickedDate) => ({
   type: DATE_CHANGE,
@@ -21,155 +21,155 @@ export const nextModal = () => ({
 export const showResult = () => ({
   type: MODAL_RESULT,
 });
-export const selectKlass = (selectedKlass) => ({
-  type: SELECT_ENROLL_KLASS,
-  selectedKlass,
+export const selectSession = (selectedSession) => ({
+  type: SELECT_ENROLL_SESSION,
+  selectedSession,
 });
 
 const initialState = {
-  klasses: [
+  sessions: [
     {
       id: 1,
-      klassDate: new Date(),
+      sessionDate: new Date(),
       startTime: "09:00",
       endTime: "10:00",
       place: "간디룸",
-      klassName: "빈야사 요가",
+      sessionName: "빈야사 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
       enrolledPeople: 10,
     },
     {
       id: 2,
-      klassDate: new Date(),
+      sessionDate: new Date(),
       startTime: "10:00",
       endTime: "11:00",
       place: "간디룸",
-      klassName: "아쉬탕가 요가",
+      sessionName: "아쉬탕가 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
       enrolledPeople: 2,
     },
     {
       id: 3,
-      klassDate: new Date(),
+      sessionDate: new Date(),
       startTime: "09:00",
       endTime: "10:00",
       place: "간디룸",
-      klassName: "빈야사 요가",
+      sessionName: "빈야사 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
       enrolledPeople: 10,
     },
     {
       id: 4,
-      klassDate: new Date(),
+      sessionDate: new Date(),
       startTime: "09:00",
       endTime: "10:00",
       place: "간디룸",
-      klassName: "빈야사 요가",
+      sessionName: "빈야사 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
       enrolledPeople: 5,
     },
     {
       id: 5,
-      klassDate: new Date(),
+      sessionDate: new Date(),
       startTime: "09:00",
       endTime: "10:00",
       place: "간디룸",
-      klassName: "빈야사 요가",
+      sessionName: "빈야사 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
       enrolledPeople: 6,
     },
     {
       id: 6,
-      klassDate: new Date(),
+      sessionDate: new Date(),
       startTime: "11:00",
       endTime: "10:00",
       place: "간디룸",
-      klassName: "기초 요가",
+      sessionName: "기초 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
       enrolledPeople: 2,
     },
     {
       id: 7,
-      klassDate: new Date(new Date().valueOf() + 1000 * 3600 * 24),
+      sessionDate: new Date(new Date().valueOf() + 1000 * 3600 * 24),
       startTime: "11:00",
       endTime: "10:00",
       place: "간디룸",
-      klassName: "기초 요가",
+      sessionName: "기초 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
       enrolledPeople: 0,
     },
     {
       id: 8,
-      klassDate: new Date(new Date().valueOf() + 1000 * 3600 * 24),
+      sessionDate: new Date(new Date().valueOf() + 1000 * 3600 * 24),
       startTime: "11:00",
       endTime: "10:00",
       place: "간디룸",
-      klassName: "기초 요가",
+      sessionName: "기초 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
       enrolledPeople: 10,
     },
   ],
-  enrolledKlasses: [
+  enrolledSessions: [
     {
       id: 5,
-      klassDate: new Date(),
+      sessionDate: new Date(),
       startTime: "09:00",
       endTime: "10:00",
       place: "간디룸",
-      klassName: "빈야사 요가",
+      sessionName: "빈야사 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
       enrolledPeople: 6,
     },
     {
       id: 6,
-      klassDate: new Date(),
+      sessionDate: new Date(),
       startTime: "11:00",
       endTime: "10:00",
       place: "간디룸",
-      klassName: "기초 요가",
+      sessionName: "기초 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
       enrolledPeople: 2,
     },
     {
       id: 7,
-      klassDate: new Date(new Date().valueOf() + 1000 * 3600 * 24),
+      sessionDate: new Date(new Date().valueOf() + 1000 * 3600 * 24),
       startTime: "11:00",
       endTime: "10:00",
       place: "간디룸",
-      klassName: "기초 요가",
+      sessionName: "기초 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
       enrolledPeople: 0,
     },
     {
       id: 8,
-      klassDate: new Date(new Date().valueOf() + 1000 * 3600 * 24),
+      sessionDate: new Date(new Date().valueOf() + 1000 * 3600 * 24),
       startTime: "11:00",
       endTime: "10:00",
       place: "간디룸",
-      klassName: "기초 요가",
+      sessionName: "기초 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
       enrolledPeople: 10,
     },
   ],
-  enrollingKlass: {
+  enrollingSession: {
     id: 8,
-    klassDate: new Date(new Date().valueOf() + 1000 * 3600 * 24),
+    sessionDate: new Date(new Date().valueOf() + 1000 * 3600 * 24),
     startTime: "11:00",
     endTime: "10:00",
     place: "간디룸",
-    klassName: "기초 요가",
+    sessionName: "기초 요가",
     companyName: "자메이카 요가 필라테스 센터",
     maxPeople: 10,
     enrolledPeople: 10,
@@ -180,26 +180,26 @@ const initialState = {
   isResultOpen: false,
 };
 
-const klass = (klassState = initialState, action) => {
+const session = (sessionState = initialState, action) => {
   switch (action.type) {
     case DATE_CHANGE:
-      return { ...klassState, selectedDate: action.clickedDate };
+      return { ...sessionState, selectedDate: action.clickedDate };
     case MODAL_OPEN:
-      return { ...klassState, isModalOpen: true };
+      return { ...sessionState, isModalOpen: true };
     case MODAL_CLOSE:
-      return { ...klassState, isModalOpen: false, isConfirmOpen: false };
+      return { ...sessionState, isModalOpen: false, isConfirmOpen: false };
     case MODAL_NEXT:
-      return { ...klassState, isConfirmOpen: true };
+      return { ...sessionState, isConfirmOpen: true };
     case MODAL_RESULT:
       return {
-        ...klassState,
+        ...sessionState,
         isConfirmOpen: false,
         isResultOpen: true,
       };
-    case SELECT_ENROLL_KLASS:
-      return { ...klassState, enrollingKlass: action.selectedKlass };
+    case SELECT_ENROLL_SESSION:
+      return { ...sessionState, enrollingSession: action.selectedSession };
     default:
-      return klassState;
+      return sessionState;
   }
 };
-export default klass;
+export default session;

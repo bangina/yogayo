@@ -24,11 +24,10 @@ const Diary = () => {
       <br />
       <br />
       <Grid container spacing={3}>
-        <DiaryCard />
-        <DiaryCard />
-        <DiaryCard />
-        <DiaryCard />
-        <DiaryCard />
+        <DiaryCard imgNum={1} />
+        <DiaryCard imgNum={2} />
+        <DiaryCard imgNum={3} />
+        <DiaryCard imgNum={4} />
       </Grid>
     </div>
   );

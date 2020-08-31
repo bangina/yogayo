@@ -72,20 +72,20 @@ const useSliderStyles = makeStyles(() => ({
     display: "none",
   },
 }));
-export const ClassCard = (props) => {
+export const SessionCard = (props) => {
   const styles = useStyles();
   const sliderStyles = useSliderStyles();
   const {
     id,
-    klassDate,
+    sessionDate,
     startTime,
     endTime,
     place,
-    klassName,
+    sessionName,
     companyName,
     enrolledPeople,
     maxPeople,
-  } = props.klass;
+  } = props.session;
   const printDay = (props) => {
     switch (props) {
       case 1:
@@ -114,14 +114,15 @@ export const ClassCard = (props) => {
           title="Live from space album cover"
         >
           <Avatar className={styles.color2}>
-            {printDay(klassDate.getDay())}
+            {printDay(sessionDate.getDay())}
           </Avatar>
         </CardMedia>
       </CardContent>
       <Box>
-        <h3 className={styles.heading}>{klassName}</h3>
+        <h3 className={styles.heading}>{sessionName}</h3>
         <p variant="h5">
-          {klassDate.getMonth()}월 {klassDate.getDate()}일 {klassDate.getDay()}
+          {sessionDate.getMonth()}월 {sessionDate.getDate()}일{" "}
+          {sessionDate.getDay()}
           요일 <br />
           {startTime} - {endTime}
         </p>
@@ -142,4 +143,4 @@ export const ClassCard = (props) => {
   );
 };
 
-export default ClassCard;
+export default SessionCard;

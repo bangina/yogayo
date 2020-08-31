@@ -1,17 +1,16 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import ClassCard from "../components/ClassCard";
+import SessionCard from "../components/SessionCard";
 import BookingTabs from "../components/BookingTabs";
 
 const MyBookings = () => {
-  const globalklass = useSelector((state) => state.klass);
-  const enrolledKlasses = globalklass.enrolledKlasses;
-  console.log(enrolledKlasses);
+  const globalSession = useSelector((state) => state.session);
+  const enrolledSessions = globalSession.enrolledSessions;
   return (
     <div>
       <BookingTabs />
-      {enrolledKlasses.map((enrolledKlass) => (
-        <ClassCard key={enrolledKlass.id} klass={enrolledKlass} />
+      {enrolledSessions.map((enrolledSession) => (
+        <SessionCard key={enrolledSession.id} session={enrolledSession} />
       ))}
     </div>
   );

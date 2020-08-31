@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { changeDate } from "../redux/class";
+import { changeDate } from "../redux/session";
 import { useDispatch } from "react-redux";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
