@@ -184,12 +184,16 @@ const session = (sessionState = initialState, action) => {
   switch (action.type) {
     case DATE_CHANGE:
       return { ...sessionState, selectedDate: action.clickedDate };
+    //modal 열기
     case MODAL_OPEN:
       return { ...sessionState, isModalOpen: true };
+    //modal 닫기
     case MODAL_CLOSE:
       return { ...sessionState, isModalOpen: false, isConfirmOpen: false };
+    //modal body 교체(1->2단계)
     case MODAL_NEXT:
       return { ...sessionState, isConfirmOpen: true };
+    //modal body 교체(2->3단계)
     case MODAL_RESULT:
       return {
         ...sessionState,

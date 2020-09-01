@@ -136,7 +136,9 @@ const BookingModal = (props) => {
         aria-labelledby="modal-title"
         open={globalSession.isModalOpen}
       >
-        {/* 모달 상단 컬러바 area */}
+        {/* ////////////////// */}
+        {/* modal header area */}
+        {/* ////////////////// */}
         <DialogTitle
           id="modal-title"
           onClose={handleClose}
@@ -152,8 +154,12 @@ const BookingModal = (props) => {
           {printDay(globalSelectedSession.sessionDate.getDay())})&nbsp;
           {globalSelectedSession.startTime}
         </DialogTitle>
-        {/* 모달 본문 area */}
-        {/* 1단계 모달 */}
+
+        {/* ////////////////// */}
+        {/* modal body area */}
+        {/* ////////////////// */}
+
+        {/* body - 1단계  */}
         {globalSession.isModalOpen &&
           !globalSession.isConfirmOpen &&
           !globalSession.isResultOpen && (
@@ -202,7 +208,10 @@ const BookingModal = (props) => {
               </Typography>
             </DialogContent>
           )}
-        {/* 2단계 모달 */}
+
+        {/* ////////////////// */}
+        {/*  body -  2단계 */}
+        {/* ////////////////// */}
         {globalSession.isConfirmOpen && (
           <DialogContent>
             <Typography gutterBottom>
@@ -219,7 +228,8 @@ const BookingModal = (props) => {
             <Typography>신청하시겠습니까?</Typography>
           </DialogContent>
         )}
-        {/* 3-1. 예약 성공시 */}
+
+        {/* body 3-1. (예약 success) */}
 
         {globalSession.isResultOpen && (
           <DialogContent>
@@ -227,14 +237,21 @@ const BookingModal = (props) => {
           </DialogContent>
         )}
 
-        {/* 모달 버튼 area */}
+        {/* body 3-2. (예약 fail) */}
+
+        {/* body 3-3. (예약 pending)-대기 완료 */}
+
+        {/* ////////////////// */}
+        {/* modal footer - buttons area */}
+        {/* ////////////////// */}
         <DialogActions>
+          {/* 1,2단계 모달 - 좌버튼 공통 */}
           {globalSession.isResultOpen || (
             <StyledButton onClick={handleClose} variant="outlined" size="large">
               돌아가기
             </StyledButton>
           )}
-
+          {/* 1단계 모달 - 우버튼 */}
           {globalSession.isModalOpen &&
             !globalSession.isConfirmOpen &&
             !globalSession.isResultOpen && (
@@ -248,6 +265,7 @@ const BookingModal = (props) => {
                 예약하기
               </StyledButton>
             )}
+          {/* 2단계 모달 - 우버튼 */}
           {globalSession.isConfirmOpen && (
             <StyledButton
               onClick={handleNextSubmit}
@@ -259,7 +277,7 @@ const BookingModal = (props) => {
               예약완료
             </StyledButton>
           )}
-          {/* 예약 성공시 메시지 */}
+          {/* 3단계 모달 - 단일버튼 */}
           {globalSession.isResultOpen && (
             <StyledButton
               onClick={handleSubmit}
