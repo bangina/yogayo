@@ -71,16 +71,28 @@ export default function Board(props) {
   const tableHeaderColor = "primary";
   const tableHead = ["글번호", "말머리", "글제목", "작성자", "등록일"];
   const [tableData, setTableData] = useState([]);
+  const [allData, setAllData] = useState([]);
   const globalPosts = useSelector((state) => state.posts);
 
   useEffect(() => {
-    setTableData(globalPosts.slice(0, 9));
+    const newData = [];
+    for (let i = 0; i < globalPosts.length; i++) {
+      newData.push([
+        globalPosts[i].id,
+        globalPosts[i].header,
+        globalPosts[i].title,
+        globalPosts[i].writer,
+        globalPosts[i].regiDate,
+      ]);
+    }
+    setAllData(newData);
+    setTableData(newData.slice(0, 10));
   }, [globalPosts]);
 
   const handlePage = (event, value) => {
     const startNum = (value - 1) * 10;
     const endNum = value * 10 - 1;
-    setTableData(globalPosts.slice(startNum, endNum));
+    setTableData(allData.slice(startNum, endNum));
   };
 
   return (
