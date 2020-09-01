@@ -72,6 +72,7 @@ const Detail = () => {
                     </Button>
                   </InputAdornment>
                 }
+                placeholder="댓글을 입력하세요.."
               />
             </FormControl>
           </Row>
