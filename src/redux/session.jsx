@@ -186,7 +186,12 @@ const session = (sessionState = initialState, action) => {
       return { ...sessionState, selectedDate: action.clickedDate };
     //modal 열기
     case MODAL_OPEN:
-      return { ...sessionState, isModalOpen: true };
+      return {
+        ...sessionState,
+        isModalOpen: true,
+        isConfirmOpen: false,
+        isResultOpen: false,
+      };
     //modal 닫기
     case MODAL_CLOSE:
       return { ...sessionState, isModalOpen: false, isConfirmOpen: false };
