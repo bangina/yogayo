@@ -9,7 +9,6 @@ import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineDot from "@material-ui/lab/TimelineDot";
 import styled from "styled-components";
 import { Button } from "@material-ui/core";
-import { Link } from "react-router-dom";
 import BookingModal from "./BookingModal";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
@@ -18,7 +17,8 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Slider from "@material-ui/core/Slider";
 import cx from "clsx";
-import { openModal, selectSession } from "../redux/session";
+import { selectSession } from "../redux/session";
+import { openModal } from "../redux/modal";
 
 const useStyles = makeStyles(({ spacing, palette }) => {
   const family =

@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { closeModal, nextModal, showResult } from "../redux/session";
+import { closeModal, nextModal, showResult } from "../redux/modal";
 import { withStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
@@ -95,6 +95,7 @@ const printDay = (props) => {
 };
 const BookingModal = (props) => {
   const globalSession = useSelector((state) => state.session);
+  const globalModal = useSelector((state) => state.modal);
   const globalSelectedSession = globalSession.enrollingSession;
   const dispatch = useDispatch();
   const validityRef = useRef();
@@ -134,7 +135,7 @@ const BookingModal = (props) => {
       <Dialog
         onClose={handleClose}
         aria-labelledby="modal-title"
-        open={globalSession.isModalOpen}
+        open={globalModal.isModalOpen}
       >
         {/* ////////////////// */}
         {/* modal header area */}
@@ -160,9 +161,9 @@ const BookingModal = (props) => {
         {/* ////////////////// */}
 
         {/* body - 1단계  */}
-        {globalSession.isModalOpen &&
-          !globalSession.isConfirmOpen &&
-          !globalSession.isResultOpen && (
+        {globalModal.isModalOpen &&
+          !globalModal.isConfirmOpen &&
+          !globalModal.isResultOpen && (
             <DialogContent>
               <Typography gutterBottom>
                 <AccessTimeIcon fontSize="small"></AccessTimeIcon>
@@ -212,7 +213,7 @@ const BookingModal = (props) => {
         {/* ////////////////// */}
         {/*  body -  2단계 */}
         {/* ////////////////// */}
-        {globalSession.isConfirmOpen && (
+        {globalModal.isConfirmOpen && (
           <DialogContent>
             <Typography gutterBottom>
               <AccessTimeIcon fontSize="small"></AccessTimeIcon>
@@ -231,7 +232,7 @@ const BookingModal = (props) => {
 
         {/* body 3-1. (예약 success) */}
 
-        {globalSession.isResultOpen && (
+        {globalModal.isResultOpen && (
           <DialogContent>
             <SuccessMsg />
           </DialogContent>
@@ -246,15 +247,15 @@ const BookingModal = (props) => {
         {/* ////////////////// */}
         <DialogActions>
           {/* 1,2단계 모달 - 좌버튼 공통 */}
-          {globalSession.isResultOpen || (
+          {globalModal.isResultOpen || (
             <StyledButton onClick={handleClose} variant="outlined" size="large">
               돌아가기
             </StyledButton>
           )}
           {/* 1단계 모달 - 우버튼 */}
-          {globalSession.isModalOpen &&
-            !globalSession.isConfirmOpen &&
-            !globalSession.isResultOpen && (
+          {globalModal.isModalOpen &&
+            !globalModal.isConfirmOpen &&
+            !globalModal.isResultOpen && (
               <StyledButton
                 onClick={handleInitialSubmit}
                 color="primary"
@@ -266,7 +267,7 @@ const BookingModal = (props) => {
               </StyledButton>
             )}
           {/* 2단계 모달 - 우버튼 */}
-          {globalSession.isConfirmOpen && (
+          {globalModal.isConfirmOpen && (
             <StyledButton
               onClick={handleNextSubmit}
               color="primary"
@@ -278,7 +279,7 @@ const BookingModal = (props) => {
             </StyledButton>
           )}
           {/* 3단계 모달 - 단일버튼 */}
-          {globalSession.isResultOpen && (
+          {globalModal.isResultOpen && (
             <StyledButton
               onClick={handleSubmit}
               color="primary"
