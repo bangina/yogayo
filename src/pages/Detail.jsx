@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import CardContent from "@material-ui/core/CardContent";
@@ -18,9 +18,15 @@ import {
 } from "@mui-treasury/components/info";
 import { useChatzInfoStyles } from "@mui-treasury/styles/info/chatz";
 import { useDynamicAvatarStyles } from "@mui-treasury/styles/avatar/dynamic";
+import { useSelector } from "react-redux";
 
-const Detail = () => {
+const Detail = (props) => {
+  let postId = props.match.params.id;
   const avatarStyles2 = useDynamicAvatarStyles({ size: 72 });
+  const post = useSelector((state) => state.posts);
+  useEffect(() => {
+    console.log(post.filter((id) => post.id == postId));
+  }, []);
   return (
     <div>
       <Paper>

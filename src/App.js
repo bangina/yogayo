@@ -26,7 +26,7 @@ function App() {
           <Route path="/main" component={Main}></Route>
           <Route path="/Booking" component={Booking}></Route>
           <Route path="/board" component={Board} exact={true}></Route>
-          <Route path="/board/detail" component={Detail}></Route>
+          <Route path="/board/detail/:id" component={Detail}></Route>
           <Route path="/board/insert" component={InsertBoard}></Route>
           <Route path="/diary" component={Diary}></Route>
           <Route path="/mypage/bookings" component={MyBookings}></Route>

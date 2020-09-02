@@ -145,10 +145,12 @@ export default function Board(props) {
             {tableData.map((prop, key) => {
               return (
                 <TableRow key={key} className={classes.tableBodyRow}>
-                  {prop.map((prop, key) => {
+                  {prop.map((p, key) => {
                     return (
                       <TableCell className={classes.tableCell} key={key}>
-                        <RouterLink to="/board/detail">{prop}</RouterLink>
+                        <RouterLink to={`/board/detail/${prop[0]}`}>
+                          {p}
+                        </RouterLink>
                       </TableCell>
                     );
                   })}
