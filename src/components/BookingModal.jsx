@@ -20,6 +20,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Alert from "@material-ui/lab/Alert";
 import SuccessMsg from "./SuccessMsg";
+import ModalButtonLeft from "./ModalButtonLeft";
+import ModalButtonRight from "./ModalButtonRight";
 
 const styles = (theme) => ({
   root: {
@@ -160,7 +162,9 @@ const BookingModal = (props) => {
         {/* modal body area */}
         {/* ////////////////// */}
 
+        {/* ////////////////// */}
         {/* body - 1단계  */}
+        {/* ////////////////// */}
         {globalModal.isModalOpen &&
           !globalModal.isConfirmOpen &&
           !globalModal.isResultOpen && (
@@ -229,68 +233,43 @@ const BookingModal = (props) => {
             <Typography>신청하시겠습니까?</Typography>
           </DialogContent>
         )}
-
-        {/* body 3-1. (예약 success) */}
-
+        {/* ////////////////// */}
+        {/*  body -  3단계 */}
+        {/* ////////////////// */}
         {globalModal.isResultOpen && (
           <DialogContent>
             <SuccessMsg />
           </DialogContent>
         )}
-
-        {/* body 3-2. (예약 fail) */}
-
-        {/* body 3-3. (예약 pending)-대기 완료 */}
-
         {/* ////////////////// */}
-        {/* modal footer - buttons area */}
+        {/*  footer -  좌/우 버튼 컴포넌트 분리*/}
         {/* ////////////////// */}
         <DialogActions>
-          {/* 1,2단계 모달 - 좌버튼 공통 */}
-          {globalModal.isResultOpen || (
-            <StyledButton onClick={handleClose} variant="outlined" size="large">
-              돌아가기
-            </StyledButton>
-          )}
-          {/* 1단계 모달 - 우버튼 */}
-          {globalModal.isModalOpen &&
-            !globalModal.isConfirmOpen &&
-            !globalModal.isResultOpen && (
-              <StyledButton
-                onClick={handleInitialSubmit}
-                color="primary"
-                variant="contained"
-                size="large"
-                classes="button"
-              >
-                예약하기
-              </StyledButton>
-            )}
-          {/* 2단계 모달 - 우버튼 */}
-          {globalModal.isConfirmOpen && (
-            <StyledButton
-              onClick={handleNextSubmit}
-              color="primary"
-              variant="contained"
-              size="large"
-              classes="button"
-            >
-              예약완료
-            </StyledButton>
-          )}
-          {/* 3단계 모달 - 단일버튼 */}
-          {globalModal.isResultOpen && (
-            <StyledButton
-              onClick={handleSubmit}
-              color="primary"
-              variant="contained"
-              size="large"
-              classes="button"
-              style={{ width: "100%" }}
-            >
-              확인
-            </StyledButton>
-          )}
+          {/* 모달 버튼 - LEFT */}
+          {/* div태그 씌운 이유? onClick 이벤트 적용하기 위해서 */}
+          {!globalModal.isResultOpen ? (
+            <div onClick={handleClose} style={{ width: "100%" }}>
+              <ModalButtonLeft isResultOpen={globalModal.isResultOpen} />
+            </div>
+          ) : null}
+
+          {/* 모달 버튼 - RIGHT */}
+          <div
+            onClick={
+              !globalModal.isConfirmOpen && !globalModal.isResultOpen
+                ? handleInitialSubmit
+                : globalModal.isConfirmOpen
+                ? handleNextSubmit
+                : handleSubmit
+            }
+            style={{ width: "100%" }}
+          >
+            <ModalButtonRight
+              isModalOpen={globalModal.isModalOpen}
+              isConfirmOpen={globalModal.isConfirmOpen}
+              isResultOpen={globalModal.isResultOpen}
+            />
+          </div>
         </DialogActions>
       </Dialog>
     </>

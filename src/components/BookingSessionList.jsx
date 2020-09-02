@@ -191,11 +191,14 @@ const BookingSessionList = () => {
                         <Slider
                           classes={sliderStyles}
                           value={
-                            (session.enrolledPeople / session.maxPeople) * 100
+                            (session.enrolledPeople.length /
+                              session.maxPeople) *
+                            100
                           }
                         />
                         <span className={styles.value}>
-                          {session.enrolledPeople}/{session.maxPeople}명 신청
+                          {session.enrolledPeople.length}/{session.maxPeople}명
+                          신청
                         </span>
                       </Box>
                       <Button
