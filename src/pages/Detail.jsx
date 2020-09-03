@@ -23,21 +23,19 @@ import { useSelector } from "react-redux";
 const Detail = (props) => {
   let postId = props.match.params.id;
   const avatarStyles2 = useDynamicAvatarStyles({ size: 72 });
-  const post = useSelector((state) => state.posts);
-  useEffect(() => {
-    console.log(post.filter((id) => post.id == postId));
-  }, []);
+  const post = useSelector(
+    (state) => state.posts.filter((post) => post.id == postId)[0]
+  );
+
   return (
     <div>
       <Paper>
         <CardContent>
           <TextInfoContent
             useStyles={useN01TextInfoContentStyles}
-            overline={"March 20, 2019"}
-            heading={"Nature Around Us"}
-            body={
-              "We are going to learn different kinds of species in nature that live together to form amazing environment."
-            }
+            overline={post.regiDate}
+            heading={`[${post.header}] ${post.title}`}
+            body={post.contents}
           />
         </CardContent>
         <Column gap={2}>
@@ -81,6 +79,16 @@ const Detail = (props) => {
                 placeholder="댓글을 입력하세요.."
               />
             </FormControl>
+          </Row>
+          <Row mt={2} alignItems={"center"}>
+            <Button
+              className="write-btn"
+              variant="outlined"
+              color="primary"
+              onClick={() => props.history.goBack()}
+            >
+              뒤로가기
+            </Button>
           </Row>
         </Column>
       </Paper>
