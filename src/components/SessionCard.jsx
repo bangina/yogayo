@@ -132,10 +132,10 @@ export const SessionCard = (props) => {
         <Box display={"flex"} alignItems={"center"}>
           <Slider
             classes={sliderStyles}
-            value={(enrolledPeople / maxPeople) * 100}
+            value={(enrolledPeople.length / maxPeople) * 100}
           />
           <span className={styles.value}>
-            {enrolledPeople}/{maxPeople}명 신청
+            {enrolledPeople.length}/{maxPeople}명 신청
           </span>
         </Box>
       </Box>

@@ -1,25 +1,9 @@
 const DATE_CHANGE = "DATE_CHANGE";
-const MODAL_OPEN = "MODAL_OPEN";
-const MODAL_CLOSE = "MODAL_CLOSE";
-const MODAL_NEXT = "MODAL_NEXT";
-const MODAL_RESULT = "MODAL_RESULT";
 const SELECT_ENROLL_SESSION = "SELECT_ENROLL_SESSION";
 
 export const changeDate = (clickedDate) => ({
   type: DATE_CHANGE,
   clickedDate, //value
-});
-export const openModal = () => ({
-  type: MODAL_OPEN,
-});
-export const closeModal = () => ({
-  type: MODAL_CLOSE,
-});
-export const nextModal = () => ({
-  type: MODAL_NEXT,
-});
-export const showResult = () => ({
-  type: MODAL_RESULT,
 });
 export const selectSession = (selectedSession) => ({
   type: SELECT_ENROLL_SESSION,
@@ -37,7 +21,7 @@ const initialState = {
       sessionName: "빈야사 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
-      enrolledPeople: 10,
+      enrolledPeople: ["test2"],
     },
     {
       id: 2,
@@ -48,7 +32,7 @@ const initialState = {
       sessionName: "아쉬탕가 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
-      enrolledPeople: 2,
+      enrolledPeople: ["test1", "test2"],
     },
     {
       id: 3,
@@ -59,7 +43,7 @@ const initialState = {
       sessionName: "빈야사 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
-      enrolledPeople: 10,
+      enrolledPeople: ["test1", "test2"],
     },
     {
       id: 4,
@@ -70,7 +54,7 @@ const initialState = {
       sessionName: "빈야사 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
-      enrolledPeople: 5,
+      enrolledPeople: ["test2"],
     },
     {
       id: 5,
@@ -81,7 +65,7 @@ const initialState = {
       sessionName: "빈야사 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
-      enrolledPeople: 6,
+      enrolledPeople: ["test1"],
     },
     {
       id: 6,
@@ -92,7 +76,7 @@ const initialState = {
       sessionName: "기초 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
-      enrolledPeople: 2,
+      enrolledPeople: [],
     },
     {
       id: 7,
@@ -103,7 +87,7 @@ const initialState = {
       sessionName: "기초 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
-      enrolledPeople: 0,
+      enrolledPeople: ["test1", "test2"],
     },
     {
       id: 8,
@@ -114,7 +98,7 @@ const initialState = {
       sessionName: "기초 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
-      enrolledPeople: 10,
+      enrolledPeople: [],
     },
   ],
   enrolledSessions: [
@@ -127,7 +111,7 @@ const initialState = {
       sessionName: "빈야사 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
-      enrolledPeople: 6,
+      enrolledPeople: ["test2"],
     },
     {
       id: 6,
@@ -138,7 +122,7 @@ const initialState = {
       sessionName: "기초 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
-      enrolledPeople: 2,
+      enrolledPeople: ["test1", "test2"],
     },
     {
       id: 7,
@@ -149,7 +133,7 @@ const initialState = {
       sessionName: "기초 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
-      enrolledPeople: 0,
+      enrolledPeople: ["test1", "test2"],
     },
     {
       id: 8,
@@ -160,7 +144,7 @@ const initialState = {
       sessionName: "기초 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
-      enrolledPeople: 10,
+      enrolledPeople: ["test1", "test2", "test3"],
     },
   ],
   enrollingSession: {
@@ -172,34 +156,15 @@ const initialState = {
     sessionName: "기초 요가",
     companyName: "자메이카 요가 필라테스 센터",
     maxPeople: 10,
-    enrolledPeople: 10,
+    enrolledPeople: ["test1"],
   },
   selectedDate: new Date(),
-  isModalOpen: false,
-  isConfirmOpen: false,
-  isResultOpen: false,
 };
 
 const session = (sessionState = initialState, action) => {
   switch (action.type) {
     case DATE_CHANGE:
       return { ...sessionState, selectedDate: action.clickedDate };
-    //modal 열기
-    case MODAL_OPEN:
-      return { ...sessionState, isModalOpen: true };
-    //modal 닫기
-    case MODAL_CLOSE:
-      return { ...sessionState, isModalOpen: false, isConfirmOpen: false };
-    //modal body 교체(1->2단계)
-    case MODAL_NEXT:
-      return { ...sessionState, isConfirmOpen: true };
-    //modal body 교체(2->3단계)
-    case MODAL_RESULT:
-      return {
-        ...sessionState,
-        isConfirmOpen: false,
-        isResultOpen: true,
-      };
     case SELECT_ENROLL_SESSION:
       return { ...sessionState, enrollingSession: action.selectedSession };
     default:
