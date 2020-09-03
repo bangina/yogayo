@@ -7,6 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { Cookies } from "react-cookie";
 import { insert } from "../redux/posts";
 
+import Alert from "@material-ui/lab/Alert";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "& .MuiTextField-root": {
@@ -55,13 +57,21 @@ const InsertBoard = (props) => {
   };
 
   const onClickHandler = () => {
-    console.log(post);
-    dispatch(insert(post));
-    props.history.push("/board");
+    if (post.header == "" || post.title == "" || post.contents == "") {
+      setAlert(true);
+    } else {
+      console.log(post);
+      dispatch(insert(post));
+      props.history.push("/board");
+    }
   };
+
+  const [alert, setAlert] = useState(false);
 
   return (
     <form className={classes.root}>
+      {alert && <Alert severity="error">모두 입력해 주세요</Alert>}
+
       <div>
         <DropDown onChange={(value) => setPost({ ...post, header: value })} />
 

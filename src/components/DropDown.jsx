@@ -1,44 +1,37 @@
-import React, { useState } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import TextField from "@material-ui/core/TextField";
+import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      width: "15ch",
-    },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
   },
 }));
 
 export default function MultilineTextFields(props) {
   const classes = useStyles();
-  const options = ["말머리 선택", "중고장터", "기타"];
-  const [selectedOption, setSelectedOption] = useState("말머리 선택");
 
   const handleChange = (event) => {
-    setSelectedOption(event.target.value);
     console.log(event.target.value);
     props.onChange(event.target.value);
   };
 
   return (
-    <form className={classes.root} noValidate autoComplete="off">
-      <div>
-        <TextField
-          id="standard-select-currency"
-          select
-          value={selectedOption}
-          onChange={handleChange}
-        >
-          {options.map((option) => (
-            <MenuItem key={option} value={option}>
-              {option}
-            </MenuItem>
-          ))}
-        </TextField>
-      </div>
-    </form>
+    <div>
+      <FormControl className={classes.formControl}>
+        <InputLabel id="demo-simple-select-helper-label">말머리</InputLabel>
+        <Select onChange={handleChange}>
+          <MenuItem value={"중고거래"}>중고거래</MenuItem>
+          <MenuItem value={"요가"}>요가</MenuItem>
+          <MenuItem value={"필라테스"}>필라테스</MenuItem>
+          <MenuItem value={"기타"}>기타</MenuItem>
+        </Select>
+      </FormControl>
+    </div>
   );
 }
