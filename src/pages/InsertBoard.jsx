@@ -48,7 +48,10 @@ const InsertBoard = (props) => {
   }, []);
 
   const onChangeHandler = (e) => {
-    setPost({ ...post, [e.target.name]: e.target.value });
+    setPost({
+      ...post,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const onClickHandler = () => {

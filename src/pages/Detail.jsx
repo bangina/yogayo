@@ -26,6 +26,9 @@ const Detail = (props) => {
   const post = useSelector(
     (state) => state.posts.filter((post) => post.id == postId)[0]
   );
+  const text = post.contents.split("\n").map((i, key) => {
+    return <div key={key}>{i}</div>;
+  });
 
   return (
     <div>
@@ -35,8 +38,9 @@ const Detail = (props) => {
             useStyles={useN01TextInfoContentStyles}
             overline={post.regiDate}
             heading={`[${post.header}] ${post.title}`}
-            body={post.contents}
+            body={text}
           />
+          {}
         </CardContent>
         <Column gap={2}>
           <Row mt={2} alignItems={"center"}>

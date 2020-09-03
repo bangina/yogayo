@@ -10,7 +10,7 @@ const initialState = [
     id: 1,
     header: "기타",
     title: "제목 입니다",
-    contents: "내용입니다내용내용",
+    contents: "내용입니다\n내용내용",
     writer: "test1",
     regiDate: "2020.8.31",
   },
