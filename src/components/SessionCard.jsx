@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Slider from "@material-ui/core/Slider";
@@ -75,17 +76,7 @@ const useSliderStyles = makeStyles(() => ({
 export const SessionCard = (props) => {
   const styles = useStyles();
   const sliderStyles = useSliderStyles();
-  const {
-    id,
-    sessionDate,
-    startTime,
-    endTime,
-    place,
-    sessionName,
-    companyName,
-    enrolledPeople,
-    maxPeople,
-  } = props.session;
+  const enrolledSession = props.enrolledSession[0];
   const printDay = (props) => {
     switch (props) {
       case 1:
@@ -114,30 +105,39 @@ export const SessionCard = (props) => {
           title="Live from space album cover"
         >
           <Avatar className={styles.color2}>
-            {printDay(sessionDate.getDay())}
+            {printDay(enrolledSession.sessionDate.getDay())}
           </Avatar>
         </CardMedia>
       </CardContent>
       <Box>
-        <h3 className={styles.heading}>{sessionName}</h3>
+        <h3 className={styles.heading}>{enrolledSession.sessionName}</h3>
         <p variant="h5">
-          {sessionDate.getMonth()}월 {sessionDate.getDate()}일{" "}
-          {sessionDate.getDay()}
+          {enrolledSession.sessionDate.getMonth()}월{" "}
+          {enrolledSession.sessionDate.getDate()}일{" "}
+          {enrolledSession.sessionDate.getDay()}
           요일 <br />
-          {startTime} - {endTime}
+          {enrolledSession.startTime} - {enrolledSession.endTime}
         </p>
         <p className={styles.subheader}>
-          {companyName} • {place}
+          {enrolledSession.companyName} • {enrolledSession.place}
         </p>
         <Box display={"flex"} alignItems={"center"}>
           <Slider
             classes={sliderStyles}
-            value={(enrolledPeople.length / maxPeople) * 100}
+            value={
+              (enrolledSession.enrolledPeople.length /
+                enrolledSession.maxPeople) *
+              100
+            }
           />
           <span className={styles.value}>
-            {enrolledPeople.length}/{maxPeople}명 신청
+            {enrolledSession.enrolledPeople.length}/{enrolledSession.maxPeople}
+            명 신청
           </span>
         </Box>
+        <Button variant="outlined" color="primary">
+          취소하기
+        </Button>
       </Box>
     </Card>
   );

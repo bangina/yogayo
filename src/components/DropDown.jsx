@@ -22,16 +22,14 @@ export default function MultilineTextFields(props) {
   };
 
   return (
-    <div>
-      <FormControl className={classes.formControl}>
-        <InputLabel id="demo-simple-select-helper-label">말머리</InputLabel>
-        <Select onChange={handleChange}>
-          <MenuItem value={"중고거래"}>중고거래</MenuItem>
-          <MenuItem value={"요가"}>요가</MenuItem>
-          <MenuItem value={"필라테스"}>필라테스</MenuItem>
-          <MenuItem value={"기타"}>기타</MenuItem>
-        </Select>
-      </FormControl>
-    </div>
+    <FormControl className={classes.formControl}>
+      <InputLabel id="demo-simple-select-helper-label">말머리</InputLabel>
+      <Select onChange={handleChange}>
+        <MenuItem value={"중고거래"}>중고거래</MenuItem>
+        <MenuItem value={"요가"}>요가</MenuItem>
+        <MenuItem value={"필라테스"}>필라테스</MenuItem>
+        <MenuItem value={"기타"}>기타</MenuItem>
+      </Select>
+    </FormControl>
   );
 }

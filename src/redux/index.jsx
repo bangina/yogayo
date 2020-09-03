@@ -5,5 +5,12 @@ import member from "./member";
 import session from "./session";
 import posts from "./posts";
 import modal from "./modal";
-const rootReducer = combineReducers({ member, session, posts, modal });
+import memberSession from "./memberSession";
+const rootReducer = combineReducers({
+  member,
+  session,
+  posts,
+  modal,
+  memberSession,
+});
 export default rootReducer;
