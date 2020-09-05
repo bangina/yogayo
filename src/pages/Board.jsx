@@ -102,6 +102,11 @@ export default function Board(props) {
       </Typography>
       <div className={classes.tableResponsive}>
         <div>
+          <DropDown
+            onChange={(value) => console.log("Borad onChange", value)}
+          />
+        </div>
+        <div style={{ float: "right" }}>
           <Button
             variant="contained"
             color="primary"
@@ -110,11 +115,12 @@ export default function Board(props) {
           >
             글쓰기
           </Button>
-          <DropDown
-            onChange={(value) => console.log("Borad onChange", value)}
-          />
+          <RouterLink to="/myposts">
+            <Button variant="outlined" color="primary">
+              내 글 보기
+            </Button>
+          </RouterLink>
         </div>
-
         <Table className={classes.table}>
           <colgroup>
             <col style={{ width: "5%" }} />

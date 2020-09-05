@@ -73,7 +73,7 @@ export const Voucher = React.memo(function ElevatedHeaderCard() {
       <CardHeader
         className={cardHeaderShadowStyles.root}
         classes={cardHeaderStyles}
-        title={'수강권 정보'}
+        title={'내 회원권 정보'}
         subheader={''}
       />
       <CardContent className={classes.content}>

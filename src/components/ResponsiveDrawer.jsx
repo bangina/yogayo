@@ -155,7 +155,7 @@ function ResponsiveDrawer(props) {
             <RouterLink to="/vouchers">
               <ListItem button className={classes.nested}>
                 <ListItemText
-                  secondary="수강권 정보"
+                  secondary="내 회원권 정보"
                   className={classes.subMenu}
                 />
               </ListItem>
@@ -168,17 +168,9 @@ function ResponsiveDrawer(props) {
                 />
               </ListItem>
             </RouterLink>
-            <RouterLink to="/diaries">
-              <ListItem button className={classes.nested}>
-                <ListItemText secondary="글 관리" className={classes.subMenu} />
-              </ListItem>
-            </RouterLink>
             <RouterLink to="/notifications">
               <ListItem button className={classes.nested}>
-                <ListItemText
-                  secondary="댓글 알림"
-                  className={classes.subMenu}
-                />
+                <ListItemText secondary="알림" className={classes.subMenu} />
               </ListItem>
             </RouterLink>
           </List>

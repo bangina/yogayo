@@ -26,10 +26,6 @@ span.error {
   justify-content: center;
 }
 
-.write-btn {
-  float: right !important;
-}
-
 /* bookings page - Tab  */
 
 .MuiTabs-indicator::after {
