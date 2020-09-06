@@ -29,6 +29,7 @@ export default function MultilineTextFields(props) {
         <MenuItem value={"요가"}>요가</MenuItem>
         <MenuItem value={"필라테스"}>필라테스</MenuItem>
         <MenuItem value={"기타"}>기타</MenuItem>
+        <MenuItem value={"같이운동해요"}>같이운동해요</MenuItem>
       </Select>
     </FormControl>
   );

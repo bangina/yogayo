@@ -14,6 +14,8 @@ import Typography from "@material-ui/core/Typography";
 import { Link as RouterLink } from "react-router-dom";
 import DropDown from "../components/DropDown";
 import SearchBar from "../components/SearchBar";
+import VisibilityIcon from "@material-ui/icons/Visibility";
+import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 
 const useStyles = makeStyles((theme) => ({
   primaryTableHeader: {
@@ -63,13 +65,16 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
   },
+  btn: {
+    margin: theme.spacing(1),
+  },
 }));
 
 export default function Board(props) {
   const classes = useStyles();
 
   const tableHeaderColor = "primary";
-  const tableHead = ["글번호", "말머리", "글제목", "작성자", "등록일"];
+  const tableHead = ["말머리", "글제목", "작성자", "등록일"];
   const [tableData, setTableData] = useState([]);
   const [allData, setAllData] = useState([]);
   const globalPosts = useSelector((state) => state.posts);
@@ -110,7 +115,7 @@ export default function Board(props) {
           <Button
             variant="contained"
             color="primary"
-            className="write-btn"
+            className={classes.btn}
             onClick={() => props.history.push("/board/insert")}
           >
             글쓰기
@@ -123,9 +128,8 @@ export default function Board(props) {
         </div>
         <Table className={classes.table}>
           <colgroup>
-            <col style={{ width: "5%" }} />
-            <col style={{ width: "15%" }} />
-            <col style={{ width: "50%" }} />
+            <col style={{ width: "10%" }} />
+            <col style={{ width: "60%" }} />
             <col style={{ width: "20%" }} />
             <col style={{ width: "10%" }} />
           </colgroup>
@@ -148,18 +152,34 @@ export default function Board(props) {
             </TableHead>
           ) : null}
           <TableBody>
-            {tableData.map((prop, key) => {
+            {tableData.map((dataItem, index) => {
+              console.log(dataItem);
               return (
-                <TableRow key={key} className={classes.tableBodyRow}>
-                  {prop.map((p, key) => {
-                    return (
-                      <TableCell className={classes.tableCell} key={key}>
-                        <RouterLink to={`/board/detail/${prop[0]}`}>
-                          {p}
-                        </RouterLink>
-                      </TableCell>
-                    );
-                  })}
+                <TableRow key={index} className={classes.tableBodyRow}>
+                  <TableCell className={classes.tableCell} key={index}>
+                    <RouterLink to={`/board/detail/${dataItem[0]}`}>
+                      {dataItem[1]}
+                    </RouterLink>
+                  </TableCell>
+                  <TableCell className={classes.tableCell} key={index}>
+                    <RouterLink to={`/board/detail/${dataItem[0]}`}>
+                      <div>{dataItem[2]} </div>
+                      <div style={{ color: "gray" }}>
+                        <VisibilityIcon style={{ fontSize: 15 }} /> 10{" "}
+                        <ChatBubbleIcon style={{ fontSize: 15 }} /> 5
+                      </div>
+                    </RouterLink>
+                  </TableCell>
+                  <TableCell className={classes.tableCell} key={index}>
+                    <RouterLink to={`/board/detail/${dataItem[0]}`}>
+                      {dataItem[3]}
+                    </RouterLink>
+                  </TableCell>
+                  <TableCell className={classes.tableCell} key={index}>
+                    <RouterLink to={`/board/detail/${dataItem[0]}`}>
+                      {dataItem[4]}
+                    </RouterLink>
+                  </TableCell>
                 </TableRow>
               );
             })}
@@ -169,12 +189,13 @@ export default function Board(props) {
 
       <div className={classes.root}>
         <Pagination
-          count={parseInt(globalPosts.length / 10) + 1}
+          count={Math.ceil(globalPosts.length / 10)}
           onChange={handlePage}
         />
       </div>
-
-      <SearchBar />
+      <div style={{ textAlign: "center" }}>
+        <SearchBar />
+      </div>
     </div>
   );
 }

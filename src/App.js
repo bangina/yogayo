@@ -11,6 +11,7 @@ import Diary from "./pages/Diary";
 import Voucher from "./pages/Voucher";
 import Detail from "./pages/Detail";
 import InsertBoard from "./pages/InsertBoard";
+import Notifications from "./pages/Notifications";
 
 //Read me
 //컴포넌트 이름에 Styled 가 붙은 것들 ==> styled components 패키지로 css 적용된 컴포넌트임.
@@ -31,6 +32,7 @@ function App() {
           <Route path="/diary" component={Diary}></Route>
           <Route path="/mypage/bookings" component={MyBookings}></Route>
           <Route path="/vouchers" component={Voucher}></Route>
+          <Route path="/notifications" component={Notifications}></Route>
         </ResponsiveDrawer>
       </Router>
     </div>
