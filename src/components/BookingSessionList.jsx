@@ -89,6 +89,7 @@ const StyledTimeline = styled(Timeline)`
   padding: 0;
   .MuiTimeline-root {
     padding: 0;
+    margin-left: 1rem;
   }
   .MuiTimelineContent-root {
     padding: 6px 0;
