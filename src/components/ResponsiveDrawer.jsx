@@ -31,6 +31,9 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    // padding: "0 50px",
+    maxWidth: "1800px",
+    margin: "0 auto",
   },
   profile: {
     textAlign: "center",

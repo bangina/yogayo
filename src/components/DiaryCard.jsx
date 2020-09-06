@@ -31,14 +31,14 @@ const useStyles = makeStyles(() => ({
     overflow: "hidden",
   },
   imgBackground: {
-    background:
-      "linear-gradient(to top, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%)",
+    background: "#ff8177",
   },
   date: {
     position: "absolute",
     right: "1rem",
+    top: "0.5rem",
     color: "#fff",
-    fontWeight: "bold",
+    fontWeight: "light",
     textShadow: "1px 1px 3px rgba(0,0,0,0.2)",
     letterSpacing: "-0.05em",
   },
@@ -78,9 +78,15 @@ export const DiaryCard = (prop) => {
     <>
       <Grid item xs={12} md={6} lg={4} xl={3} key={content.id}>
         <Card elevation={1} className={styles.root}>
-          <Typography variant="h3" className={styles.date}>
-            {content.sessionDate.getMonth() + 1} /{" "}
-            {content.sessionDate.getDate()}
+          <Typography variant="h6" className={styles.date}>
+            {content.sessionDate.getMonth() + 1 < 10
+              ? `0${content.sessionDate.getMonth() + 1}`
+              : content.sessionDate.getMonth() + 1}
+            월{" "}
+            {content.sessionDate.getDate() + 1 < 10
+              ? `0${content.sessionDate.getDate()}`
+              : content.sessionDate.getDate()}
+            일
           </Typography>
           <div className={styles.imgBackground}>
             <CardMedia

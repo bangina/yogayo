@@ -91,7 +91,7 @@ export const SessionCard = (props) => {
         return "금";
       case 6:
         return "토";
-      case 7:
+      case 0:
         return "일";
       default:
         return "";
