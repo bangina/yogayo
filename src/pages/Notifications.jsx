@@ -75,7 +75,7 @@ const Notifications = () => {
       </AppBar>
       <TabPanel value={value} index={0}>
         <List className={classes.root}>
-          <ListItem>
+          <ListItem divider>
             <ListItemAvatar>
               <Avatar>SB</Avatar>
             </ListItemAvatar>
@@ -89,28 +89,25 @@ const Notifications = () => {
               secondary="Jan 9, 2014"
             />
           </ListItem>
-          <Divider />
 
-          <ListItem>
+          <ListItem divider>
             <ListItemAvatar>
               <Avatar>SB</Avatar>
             </ListItemAvatar>
             <ListItemText primary="Work" secondary="Jan 7, 2014" />
           </ListItem>
-          <Divider />
 
-          <ListItem>
+          <ListItem divider>
             <ListItemAvatar>
               <Avatar>SB</Avatar>
             </ListItemAvatar>
             <ListItemText primary="Vacation" secondary="July 20, 2014" />
           </ListItem>
-          <Divider />
         </List>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <List className={classes.root}>
-          <ListItem>
+          <ListItem divider>
             <ListItemAvatar>
               <Avatar>SB</Avatar>
             </ListItemAvatar>
@@ -124,23 +121,20 @@ const Notifications = () => {
               secondary="Jan 9, 2014"
             />
           </ListItem>
-          <Divider />
 
-          <ListItem>
+          <ListItem divider>
             <ListItemAvatar>
               <Avatar>SB</Avatar>
             </ListItemAvatar>
             <ListItemText primary="Work" secondary="Jan 7, 2014" />
           </ListItem>
-          <Divider />
 
-          <ListItem>
+          <ListItem divider>
             <ListItemAvatar>
               <Avatar>SB</Avatar>
             </ListItemAvatar>
             <ListItemText primary="Vacation" secondary="July 20, 2014" />
           </ListItem>
-          <Divider />
         </List>
       </TabPanel>
     </div>

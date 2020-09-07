@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   btn: {
-    margin: theme.spacing(1),
+    marginRight: theme.spacing(1),
   },
 }));
 
