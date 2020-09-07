@@ -2,20 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import {
-  createStore
-} from "redux";
-import {
-  composeWithDevTools
-} from "redux-devtools-extension";
-import {
-  Provider
-} from "react-redux";
+import { createStore } from "redux";
+import { composeWithDevTools } from "redux-devtools-extension";
+import { Provider } from "react-redux";
 import rootReducer from "./redux/index";
-import {
-  createMuiTheme,
-  ThemeProvider
-} from "@material-ui/core";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 
 const store = createStore(rootReducer, composeWithDevTools());
 const theme = createMuiTheme({
@@ -27,7 +18,8 @@ const theme = createMuiTheme({
     primary: {
       main: "#cf556c",
       contrastText: "#fff",
-      mainGradient: "linear-gradient(to right, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%)",
+      mainGradient:
+        "linear-gradient(to right, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%)",
     },
     secondary: {
       main: "#f99185",
@@ -40,7 +32,7 @@ const theme = createMuiTheme({
   },
   typography: {
     fontFamily: [
-      'Noto Sans KR',
+      "Noto Sans KR",
       "BlinkMacSystemFont",
       '"Segoe UI"',
       "Roboto",
@@ -53,18 +45,11 @@ const theme = createMuiTheme({
     ].join(","),
   },
 });
-ReactDOM.render( <
-  Provider store = {
-    store
-  } >
-  <
-  ThemeProvider theme = {
-    theme
-  } >
-  <
-  App / >
-  <
-  /ThemeProvider> <
-  /Provider>,
+ReactDOM.render(
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </Provider>,
   document.getElementById("root")
 );
