@@ -12,16 +12,7 @@ const Diary = () => {
       place: "간디룸",
       sessionName: "기초 요가",
       companyName: "자메이카 요가 필라테스 센터",
-      diaryText: "수련 소감을 적어주세요",
-      feeling: "good",
-    },
-    {
-      id: 2,
-      sessionDate: new Date(),
-      place: "간디룸",
-      sessionName: "기초 요가",
-      companyName: "요가왕 요가원",
-      diaryText: "수련 소감을 적어주세요",
+      diaryText: "솔방울님, 이번 수련은 어떠셨나요?",
       feeling: "good",
     },
   ]);
@@ -90,17 +81,55 @@ const Diary = () => {
       feeling: "good",
     },
   ]);
+
+  const printDay = (props) => {
+    switch (props) {
+      case 1:
+        return "월";
+      case 2:
+        return "화";
+      case 3:
+        return "수";
+      case 4:
+        return "목";
+      case 5:
+        return "금";
+      case 6:
+        return "토";
+      case 0:
+        return "일";
+      default:
+        return "";
+    }
+  };
+  console.log(new Date().getDay());
   return (
     <div>
-      <Typography variant="h6" gutterBottom color="">
-        솔방울님, 이번 수련은 어떠셨나요?
+      <Typography variant="" gutterBottom color="">
+        {new Date().getFullYear()}년 {new Date().getMonth() + 1}월{" "}
+        {new Date().getDate()}일, {printDay(new Date().getDay())}요일
       </Typography>
-      <Typography variant="h3" gutterBottom color="primary">
-        작성 가능한 일기
+      <p
+        className="msg-box"
+        style={{
+          background: "rgba(0,0,0,0.1)",
+          borderRadius: "5px",
+          color: "#333",
+          padding: "0 1rem",
+          lineHeight: "5rem",
+          fontSize: "1rem",
+          textIndent: "10px",
+        }}
+      >
+        오늘 수련은 어떠셨나요?{" "}
+        <img src="./yogayo_logo.svg" style={{ width: "40px" }} alt="logo" />
+      </p>
+      <Typography variant="" gutterBottom color="">
+        오늘 작성 가능한 일기
+        <br />
+        (수련일기는 수련 후 24시간 이내에만 작성가능합니다.)
       </Typography>
-      <Typography color="primary">
-        수련일기는 수련 후 24시간 이내에만 작성가능합니다.
-      </Typography>
+
       <br />
       <br />
       <Grid container spacing={3}>
@@ -108,9 +137,7 @@ const Diary = () => {
           <DiaryCard content={content} />
         ))}
       </Grid>
-      <Typography variant="h3" gutterBottom color="primary">
-        오늘의 요기 피드
-      </Typography>
+      <Typography>오늘의 요기 피드</Typography>
       <br />
       <br />
       <br />

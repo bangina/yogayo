@@ -5,7 +5,9 @@ import BookingSessionList from "../components/BookingSessionList";
 
 const Booking = () => {
   return (
-    <div>
+    <div
+      style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+    >
       <BookingCalendar />
       <BookingSessionList />
     </div>

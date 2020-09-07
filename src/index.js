@@ -32,7 +32,7 @@ const theme = createMuiTheme({
   },
   typography: {
     fontFamily: [
-      "Nanum Gothic",
+      "Noto Sans KR",
       "BlinkMacSystemFont",
       '"Segoe UI"',
       "Roboto",

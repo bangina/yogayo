@@ -89,6 +89,7 @@ const StyledTimeline = styled(Timeline)`
   padding: 0;
   .MuiTimeline-root {
     padding: 0;
+    margin-left: 1rem;
   }
   .MuiTimelineContent-root {
     padding: 6px 0;
@@ -134,7 +135,7 @@ const BookingSessionList = () => {
         return "금";
       case 6:
         return "토";
-      case 7:
+      case 0:
         return "일";
       default:
         return "";

@@ -9,7 +9,8 @@ const StyledCalendar = styled(Calendar)`
   border-radius: 10px;
   width: 100%;
   max-width: 500px;
-  margin: auto;
+  float: left;
+  margin-right: 2rem;
   box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.15);
   .react-calendar__navigation {
     button {
@@ -46,7 +47,26 @@ const BookingCalendar = () => {
   const dispatch = useDispatch();
   //value state에 날짜 객체를 저장
   const [value, setValue] = useState(new Date());
-
+  const printDay = (props) => {
+    switch (props) {
+      case 1:
+        return "월";
+      case 2:
+        return "화";
+      case 3:
+        return "수";
+      case 4:
+        return "목";
+      case 5:
+        return "금";
+      case 6:
+        return "토";
+      case 0:
+        return "일";
+      default:
+        return "";
+    }
+  };
   //선택된 날짜를 redux에 보내기(=>selectedDate에 담김)
   useEffect(() => {
     dispatch(changeDate(value));
@@ -54,7 +74,10 @@ const BookingCalendar = () => {
   const maxDate = new Date(new Date().setMonth(new Date().getMonth() + 1));
   return (
     <div>
-      <h2>{value.toString()}</h2>
+      <h3>
+        {new Date().getFullYear()}년 {new Date().getMonth() + 1}월{" "}
+        {new Date().getDate()}일, {printDay(new Date().getDay())}요일
+      </h3>
       <StyledCalendar
         onChange={setValue}
         minDetail="month"
