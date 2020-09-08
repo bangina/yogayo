@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Button from "@material-ui/core/Button";
 import CameraIcon from "@material-ui/icons/PhotoCamera";
 import Card from "@material-ui/core/Card";
@@ -23,9 +23,30 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
   },
+  visual: {
+    background: "pink",
+    position: "fixed",
+    left: 0,
+    right: 0,
+    top: "56px",
+    height: "7rem",
+    padding: "1rem",
+    // boxShadow:"2x ",
+    borderBottomLeftRadius: "30px",
+    borderBottomRightRadius: "30px",
+    color: "#fff",
+    fontSize: "2rem",
+    textAlign: "center",
+  },
   heroContent: {
-    backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6),
+    marginTop: "7rem",
+    padding: theme.spacing(2, 0, 6),
+    "&>*": {
+      backgroundColor: "#fff",
+      padding: "2rem 3rem",
+      borderRadius: "10px",
+      boxShadow: "1px 2px 4px rgba(0,0,0,0.2)",
+    },
   },
   heroButtons: {
     marginTop: theme.spacing(4),
@@ -140,12 +161,32 @@ const Main = (props) => {
     cookies.remove("member");
     props.history.push("/login");
   };
-
+  const swiperRef = useRef();
+  const list = window.matchMedia("(min-width:960px)");
+  const initialSlideNum = function () {
+    if (list.matches === true) {
+      return 3;
+    } else {
+      return 1;
+    }
+  };
+  const [slidesPerView, setSlidesPerView] = useState(initialSlideNum);
+  useEffect(() => {
+    function handleResize() {
+      if (list.matches === true) {
+        setSlidesPerView(3);
+      } else {
+        setSlidesPerView(1);
+      }
+    }
+    window.addEventListener("resize", handleResize);
+  }, []);
   return (
     <React.Fragment>
       <CssBaseline />
 
       <main>
+        <div className={classes.visual}>요가요에 오신것을 환영해용</div>
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
@@ -157,13 +198,13 @@ const Main = (props) => {
               gutterBottom
             >
               {loginUser ? loginUser.name : ""}님{/* {loginMember.name}님 */}
+              <img
+                src="./pose1.svg"
+                alt="yoga pose"
+                style={{ width: "40px", margin: "0 10px" }}
+              />
             </Typography>
-            <Typography
-              // variant="h5"
-              align="center"
-              color="textSecondary"
-              paragraph
-            >
+            <Typography align="center" color="textSecondary" paragraph>
               {loginMember.Voucher.center} <br />
               {loginMember.Voucher.VoucherName} <br />
               {loginMember.Voucher.date} <br />
@@ -251,15 +292,20 @@ const Main = (props) => {
             </Grid>
           </Grid> */}
         {/* </Container> */}
-        <Typography>오늘의 요기 피드</Typography>
+        <Typography variant="h5" color="primary" gutterBottom>
+          요가요 피플 수련일기 구경하기
+        </Typography>
+        <Typography gutterBottom>오늘 올라온 요가 수련 일기들이에요</Typography>
+        <br />
         <Swiper
           spaceBetween={40}
-          slidesPerView={1.2}
+          slidesPerView={slidesPerView}
           navigation
           pagination={{ clickable: true }}
           scrollbar={{ draggable: true }}
           onSwiper={(swiper) => console.log(swiper)}
           onSlideChange={() => console.log("slide change")}
+          ref={swiperRef}
         >
           {contents.map((content) => (
             <SwiperSlide>
@@ -267,7 +313,15 @@ const Main = (props) => {
             </SwiperSlide>
           ))}
         </Swiper>
-        <Typography>커뮤니티</Typography>
+        <br />
+        <Typography variant="h5" color="primary" gutterBottom>
+          요가요 피플 커뮤니티
+        </Typography>
+        <Typography gutterBottom>
+          요가원 정보 공유/ 중고장터 / 같이 운동해요!
+        </Typography>
+        <br />
+
         <img
           src="./img/temp_post_detail.png"
           alt="temp"

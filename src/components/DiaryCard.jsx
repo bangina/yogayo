@@ -75,7 +75,7 @@ export const DiaryCard = (prop) => {
   const content = prop.content;
 
   return (
-    <Grid item xs={12} md={6} lg={4} xl={3} key={content.id}>
+    // <Grid item xs={12} md={6} lg={4} xl={3} key={content.id}>
       <Card elevation={1} className={styles.root}>
         <Typography variant="h6" className={styles.date}>
           {content.sessionDate.getMonth() + 1 < 10
@@ -122,7 +122,7 @@ export const DiaryCard = (prop) => {
           </Box>
         </CardContent>
       </Card>
-    </Grid>
+    // </Grid>
   );
 };
 

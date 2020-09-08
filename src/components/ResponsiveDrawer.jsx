@@ -44,6 +44,9 @@ const useStyles = makeStyles((theme) => ({
     background: "pink",
     margin: "auto",
     marginBottom: theme.spacing(2),
+    width: "4rem",
+    height: "4rem",
+    padding: "0.5rem",
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
@@ -103,7 +106,9 @@ function ResponsiveDrawer(props) {
     <div>
       <div className={classes.toolbar} />
       <List className={classes.profile}>
-        <Avatar className={classes.avatar}>SB</Avatar>
+        <Avatar className={classes.avatar}>
+          <img src="./pose1.svg" alt="user" style={{ width: "100%" }} />
+        </Avatar>
         <ListItemText primary="솔방울" secondary="요가왕 요가원" />
       </List>
       <Divider />

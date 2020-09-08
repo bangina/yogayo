@@ -134,7 +134,9 @@ const Diary = () => {
       <br />
       <Grid container spacing={3}>
         {pendingContents.map((content) => (
-          <DiaryCard content={content} />
+          <Grid item xs={12} md={6} lg={4} xl={3} key={content.id}>
+            <DiaryCard content={content} />
+          </Grid>
         ))}
       </Grid>
       <Typography>오늘의 요기 피드</Typography>
@@ -143,7 +145,9 @@ const Diary = () => {
       <br />
       <Grid container spacing={3}>
         {contents.map((content) => (
-          <DiaryCard content={content} />
+          <Grid item xs={12} md={6} lg={4} xl={3} key={content.id}>
+            <DiaryCard content={content} />
+          </Grid>
         ))}
       </Grid>
     </div>
