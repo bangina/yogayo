@@ -33,6 +33,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     maxWidth: "1800px",
     margin: "0 auto",
+    "&>*": {
+      minWidth: 0,
+    },
   },
   profile: {
     textAlign: "center",

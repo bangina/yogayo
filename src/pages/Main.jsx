@@ -17,7 +17,8 @@ import DiaryCard from "../components/DiaryCard";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import Detail from "./Detail";
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper.scss";
 const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
@@ -47,18 +48,6 @@ const useStyles = makeStyles((theme) => ({
   footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
-  },
-  diaryGridWrapper: {
-    display: "flex",
-    flexWrap: "wrap",
-    overflow: "auto",
-    width: "100%",
-    position: "relative",
-  },
-  diaryGrid: {
-    flexWrap: "wrap",
-    width: "100%",
-    margin: "auto",
   },
   arrowLeft: {
     position: "absolute",
@@ -263,15 +252,21 @@ const Main = (props) => {
           </Grid> */}
         {/* </Container> */}
         <Typography>오늘의 요기 피드</Typography>
-        <div className={classes.diaryGridWrapper}>
-          <KeyboardArrowLeft className={classes.arrowLeft} />
-          <Grid container spacing={3} className={classes.diaryGrid}>
-            {contents.map((content) => (
+        <Swiper
+          spaceBetween={40}
+          slidesPerView={1.2}
+          navigation
+          pagination={{ clickable: true }}
+          scrollbar={{ draggable: true }}
+          onSwiper={(swiper) => console.log(swiper)}
+          onSlideChange={() => console.log("slide change")}
+        >
+          {contents.map((content) => (
+            <SwiperSlide>
               <DiaryCard content={content} />
-            ))}
-          </Grid>
-          <KeyboardArrowRight className={classes.arrowRight} />
-        </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
         <Typography>커뮤니티</Typography>
         <img
           src="./img/temp_post_detail.png"
