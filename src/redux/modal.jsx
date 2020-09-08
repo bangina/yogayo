@@ -20,6 +20,7 @@ const initialState = {
   isModalOpen: false,
   isConfirmOpen: false,
   isResultOpen: false,
+  isDiaryModalOpen: true,
 };
 
 const modal = (modalState = initialState, action) => {

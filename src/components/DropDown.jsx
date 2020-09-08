@@ -2,7 +2,6 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 
@@ -13,23 +12,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MultilineTextFields(props) {
+export default function DropDown(props) {
   const classes = useStyles();
-
+  console.log(props, "props");
   const handleChange = (event) => {
-    console.log(event.target.value);
     props.onChange(event.target.value);
   };
 
   return (
     <FormControl className={classes.formControl}>
-      <InputLabel id="demo-simple-select-helper-label">말머리</InputLabel>
+      <InputLabel id="demo-simple-select-helper-label">
+        {props.title}
+      </InputLabel>
       <Select onChange={handleChange}>
-        <MenuItem value={"중고거래"}>중고거래</MenuItem>
-        <MenuItem value={"요가"}>요가</MenuItem>
-        <MenuItem value={"필라테스"}>필라테스</MenuItem>
-        <MenuItem value={"기타"}>기타</MenuItem>
-        <MenuItem value={"같이운동해요"}>같이운동해요</MenuItem>
+        {props.value.map((v) => (
+          <MenuItem value={v}>{v}</MenuItem>
+        ))}
       </Select>
     </FormControl>
   );

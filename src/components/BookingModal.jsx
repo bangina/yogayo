@@ -238,7 +238,7 @@ const BookingModal = (props) => {
         {/* ////////////////// */}
         {globalModal.isResultOpen && (
           <DialogContent>
-            <SuccessMsg />
+            <SuccessMsg message="예약이 완료되었습니다." />
           </DialogContent>
         )}
         {/* ////////////////// */}

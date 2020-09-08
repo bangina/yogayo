@@ -224,7 +224,7 @@ const BookingSessionList = () => {
           ))}
         </Timeline>
       </StyledTimeline>
-      <BookingModal isOpen={isOpen} selectedSession={selectedSession} />;
+      <BookingModal isOpen={isOpen} selectedSession={selectedSession} />
     </>
   );
 };

@@ -16,7 +16,7 @@ const StyledSvg = styled.svg`
     }
   }
 `;
-const SuccessMsg = () => {
+const SuccessMsg = (prop) => {
   return (
     <>
       {/* success svg icon */}
@@ -66,7 +66,7 @@ const SuccessMsg = () => {
           </defs>
         </StyledSvg>
       </div>
-      <Typography variant="h6">예약이 완료되었습니다.</Typography>
+  <Typography variant="h6">{prop.message}</Typography>
     </>
   );
 };

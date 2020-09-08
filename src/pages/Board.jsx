@@ -108,7 +108,9 @@ export default function Board(props) {
       <div className={classes.tableResponsive}>
         <div>
           <DropDown
-            onChange={(value) => console.log("Borad onChange", value)}
+            title="말머리"
+            value={["중고거래", "요가", "필라테스", "기타", "같이운동해요"]}
+            onChange={(value) => console.log(value)}
           />
         </div>
         <div style={{ float: "right" }}>

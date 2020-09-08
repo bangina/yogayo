@@ -31,12 +31,13 @@ const useStyles = makeStyles((theme) => ({
     top: "56px",
     height: "7rem",
     padding: "1rem",
-    // boxShadow:"2x ",
+    boxShadow: "1px 1px 6px rgba(0,0,0,0.2)",
     borderBottomLeftRadius: "30px",
     borderBottomRightRadius: "30px",
     color: "#fff",
     fontSize: "2rem",
     textAlign: "center",
+    zIndex: -1,
   },
   heroContent: {
     marginTop: "7rem",
@@ -186,7 +187,10 @@ const Main = (props) => {
       <CssBaseline />
 
       <main>
-        <div className={classes.visual}>요가요에 오신것을 환영해용</div>
+        <div className={classes.visual}>
+          마감기한 : 9/10일 목요일. <br />
+          죽음의 코딩레이스.
+        </div>
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="sm">
@@ -292,7 +296,7 @@ const Main = (props) => {
             </Grid>
           </Grid> */}
         {/* </Container> */}
-        <Typography variant="h5" color="primary" gutterBottom>
+        <Typography variant="h5" color="" gutterBottom>
           요가요 피플 수련일기 구경하기
         </Typography>
         <Typography gutterBottom>오늘 올라온 요가 수련 일기들이에요</Typography>
@@ -321,7 +325,6 @@ const Main = (props) => {
           요가원 정보 공유/ 중고장터 / 같이 운동해요!
         </Typography>
         <br />
-
         <img
           src="./img/temp_post_detail.png"
           alt="temp"
