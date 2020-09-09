@@ -10,7 +10,7 @@ import Slider from "@material-ui/core/Slider";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
+    // minWidth: 275,
   },
   bullet: {
     display: "inline-block",
@@ -54,7 +54,7 @@ export default function SimpleCard() {
   const bull = <span className={classes.bullet}>•</span>;
 
   return (
-    <div>
+    <div style={{ marginBottom: "15px" }}>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <Card className={classes.root}>

@@ -162,14 +162,14 @@ function ResponsiveDrawer(props) {
         </ListItem>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <RouterLink to="/vouchers">
+            {/* <RouterLink to="/vouchers">
               <ListItem button className={classes.nested}>
                 <ListItemText
                   secondary="내 회원권 정보"
                   className={classes.subMenu}
                 />
               </ListItem>
-            </RouterLink>
+            </RouterLink> */}
             <RouterLink to="/mypage/bookings">
               <ListItem button className={classes.nested}>
                 <ListItemText

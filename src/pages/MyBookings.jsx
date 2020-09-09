@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import SessionCard from "../components/SessionCard";
-import BookingTabs from "../components/BookingTabs";
+import Voucher from "./Voucher";
+import TabBar from "../components/TabBar";
+import TabPanel from "../components/TabPanel";
 
 const MyBookings = () => {
   const globalMemberSessions = useSelector(
@@ -18,15 +20,34 @@ const MyBookings = () => {
   console.log(enrolledSessionIds);
   console.log(globalSessions);
   console.log("enrolledSessions", enrolledSessions);
+
+  const [value, setValue] = useState(0);
+
+  const handleChage = (newValue) => {
+    setValue(newValue);
+  };
+
   return (
     <div>
-      <BookingTabs />
-      {enrolledSessions.map((enrolledSession) => (
-        <SessionCard
-          key={enrolledSession.id}
-          enrolledSession={enrolledSession}
-        />
-      ))}
+      <Voucher />
+      <TabBar onChange={handleChage} menu="bookings">
+        <TabPanel value={value} index={0}>
+          {enrolledSessions.map((enrolledSession) => (
+            <SessionCard
+              key={enrolledSession.id}
+              enrolledSession={enrolledSession}
+            />
+          ))}
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          {enrolledSessions.map((enrolledSession) => (
+            <SessionCard
+              key={enrolledSession.id}
+              enrolledSession={enrolledSession}
+            />
+          ))}
+        </TabPanel>
+      </TabBar>
     </div>
   );
 };
