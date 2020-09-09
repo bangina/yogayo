@@ -16,10 +16,10 @@ const theme = createMuiTheme({
       white: "#fff",
     },
     primary: {
-      main: "#cf556c",
+      main: "#ff596a",
       contrastText: "#fff",
       mainGradient:
-        "linear-gradient(to right, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%)",
+        "linear-gradient(to bottom, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #cf556c 100%)",
     },
     secondary: {
       main: "#f99185",

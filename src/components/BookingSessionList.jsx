@@ -166,12 +166,17 @@ const BookingSessionList = () => {
                 </TimelineSeparator>
                 <TimelineContent>
                   <Card className={cx(styles.card)} elevation={0}>
-                    <CardContent style={{ background: "pink" }}>
+                    <CardContent
+                      style={{
+                        background:
+                          "rgba(0,0,0,0.1)",
+                      }}
+                    >
                       <CardMedia
                         image="/static/images/cards/live-from-space.jpg"
                         title="Live from space album cover"
                       >
-                        <Avatar className={styles.color2}>
+                        <Avatar>
                           {printDay(session.sessionDate.getDay())}
                         </Avatar>
                       </CardMedia>

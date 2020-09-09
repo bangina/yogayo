@@ -102,14 +102,14 @@ export default function Board(props) {
 
   return (
     <div>
-      <Typography variant="h3" gutterBottom color="primary">
-        요기 모여라
+      <Typography variant="h4" gutterBottom color="primary">
+        요가요 커뮤니티
       </Typography>
       <div className={classes.tableResponsive}>
         <div>
           <DropDown
             title="말머리"
-            value={["중고거래", "요가", "필라테스", "기타", "같이운동해요"]}
+            value={["중고장터", "요가", "필라테스", "같이 운동해요","기타"]}
             onChange={(value) => console.log(value)}
           />
         </div>

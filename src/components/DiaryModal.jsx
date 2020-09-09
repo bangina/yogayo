@@ -1,6 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { closeModal, nextModal, showResult } from "../redux/modal";
+import { closeDiaryModal } from "../redux/modal";
 import { withStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
@@ -87,25 +87,9 @@ const DiaryModal = (props) => {
     bad: "",
   });
   const handleClose = () => {
-    dispatch(closeModal());
+    dispatch(closeDiaryModal());
   };
 
-  const handleInitialSubmit = () => {
-    if (checked === true) {
-      validityRef.current.style.display = "none";
-      dispatch(nextModal());
-    } else {
-      validityRef.current.style.display = "flex";
-    }
-  };
-  //예약완료 버튼 클릭시
-  const handleNextSubmit = () => {
-    dispatch(showResult());
-  };
-  const handleSubmit = () => {
-    //예약 완료
-    dispatch(closeModal());
-  };
   const handleChange = () => {
     SetChecked(!checked);
     //누를 시점에 false인 경우(즉 false->true로 바뀔 때)

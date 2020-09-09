@@ -10,6 +10,13 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(1),
     minWidth: 120,
   },
+  inputLabel: {
+    fontSize: "14px",
+  },
+  menuItem: {
+    fontSize: "14px",
+    minHeight: 0,
+  },
 }));
 
 export default function DropDown(props) {
@@ -21,12 +28,14 @@ export default function DropDown(props) {
 
   return (
     <FormControl className={classes.formControl}>
-      <InputLabel id="demo-simple-select-helper-label">
+      <InputLabel id="select-label" className={classes.inputLabel}>
         {props.title}
       </InputLabel>
-      <Select onChange={handleChange}>
+      <Select onChange={handleChange} className={classes.select}>
         {props.value.map((v) => (
-          <MenuItem value={v}>{v}</MenuItem>
+          <MenuItem value={v} className={classes.menuItem}>
+            {v}
+          </MenuItem>
         ))}
       </Select>
     </FormControl>

@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
   },
   avatar: {
-    background: "pink",
+    background: "rgba(0,0,0,0.08)",
     margin: "auto",
     marginBottom: theme.spacing(2),
     width: "4rem",
@@ -107,7 +107,11 @@ function ResponsiveDrawer(props) {
       <div className={classes.toolbar} />
       <List className={classes.profile}>
         <Avatar className={classes.avatar}>
-          <img src="./pose1.svg" alt="user" style={{ width: "100%" }} />
+          <img
+            src="./pose1.svg"
+            alt="user"
+            style={{ width: "100%", opacity: "0.8" }}
+          />
         </Avatar>
         <ListItemText primary="솔방울" secondary="요가왕 요가원" />
       </List>
@@ -122,7 +126,7 @@ function ResponsiveDrawer(props) {
             >
               <CalendarIcon />
             </SvgIcon>
-            <ListItemText primary="수업 예약" />
+            <ListItemText primary="수업 예약하기" />
           </ListItem>
         </RouterLink>
         <RouterLink to="/board">
@@ -134,7 +138,7 @@ function ResponsiveDrawer(props) {
             >
               <TextBubbleIcon />
             </SvgIcon>
-            <ListItemText primary="커뮤니티" />
+            <ListItemText primary="요가요 커뮤니티" />
           </ListItem>
         </RouterLink>
         <RouterLink to="/diary">
@@ -146,7 +150,7 @@ function ResponsiveDrawer(props) {
             >
               <NotebookIcon />
             </SvgIcon>
-            <ListItemText primary="다이어리" />
+            <ListItemText primary="수련 일기" />
           </ListItem>
         </RouterLink>
         <ListItem button onClick={handleClick}>

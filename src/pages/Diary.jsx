@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { closeDiaryModal, openDiaryModal } from "../redux/modal";
 import DiaryCard from "../components/DiaryCard";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
@@ -13,7 +15,7 @@ const Diary = () => {
       place: "간디룸",
       sessionName: "기초 요가",
       companyName: "자메이카 요가 필라테스 센터",
-      diaryText: "솔방울님, 이번 수련은 어떠셨나요?",
+      diaryText: "솔방울님, 은 어떠셨나요?",
       feeling: "good",
     },
   ]);
@@ -82,7 +84,8 @@ const Diary = () => {
       feeling: "good",
     },
   ]);
-
+  const globalModal = useSelector((state) => state.modal);
+  const dispatch = useDispatch();
   const printDay = (props) => {
     switch (props) {
       case 1:
@@ -103,9 +106,15 @@ const Diary = () => {
         return "";
     }
   };
-  console.log(new Date().getDay());
+  const loadMore = () => {};
+  const openModal = () => {
+    dispatch(openDiaryModal());
+  };
   return (
     <div>
+      <Typography variant="h4" gutterBottom color="primary">
+        오늘의 수련일기
+      </Typography>
       <Typography variant="" gutterBottom color="">
         {new Date().getFullYear()}년 {new Date().getMonth() + 1}월{" "}
         {new Date().getDate()}일, {printDay(new Date().getDay())}요일
@@ -122,7 +131,7 @@ const Diary = () => {
           textIndent: "10px",
         }}
       >
-        오늘 수련은 어떠셨나요?{" "}
+        오늘 수련은 어떠셨나요?
         <img src="./yogayo_logo.svg" style={{ width: "40px" }} alt="logo" />
       </p>
       <Typography variant="" gutterBottom color="">
@@ -136,11 +145,17 @@ const Diary = () => {
       <Grid container spacing={3}>
         {pendingContents.map((content) => (
           <Grid item xs={12} md={6} lg={4} xl={3} key={content.id}>
-            <DiaryCard content={content} />
+            <div onClick={openModal}>
+              <DiaryCard content={content} />
+            </div>
           </Grid>
         ))}
       </Grid>
-      <Typography>오늘의 요기 피드</Typography>
+      <br />
+      <br />
+      <Typography variant="h4" gutterBottom color="primary">
+        오늘의 요기 피드
+      </Typography>
       <br />
       <br />
       <br />
@@ -151,6 +166,20 @@ const Diary = () => {
           </Grid>
         ))}
       </Grid>
+      <Button
+        onClick={loadMore}
+        variant="outlined"
+        color="primary"
+        size="large"
+        style={{
+          position: "relative",
+          left: "50%",
+          transform: "translateX(-50%)",
+          marginTop: "1rem",
+        }}
+      >
+        더 보기
+      </Button>
       <DiaryModal></DiaryModal>
     </div>
   );

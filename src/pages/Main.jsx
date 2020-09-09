@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme) => ({
     color: "#fff",
     fontSize: "2rem",
     textAlign: "center",
-    zIndex: -1,
   },
   heroContent: {
     marginTop: "7rem",
@@ -222,7 +221,7 @@ const Main = (props) => {
                     color="primary"
                     onClick={() => props.history.push("/booking")}
                   >
-                    수업 예약
+                    수업 예약하기
                   </Button>
                 </Grid>
                 <Grid item>
@@ -239,63 +238,6 @@ const Main = (props) => {
             </div>
           </Container>
         </div>
-        {/* <Container className={classes.cardGrid} maxWidth="md"> */}
-        {/* End hero unit */}
-        {/* <Grid container spacing={4}>
-            <Grid item xs={12} sm={6}>
-              <Card className={classes.card}>
-                <CardMedia
-                  className={classes.cardMedia}
-                  image="./img/yoga.jpg"
-                  title="Image title"
-                />
-                <CardContent className={classes.cardContent}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    요가 기록
-                  </Typography>
-                  <Typography>
-                    요가 기록 설명글 어쩌구 저쩌구 랄라블라
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button
-                    size="small"
-                    color="primary"
-                    onClick={() => props.history.push("/diary")}
-                  >
-                    바로가기
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid> */}
-        {/* <Grid item xs={12} sm={6}>
-              <Card className={classes.card}>
-                <CardMedia
-                  className={classes.cardMedia}
-                  image="./img/people.jpg"
-                  title="Image title"
-                />
-                <CardContent className={classes.cardContent}>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    커뮤니티
-                  </Typography>
-                  <Typography>
-                    커뮤니티 설명글 와라랄ㄹ라라라라ㅏ라랄
-                  </Typography>
-                </CardContent>
-                <CardActions>
-                  <Button
-                    size="small"
-                    color="primary"
-                    onClick={() => props.history.push("/board")}
-                  >
-                    바로가기
-                  </Button>
-                </CardActions>
-              </Card>
-            </Grid>
-          </Grid> */}
-        {/* </Container> */}
         <Typography variant="h5" color="" gutterBottom>
           요가요 피플 수련일기 구경하기
         </Typography>

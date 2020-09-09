@@ -30,7 +30,7 @@ const TabBar = (props) => {
   useEffect(() => {
     console.log(props.menu);
     if (props.menu === "notification") {
-      setTabName(["커뮤니티", "다이어리"]);
+      setTabName(["커뮤니티", "수련 일기"]);
     } else if (props.menu === "bookings") {
       setTabName(["예약한 수업", "지난 수업"]);
     }

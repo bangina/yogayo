@@ -19,6 +19,7 @@ import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfie
 import SentimentDissatisfiedIcon from "@material-ui/icons/SentimentDissatisfied";
 import SentimentSatisfiedIcon from "@material-ui/icons/SentimentSatisfied";
 import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissatisfied";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Grid from "@material-ui/core/Grid";
 const useStyles = makeStyles(() => ({
   root: {
@@ -75,54 +76,54 @@ export const DiaryCard = (prop) => {
   const content = prop.content;
 
   return (
-    // <Grid item xs={12} md={6} lg={4} xl={3} key={content.id}>
-      <Card elevation={1} className={styles.root}>
-        <Typography variant="h6" className={styles.date}>
-          {content.sessionDate.getMonth() + 1 < 10
-            ? `0${content.sessionDate.getMonth() + 1}`
-            : content.sessionDate.getMonth() + 1}
-          월{" "}
-          {content.sessionDate.getDate() + 1 < 10
-            ? `0${content.sessionDate.getDate()}`
-            : content.sessionDate.getDate()}
-          일
+    <Card elevation={1} className={styles.root}>
+      <Typography variant="h6" className={styles.date}>
+        {content.sessionDate.getMonth() + 1 < 10
+          ? `0${content.sessionDate.getMonth() + 1}`
+          : content.sessionDate.getMonth() + 1}
+        월{" "}
+        {content.sessionDate.getDate() < 10
+          ? `0${content.sessionDate.getDate()}`
+          : content.sessionDate.getDate()}
+        일
+      </Typography>
+      <div className={styles.imgBackground}>
+        <CardMedia
+          classes={mediaStyles}
+          image={`./img/diary_img_0${content.imgSrc}.png`}
+        />
+      </div>
+      <CardContent className={cx(shadowStyles.root, styles.content)}>
+        <IconButton className={styles.favorite}>
+          <SentimentVerySatisfiedIcon />
+        </IconButton>
+        <h3 className={styles.title}>{content.sessionName}</h3>
+        <Box color={"grey.500"} display={"flex"} alignItems={"center"} mb={1}>
+          <LocationOn className={styles.locationIcon} />
+          <span>요가왕 요가원</span>
+        </Box>
+        <Typography color={"textSecondary"} variant={"body2"}>
+          {content.diaryText}
         </Typography>
-        <div className={styles.imgBackground}>
-          <CardMedia
-            classes={mediaStyles}
-            image={`./img/diary_img_0${content.imgSrc}.png`}
-          />
-        </div>
-        <CardContent className={cx(shadowStyles.root, styles.content)}>
-          <IconButton className={styles.favorite}>
-            <SentimentVerySatisfiedIcon />
-          </IconButton>
-          <h3 className={styles.title}>{content.sessionName}</h3>
-          <Box color={"grey.500"} display={"flex"} alignItems={"center"} mb={1}>
-            <LocationOn className={styles.locationIcon} />
-            <span>요가왕 요가원</span>
-          </Box>
-          <Typography color={"textSecondary"} variant={"body2"}>
-            {content.diaryText}
-          </Typography>
+        <Box
+          mt={2}
+          display={"flex"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+        >
           <Box
-            mt={2}
             display={"flex"}
-            justifyContent={"space-between"}
             alignItems={"center"}
+            className={gutterStyles.parent}
           >
-            <Box
-              display={"flex"}
-              alignItems={"center"}
-              className={gutterStyles.parent}
-            ></Box>
             <IconButton size={"small"}>
-              <MoreHoriz />
+              <FavoriteBorderIcon />
+              <span>3</span>
             </IconButton>
           </Box>
-        </CardContent>
-      </Card>
-    // </Grid>
+        </Box>
+      </CardContent>
+    </Card>
   );
 };
 
