@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import MuiDialogContent from "@material-ui/core/DialogContent";
+import MuiDialog from "@material-ui/core/DialogActions";
 import MuiDialogActions from "@material-ui/core/DialogActions";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
@@ -32,7 +33,6 @@ const styles = (theme) => ({
     position: "absolute",
     right: theme.spacing(1),
     top: theme.spacing(1),
-    // color: theme.palette.grey[500],
     color: "#fff",
   },
 });
@@ -74,6 +74,12 @@ const StyledButton = styled(Button)`
   width: 49%;
   padding: 12px 22px;
   font-size: 1.1rem;
+`;
+const StyledDialog = styled(Dialog)`
+  width: 100%;
+  .MuiDialog-paperWidthSm {
+    width: 100%;
+  }
 `;
 const printDay = (props) => {
   switch (props) {
@@ -134,7 +140,7 @@ const BookingModal = (props) => {
   };
   return (
     <>
-      <Dialog
+      <StyledDialog
         onClose={handleClose}
         aria-labelledby="modal-title"
         open={globalModal.isModalOpen}
@@ -271,7 +277,7 @@ const BookingModal = (props) => {
             />
           </div>
         </DialogActions>
-      </Dialog>
+      </StyledDialog>
     </>
   );
 };

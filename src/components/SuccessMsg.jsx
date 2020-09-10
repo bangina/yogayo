@@ -66,7 +66,12 @@ const SuccessMsg = (prop) => {
           </defs>
         </StyledSvg>
       </div>
-  <Typography variant="h6">{prop.message}</Typography>
+      <Typography
+        variant="h6"
+        style={{ textAlign: "center", marginTop: "1rem" }}
+      >
+        {prop.message}
+      </Typography>
     </>
   );
 };

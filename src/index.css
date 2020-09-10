@@ -26,8 +26,30 @@ span.error {
   justify-content: center;
 }
 
-/* bookings page - Tab  */
 
-.MuiTabs-indicator::after {
-  /* background: #ffb6c2 !important; */
+.swiper-button-prev,
+.swiper-button-next {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  width: 40px !important;
+  height: 40px !important;
+  line-height: 50px !important;
+  box-sizing: border-box;
+  display: block;
+  z-index: 999;
+}
+
+.swiper-button-prev {
+  left: 0 !important;
+}
+
+.swiper-button-next {
+  right: 0 !important;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 1rem !important;
+  color: #fff;
+  font-weight: bold;
 }

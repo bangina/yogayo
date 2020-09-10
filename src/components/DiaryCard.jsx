@@ -23,7 +23,6 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Grid from "@material-ui/core/Grid";
 const useStyles = makeStyles(() => ({
   root: {
-    overflow: "initial",
     maxWidth: 700,
     backgroundColor: "transparent",
     paddingBottom: "1rem",
@@ -77,7 +76,7 @@ export const DiaryCard = (prop) => {
   const content = prop.content;
 
   return (
-    <Card elevation={1} className={styles.root}>
+    <Card className={styles.root}>
       <Typography variant="h6" className={styles.date}>
         {content.sessionDate.getMonth() + 1 < 10
           ? `0${content.sessionDate.getMonth() + 1}`

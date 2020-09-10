@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import CameraIcon from "@material-ui/icons/PhotoCamera";
 import Card from "@material-ui/core/Card";
@@ -14,13 +14,13 @@ import Container from "@material-ui/core/Container";
 import Link from "@material-ui/core/Link";
 import { Cookies } from "react-cookie";
 import DiaryCard from "../components/DiaryCard";
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
-import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
-import Detail from "./Detail";
 import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import "swiper/swiper.scss";
+import "swiper/components/navigation/navigation.scss";
 import BoardCard from "../components/BoardCard";
 
+SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
@@ -39,6 +39,10 @@ const useStyles = makeStyles((theme) => ({
     color: "#fff",
     fontSize: "2rem",
     textAlign: "center",
+  },
+  swiper: {
+    marginBottom: "2rem",
+    padding: "1rem 0",
   },
   heroContent: {
     marginTop: "7rem",
@@ -163,7 +167,6 @@ const Main = (props) => {
     cookies.remove("member");
     props.history.push("/login");
   };
-  const swiperRef = useRef();
   const list = window.matchMedia("(min-width:960px)");
   const initialSlideNum = function () {
     if (list.matches === true) {
@@ -246,19 +249,15 @@ const Main = (props) => {
           요가요 피플 수련일기 구경하기
         </Typography>
         <Typography gutterBottom>오늘 올라온 요가 수련 일기들이에요</Typography>
-        <br />
         <Swiper
           spaceBetween={40}
           slidesPerView={slidesPerView}
           navigation
-          pagination={{ clickable: true }}
-          scrollbar={{ draggable: true }}
           onSwiper={(swiper) => console.log(swiper)}
           onSlideChange={() => console.log("slide change")}
-          ref={swiperRef}
         >
           {contents.map((content) => (
-            <SwiperSlide>
+            <SwiperSlide className={classes.swiperSlide}>
               <DiaryCard content={content} />
             </SwiperSlide>
           ))}
@@ -270,16 +269,13 @@ const Main = (props) => {
         <Typography gutterBottom>
           요가원 정보 공유/ 중고장터 / 같이 운동해요!
         </Typography>
-        <br />
         <Swiper
           spaceBetween={40}
           slidesPerView={slidesPerView}
           navigation
-          pagination={{ clickable: true }}
-          scrollbar={{ draggable: true }}
           onSwiper={(swiper) => console.log(swiper)}
           onSlideChange={() => console.log("slide change")}
-          ref={swiperRef}
+          className={classes.swiper}
         >
           {contents.map((content) => (
             <SwiperSlide>
