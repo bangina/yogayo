@@ -19,6 +19,8 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import Detail from "./Detail";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.scss";
+import BoardCard from "../components/BoardCard";
+
 const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
@@ -267,11 +269,22 @@ const Main = (props) => {
           요가원 정보 공유/ 중고장터 / 같이 운동해요!
         </Typography>
         <br />
-        <img
-          src="./img/temp_post_detail.png"
-          alt="temp"
-          style={{ width: "100%" }}
-        />
+        <Swiper
+          spaceBetween={40}
+          slidesPerView={slidesPerView}
+          navigation
+          pagination={{ clickable: true }}
+          scrollbar={{ draggable: true }}
+          onSwiper={(swiper) => console.log(swiper)}
+          onSlideChange={() => console.log("slide change")}
+          ref={swiperRef}
+        >
+          {contents.map((content) => (
+            <SwiperSlide>
+              <BoardCard />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </main>
     </React.Fragment>
   );
