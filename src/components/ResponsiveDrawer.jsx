@@ -15,7 +15,6 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import Collapse from "@material-ui/core/Collapse";
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
@@ -108,14 +107,15 @@ function ResponsiveDrawer(props) {
       <List className={classes.profile}>
         <Avatar className={classes.avatar}>
           <img
-            src="./pose1.svg"
+            src="/pose1.svg"
             alt="user"
             style={{ width: "100%", opacity: "0.8" }}
           />
         </Avatar>
-        <ListItemText primary="솔방울" secondary="요가왕 요가원" />
+        <RouterLink to="/mypage">
+          <ListItemText primary="솔방울 님 >" secondary="요가왕 요가원" />
+        </RouterLink>
       </List>
-      <Divider />
       <List>
         <RouterLink to="/booking">
           <ListItem>
@@ -153,7 +153,31 @@ function ResponsiveDrawer(props) {
             <ListItemText primary="수련 일기" />
           </ListItem>
         </RouterLink>
-        <ListItem button onClick={handleClick}>
+        <RouterLink to="/mybookings">
+          <ListItem>
+            <SvgIcon
+              style={{ marginRight: "10px" }}
+              fontSize="medium"
+              viewBox="0 0 32 32"
+            >
+              <NotebookIcon />
+            </SvgIcon>
+            <ListItemText primary="내 스케쥴" />
+          </ListItem>
+        </RouterLink>
+        <RouterLink to="/notifications">
+          <ListItem>
+            <SvgIcon
+              style={{ marginRight: "10px" }}
+              fontSize="medium"
+              viewBox="0 0 32 32"
+            >
+              <NotebookIcon />
+            </SvgIcon>
+            <ListItemText primary="알림" />
+          </ListItem>
+        </RouterLink>
+        {/* <ListItem button onClick={handleClick}>
           <SvgIcon
             style={{ marginRight: "10px" }}
             fontSize="medium"
@@ -166,20 +190,17 @@ function ResponsiveDrawer(props) {
         </ListItem>
         <Collapse in={open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            {/* <RouterLink to="/vouchers">
-              <ListItem button className={classes.nested}>
-                <ListItemText
-                  secondary="내 회원권 정보"
-                  className={classes.subMenu}
-                />
-              </ListItem>
-            </RouterLink> */}
             <RouterLink to="/mypage/bookings">
               <ListItem button className={classes.nested}>
                 <ListItemText
-                  secondary="예약 현황"
+                  secondary="내 스케쥴"
                   className={classes.subMenu}
                 />
+              </ListItem>
+            </RouterLink>
+            <RouterLink to="/mypage">
+              <ListItem button className={classes.nested}>
+                <ListItemText secondary="내 정보" className={classes.subMenu} />
               </ListItem>
             </RouterLink>
             <RouterLink to="/notifications">
@@ -188,7 +209,12 @@ function ResponsiveDrawer(props) {
               </ListItem>
             </RouterLink>
           </List>
-        </Collapse>
+        </Collapse> */}
+        <RouterLink to="/">
+          <ListItem>
+            <ListItemText secondary="로그아웃" style={{ textIndent: "2rem" }} />
+          </ListItem>
+        </RouterLink>
       </List>
     </div>
   );

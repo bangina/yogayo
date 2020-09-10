@@ -12,6 +12,9 @@ const Booking = () => {
       <div
         style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
       >
+        <Typography gutterBottom color="primary">
+          날짜를 선택하세요.
+        </Typography>
         <BookingCalendar />
         <BookingSessionList />
       </div>

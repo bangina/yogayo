@@ -7,8 +7,9 @@ import Main from "./pages/Main";
 import Booking from "./pages/Booking";
 import Board from "./pages/Board";
 import MyBookings from "./pages/MyBookings";
+import MyPage from "./pages/MyPage";
 import Diary from "./pages/Diary";
-import Voucher from "./pages/Voucher";
+import Voucher from "./components/Voucher";
 import Detail from "./pages/Detail";
 import InsertBoard from "./pages/InsertBoard";
 import Notifications from "./pages/Notifications";
@@ -30,7 +31,8 @@ function App() {
           <Route path="/board/detail/:id" component={Detail}></Route>
           <Route path="/board/insert" component={InsertBoard}></Route>
           <Route path="/diary" component={Diary}></Route>
-          <Route path="/mypage/bookings" component={MyBookings}></Route>
+          <Route path="/mybookings" component={MyBookings}></Route>
+          <Route path="/mypage" component={MyPage} exact></Route>
           <Route path="/vouchers" component={Voucher}></Route>
           <Route path="/notifications" component={Notifications}></Route>
         </ResponsiveDrawer>

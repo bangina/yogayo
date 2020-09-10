@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import SessionCard from "../components/SessionCard";
-import Voucher from "./Voucher";
 import TabBar from "../components/TabBar";
 import TabPanel from "../components/TabPanel";
+import Typography from "@material-ui/core/Typography";
 
 const MyBookings = () => {
   const globalMemberSessions = useSelector(
@@ -28,8 +28,10 @@ const MyBookings = () => {
   };
 
   return (
-    <div>
-      <Voucher />
+    <>
+      <Typography variant="h4" gutterBottom color="primary">
+        내 스케쥴
+      </Typography>
       <TabBar onChange={handleChage} menu="bookings">
         <TabPanel value={value} index={0}>
           {enrolledSessions.map((enrolledSession) => (
@@ -48,7 +50,7 @@ const MyBookings = () => {
           ))}
         </TabPanel>
       </TabBar>
-    </div>
+    </>
   );
 };
 export default MyBookings;
