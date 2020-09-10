@@ -14,7 +14,7 @@ function a11yProps(index) {
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: theme.palette.background.paper,
+    // backgroundColor: theme.palette.background.paper,
   },
 }));
 
@@ -43,7 +43,7 @@ const TabBar = (props) => {
           value={value}
           onChange={handleChange}
           aria-label="simple tabs example"
-          variant="fullWidth"
+          // variant="fullWidth"
         >
           <Tab label={tabName[0]} {...a11yProps(0)} />
           <Tab label={tabName[1]} {...a11yProps(1)} />

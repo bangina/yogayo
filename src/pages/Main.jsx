@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     right: 0,
     top: "56px",
-    height: "7rem",
+    minHeight: "7rem",
     padding: "1rem",
     boxShadow: "1px 1px 6px rgba(0,0,0,0.2)",
     borderBottomLeftRadius: "30px",
@@ -187,8 +187,10 @@ const Main = (props) => {
 
       <main>
         <div className={classes.visual}>
-          마감기한 : 9/10일 목요일. <br />
-          죽음의 코딩레이스.
+          핫챠 핫챠 운동을 하쟈
+          <img src="./pose1.svg" alt="" />
+          <img src="./pose2.svg" alt="" />
+          <img src="./pose3.svg" alt="" />
         </div>
         {/* Hero unit */}
         <div className={classes.heroContent}>

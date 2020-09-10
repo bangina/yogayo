@@ -16,7 +16,7 @@ const theme = createMuiTheme({
       white: "#fff",
     },
     primary: {
-      main: "#ff596a",
+      main: "#cf556c",
       contrastText: "#fff",
       mainGradient:
         "linear-gradient(to bottom, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #cf556c 100%)",
@@ -49,7 +49,7 @@ ReactDOM.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
       <App />
-    </ThemeProvider>
+    </ThemeProvider>{" "}
   </Provider>,
   document.getElementById("root")
 );

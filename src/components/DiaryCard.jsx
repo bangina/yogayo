@@ -30,6 +30,7 @@ const useStyles = makeStyles(() => ({
     position: "relative",
     borderRadius: "10px",
     overflow: "hidden",
+    cursor: "pointer",
   },
   imgBackground: {
     background: "#ff8177",
