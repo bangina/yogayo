@@ -8,6 +8,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
+import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,15 +23,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const BoardCard = () => {
+const BoardCard = (props) => {
   const classes = useStyles();
+  const content = props.content;
 
   return (
     <Card className={classes.root}>
       <CardHeader
         avatar={<Avatar>SB</Avatar>}
-        title="Shrimp and Chorizo Paella"
-        subheader="2020.09.10"
+        title={content.writer}
+        subheader={content.regiDate}
       />
       <CardMedia
         className={classes.media}
@@ -39,18 +41,20 @@ const BoardCard = () => {
       />
       <CardContent>
         <Typography variant="h5" component="p">
-          Title
+          {content.title}
         </Typography>
         <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+          {content.contents.length > 50
+            ? content.contents.substr(0, 50) + "..."
+            : content.contents}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <Button className={classes.btn} color="primary">
-          글보기
-        </Button>
+        <RouterLink to={`/board/detail/${content.id}`}>
+          <Button className={classes.btn} color="primary">
+            글보기
+          </Button>
+        </RouterLink>
       </CardActions>
     </Card>
   );

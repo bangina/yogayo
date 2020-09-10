@@ -1,29 +1,30 @@
-import React, { Children } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import React from "react";
+import { Link as RouterLink, withRouter } from "react-router-dom";
 import PropTypes from "prop-types";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Divider from "@material-ui/core/Divider";
+import Button from "@material-ui/core/Button";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import Collapse from "@material-ui/core/Collapse";
+// import ExpandLess from "@material-ui/icons/ExpandLess";
+// import ExpandMore from "@material-ui/icons/ExpandMore";
+// import Collapse from "@material-ui/core/Collapse";
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Avatar from "@material-ui/core/Avatar";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { ReactComponent as UserIcon } from "../icons/UserIcon.svg";
+// import { ReactComponent as UserIcon } from "../icons/UserIcon.svg";
 import { ReactComponent as NotebookIcon } from "../icons/NotebookIcon.svg";
 import { ReactComponent as TextBubbleIcon } from "../icons/TextBubbleIcon.svg";
 import { ReactComponent as CalendarIcon } from "../icons/CalendarIcon.svg";
 import { ReactComponent as Logo } from "../icons/Logo.svg";
 import { ReactComponent as Yogayo } from "../icons/Yogayo.svg";
+import { Cookies } from "react-cookie";
 
 const drawerWidth = 240;
 
@@ -92,13 +93,19 @@ function ResponsiveDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
+  // const handleClick = () => {
+  //   setOpen(!open);
+  // };
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const onLogout = () => {
+    const cookies = new Cookies();
+    cookies.remove("member");
+    props.history.push("/login");
   };
 
   const drawer = (
@@ -115,6 +122,14 @@ function ResponsiveDrawer(props) {
         <RouterLink to="/mypage">
           <ListItemText primary="솔방울 님 >" secondary="요가왕 요가원" />
         </RouterLink>
+        <Button
+          variant="outlined"
+          color="primary"
+          name="logout"
+          onClick={onLogout}
+        >
+          로그아웃
+        </Button>
       </List>
       <List>
         <RouterLink to="/booking">
@@ -210,11 +225,11 @@ function ResponsiveDrawer(props) {
             </RouterLink>
           </List>
         </Collapse> */}
-        <RouterLink to="/">
+        {/* <RouterLink to="/">
           <ListItem>
             <ListItemText secondary="로그아웃" style={{ textIndent: "2rem" }} />
           </ListItem>
-        </RouterLink>
+        </RouterLink> */}
       </List>
     </div>
   );
@@ -292,4 +307,4 @@ ResponsiveDrawer.propTypes = {
   window: PropTypes.func,
 };
 
-export default ResponsiveDrawer;
+export default withRouter(ResponsiveDrawer);

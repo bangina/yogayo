@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
-import CameraIcon from "@material-ui/icons/PhotoCamera";
-import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
-import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Link from "@material-ui/core/Link";
 import { Cookies } from "react-cookie";
 import DiaryCard from "../components/DiaryCard";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -100,7 +93,7 @@ const Main = (props) => {
       attendance: "24회 중 1회 출석",
     },
   };
-  const [contents, setContents] = useState([
+  const contents = [
     {
       id: 1,
       sessionDate: new Date(),
@@ -145,7 +138,46 @@ const Main = (props) => {
         "보이차하고 요가하고 🍵🙏🏻 꾸준함에 끈기, 행하고 보고 바로잡고 다시 시도하는 것. 두려움을 넘어야 그 희열이 찾아온다 - 요가로 하여금 늘 많은 것을 배운다. 요가를 더 오래 하고자 시작하여 호흡 몇번에 땀이 나고 온몸이 떨려오는 오늘도 완전호흡하는 수련자라 너무 좋은 요즘",
       feeling: "good",
     },
-  ]);
+  ];
+
+  const boardContents = [
+    {
+      id: 1,
+      header: "중고장터",
+      title: "수강권 양도 받으실분 있으신가요?",
+      contents: "사정상 요가를 못나가게되어 양도합니다",
+      writer: "최엉망진창",
+      regiDate: "2020.8.31",
+    },
+    {
+      id: 2,
+      header: "요가",
+      title: "간단한 요가동작을 소개합니다",
+      contents:
+        "타다아사나(산자세) : 타다 Tada는 산을 의미하고 아사나 Asana는 동작을 뜻해요! 타다아사나는 산처럼 곧바로 서 있는 자세를 뜻하며, 사마스티티(Samasthiti) 라고도 불립니다.",
+      writer: "요가신",
+      regiDate: "2020.8.31",
+    },
+    {
+      id: 3,
+      header: "필라테스",
+      title: "필라테스 호흡이란?",
+      contents:
+        "코로 숨을 마시고 이으로 숨을 가늘고 길게 내뱉어야 합니다. 숨을 마실때 흉곽을 좌우로 늘였다가 내쉬는 호흡에 흉곽을 좁혀주신다고 생각하시면 됩니다.",
+      writer: "필친놈",
+      regiDate: "2020.8.31",
+    },
+    {
+      id: 4,
+      header: "같이 운동해요",
+      title: "아메리카요가 군자점 같이 등록하실분 구해요!",
+      contents:
+        "현재 친구소개이벤트 중입니다! 친구 소개시 소개한 친구와 소개받은 친구 모두 횟수 추가 해준다고하니 관심있으신 분들 댓글 달아주세요👍",
+      writer: "팔이피플",
+      regiDate: "2020.8.31",
+    },
+  ];
+
   const classes = useStyles();
 
   const getLoggedInUser = () => {
@@ -277,9 +309,9 @@ const Main = (props) => {
           onSlideChange={() => console.log("slide change")}
           className={classes.swiper}
         >
-          {contents.map((content) => (
+          {boardContents.map((content) => (
             <SwiperSlide>
-              <BoardCard />
+              <BoardCard content={content} />
             </SwiperSlide>
           ))}
         </Swiper>

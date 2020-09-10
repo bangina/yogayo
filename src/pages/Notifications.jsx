@@ -36,14 +36,30 @@ const Notifications = (props) => {
             <ListItemAvatar>
               <Avatar>SB</Avatar>
             </ListItemAvatar>
-            <ListItemText primary="Work" secondary="Jan 7, 2014" />
+            <ListItemText
+              primary={
+                <React.Fragment>
+                  <b>이나천재</b>
+                  {"님이 댓글을 남겼습니다 : 요가복 팔렸나요?"}
+                </React.Fragment>
+              }
+              secondary="Jan 9, 2014"
+            />
           </ListItem>
 
           <ListItem divider>
             <ListItemAvatar>
               <Avatar>SB</Avatar>
             </ListItemAvatar>
-            <ListItemText primary="Vacation" secondary="July 20, 2014" />
+            <ListItemText
+              primary={
+                <React.Fragment>
+                  <b>최엉망진창</b>
+                  {"님이 댓글을 남겼습니다 : 좋은 글 감사합니다!^^"}
+                </React.Fragment>
+              }
+              secondary="Jan 9, 2014"
+            />
           </ListItem>
         </List>
       </TabPanel>
@@ -58,7 +74,7 @@ const Notifications = (props) => {
               primary={
                 <React.Fragment>
                   <b>요가좋아</b>
-                  {"님이 회원님의 글을 좋아합니다"}
+                  {"님이 회원님의 일기를 좋아합니다"}
                 </React.Fragment>
               }
               secondary="Jan 9, 2014"
@@ -69,14 +85,30 @@ const Notifications = (props) => {
             <ListItemAvatar>
               <Avatar>SB</Avatar>
             </ListItemAvatar>
-            <ListItemText primary="Work" secondary="Jan 7, 2014" />
+            <ListItemText
+              primary={
+                <React.Fragment>
+                  <b>이나천재</b>
+                  {"님이 회원님의 일기를 좋아합니다"}
+                </React.Fragment>
+              }
+              secondary="Jan 9, 2014"
+            />
           </ListItem>
 
           <ListItem divider>
             <ListItemAvatar>
               <Avatar>SB</Avatar>
             </ListItemAvatar>
-            <ListItemText primary="Vacation" secondary="July 20, 2014" />
+            <ListItemText
+              primary={
+                <React.Fragment>
+                  <b>최엉망진창</b>
+                  {"님이 회원님의 일기를 좋아합니다"}
+                </React.Fragment>
+              }
+              secondary="Jan 9, 2014"
+            />
           </ListItem>
         </List>
       </TabPanel>
