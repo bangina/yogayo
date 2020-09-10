@@ -9,7 +9,6 @@ import Board from "./pages/Board";
 import MyBookings from "./pages/MyBookings";
 import MyPage from "./pages/MyPage";
 import Diary from "./pages/Diary";
-import Voucher from "./components/Voucher";
 import Detail from "./pages/Detail";
 import InsertBoard from "./pages/InsertBoard";
 import Notifications from "./pages/Notifications";
@@ -33,7 +32,6 @@ function App() {
           <Route path="/diary" component={Diary}></Route>
           <Route path="/mybookings" component={MyBookings}></Route>
           <Route path="/mypage" component={MyPage} exact></Route>
-          <Route path="/vouchers" component={Voucher}></Route>
           <Route path="/notifications" component={Notifications}></Route>
         </ResponsiveDrawer>
       </Router>
