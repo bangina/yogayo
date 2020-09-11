@@ -12,36 +12,23 @@ import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
 import "swiper/swiper.scss";
 import "swiper/components/navigation/navigation.scss";
 import BoardCard from "../components/BoardCard";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(2),
   },
-  visual: {
-    background: "pink",
-    position: "fixed",
-    left: 0,
-    right: 0,
-    top: "56px",
-    minHeight: "7rem",
-    padding: "1rem",
-    boxShadow: "1px 1px 6px rgba(0,0,0,0.2)",
-    borderBottomLeftRadius: "30px",
-    borderBottomRightRadius: "30px",
-    color: "#fff",
-    fontSize: "2rem",
-    textAlign: "center",
-  },
   swiper: {
     marginBottom: "2rem",
     padding: "1rem 0",
   },
   heroContent: {
-    marginTop: "7rem",
     padding: theme.spacing(2, 0, 6),
     "&>*": {
-      backgroundColor: "#fff",
+      backgroundColor: "rgb(207, 85, 108)",
+      color: "#fff",
       padding: "2rem 3rem",
       borderRadius: "10px",
       boxShadow: "1px 2px 4px rgba(0,0,0,0.2)",
@@ -49,6 +36,21 @@ const useStyles = makeStyles((theme) => ({
   },
   heroButtons: {
     marginTop: theme.spacing(4),
+  },
+  linkBox: {
+    textAlign: "right",
+    fontSize: "1.1rem",
+    letterSpacing: "0.04rem",
+    cursor: "pointer",
+    lineHeight: "0rem",
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  bookingText: {
+    fontSize: "1.2rem",
+  },
+  bookingArrow: {
+    verticalAlign: "text-bottom",
   },
   cardGrid: {
     paddingTop: theme.spacing(8),
@@ -76,6 +78,17 @@ const useStyles = makeStyles((theme) => ({
   arrowRight: {
     position: "absolute",
     right: "-5px",
+  },
+  tagIcon: {
+    display: "inline-block",
+    marginRight: "10px",
+    color: "#fff",
+    lineHeight: "2rem",
+    padding: "0 1rem",
+    borderRadius: "30px",
+    background: "salmon",
+    fontSize: "1rem",
+    boxShadow: "2px 2px 4px rgba(0,0,0,0.15)",
   },
 }));
 
@@ -204,7 +217,7 @@ const Main = (props) => {
     if (list.matches === true) {
       return 3;
     } else {
-      return 1;
+      return 1.7;
     }
   };
   const [slidesPerView, setSlidesPerView] = useState(initialSlideNum);
@@ -213,7 +226,7 @@ const Main = (props) => {
       if (list.matches === true) {
         setSlidesPerView(3);
       } else {
-        setSlidesPerView(1);
+        setSlidesPerView(1.7);
       }
     }
     window.addEventListener("resize", handleResize);
@@ -221,31 +234,18 @@ const Main = (props) => {
   return (
     <React.Fragment>
       <CssBaseline />
-
       <main>
-        {/* <div className={classes.visual}>
-          핫챠 핫챠 운동을 하쟈
-          <img src="./pose1.svg" alt="" />
-          <img src="./pose2.svg" alt="" />
-          <img src="./pose3.svg" alt="" />
-        </div> */}
-        {/* Hero unit */}
+        <Typography
+          component="h2"
+          variant="h6"
+          align="center"
+          color="textPrimary"
+          gutterBottom
+        >
+          {loginUser ? loginUser.name : ""}님! 좋은 아침이에요.
+        </Typography>
         <div className={classes.heroContent}>
-          <Container maxWidth="sm">
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="textPrimary"
-              gutterBottom
-            >
-              {loginUser ? loginUser.name : ""}님{/* {loginMember.name}님 */}
-              <img
-                src="./pose1.svg"
-                alt="yoga pose"
-                style={{ width: "40px", margin: "0 10px" }}
-              />
-            </Typography>
+          {/* <Container maxWidth="sm">
             <Typography align="center" color="textSecondary" paragraph>
               {loginMember.Voucher.center} <br />
               {loginMember.Voucher.VoucherName} <br />
@@ -260,58 +260,71 @@ const Main = (props) => {
                     color="primary"
                     onClick={() => props.history.push("/booking")}
                   >
-                    수업 예약하기
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    name="logout"
-                    onClick={onLogout}
-                  >
-                    로그아웃
+                    수업 예약하러 가기 {">"}
                   </Button>
                 </Grid>
               </Grid>
             </div>
+          </Container> */}
+          <Container maxWidth="sm" className={classes.linkBox}>
+            <EventAvailableIcon
+              fontSize="large"
+              className={classes.bookingIcon}
+            />
+            <Typography
+              align="center"
+              onClick={() => props.history.push("/booking")}
+              className={classes.bookingText}
+            >
+              <strong>수업 예약</strong> 하러가기
+              <ArrowForwardIcon
+                fontSize="large"
+                className={classes.bookingArrow}
+              />
+            </Typography>
           </Container>
         </div>
-        <Typography variant="h5" color="" gutterBottom>
-          요가요 피플 수련일기 구경하기
+        <Typography variant="h6" gutterBottom fontWeight="fontWeightBold">
+          오늘 올라온 수련일기
         </Typography>
-        <Typography gutterBottom>오늘 올라온 요가 수련 일기들이에요</Typography>
+        <br />
+        <br />
         <Swiper
-          spaceBetween={40}
+          spaceBetween={20}
           slidesPerView={slidesPerView}
-          navigation
+          // navigation
           onSwiper={(swiper) => console.log(swiper)}
           onSlideChange={() => console.log("slide change")}
         >
           {contents.map((content) => (
             <SwiperSlide className={classes.swiperSlide}>
-              <DiaryCard content={content} />
+              <DiaryCard content={content} ellipsis={true} />
             </SwiperSlide>
           ))}
         </Swiper>
         <br />
-        <Typography variant="h5" color="primary" gutterBottom>
+        <Typography variant="h5" color="" gutterBottom>
           요가요 피플 커뮤니티
         </Typography>
-        <Typography gutterBottom>
-          요가원 정보 공유/ 중고장터 / 같이 운동해요!
-        </Typography>
+        <br />
+        <div>
+          <span className={classes.tagIcon}> 요가</span>
+          <span className={classes.tagIcon}>필테</span>
+          <span className={classes.tagIcon}>중고장터</span>
+          <span className={classes.tagIcon}>같이 운동해요</span>
+        </div>
+        <br />
         <Swiper
-          spaceBetween={40}
+          spaceBetween={20}
           slidesPerView={slidesPerView}
-          navigation
+          // navigation
           onSwiper={(swiper) => console.log(swiper)}
           onSlideChange={() => console.log("slide change")}
           className={classes.swiper}
         >
           {boardContents.map((content) => (
             <SwiperSlide>
-              <BoardCard content={content} />
+              <BoardCard content={content} ellipsis={true} />
             </SwiperSlide>
           ))}
         </Swiper>

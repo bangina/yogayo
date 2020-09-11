@@ -57,6 +57,14 @@ const useStyles = makeStyles(() => ({
     backgroundColor: "#fff",
     borderRadius: 4,
   },
+  diaryText: {
+    display: "block",
+    display: "-webkit-box",
+    WebkitLineClamp: "5",
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  },
   favorite: {
     position: "absolute",
     top: 12,
@@ -68,12 +76,13 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export const DiaryCard = (prop) => {
+export const DiaryCard = (props) => {
   const styles = useStyles();
   const mediaStyles = useWideCardMediaStyles();
   const shadowStyles = useFadedShadowStyles();
   const gutterStyles = usePushingGutterStyles({ firstExcluded: true });
-  const content = prop.content;
+  const content = props.content;
+  const ellipsis = props.ellipsis;
 
   return (
     <Card className={styles.root}>
@@ -102,7 +111,11 @@ export const DiaryCard = (prop) => {
           <LocationOn className={styles.locationIcon} />
           <span>요가왕 요가원</span>
         </Box>
-        <Typography color={"textSecondary"} variant={"body2"}>
+        <Typography
+          color={"textSecondary"}
+          variant={"body2"}
+          className={ellipsis ? cx(styles.diaryText) : ""}
+        >
           {content.diaryText}
         </Typography>
         <Box

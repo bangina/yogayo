@@ -21,42 +21,61 @@ const useStyles = makeStyles((theme) => ({
   btn: {
     marginLeft: "auto",
   },
+  boardTitle: {
+    display: "block",
+    display: "-webkit-box",
+    WebkitLineClamp: "1",
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    minHeight: "30px",
+    marginBottom: "1rem",
+  },
+  boardText: {
+    display: "block",
+    display: "-webkit-box",
+    WebkitLineClamp: "3",
+    WebkitBoxOrient: "vertical",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    minHeight: "60px",
+  },
 }));
 
 const BoardCard = (props) => {
   const classes = useStyles();
   const content = props.content;
+  const ellipsis = props.ellipsis;
 
   return (
-    <Card className={classes.root}>
-      <CardHeader
-        avatar={<Avatar>SB</Avatar>}
-        title={content.writer}
-        subheader={content.regiDate}
-      />
-      <CardMedia
-        className={classes.media}
-        image="./img/yoga.jpg"
-        title="Paella dish"
-      />
-      <CardContent>
-        <Typography variant="h5" component="p">
-          {content.title}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {content.contents.length > 50
-            ? content.contents.substr(0, 50) + "..."
-            : content.contents}
-        </Typography>
-      </CardContent>
-      <CardActions disableSpacing>
-        <RouterLink to={`/board/detail/${content.id}`}>
-          <Button className={classes.btn} color="primary">
-            글보기
-          </Button>
-        </RouterLink>
-      </CardActions>
-    </Card>
+    <RouterLink to={`/board/detail/${content.id}`}>
+      <Card className={classes.root}>
+        <CardHeader
+          avatar={<Avatar>SB</Avatar>}
+          title={content.writer}
+          subheader={content.regiDate}
+        />
+        <CardMedia
+          className={classes.media}
+          image="./img/yoga.jpg"
+          title="Paella dish"
+        />
+        <CardContent>
+          <Typography variant="h6" component="p" className={classes.boardTitle}>
+            {content.title}
+          </Typography>
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            component="p"
+            className={classes.boardText}
+          >
+            {content.contents}
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing></CardActions>
+      </Card>
+    </RouterLink>
   );
 };
 
