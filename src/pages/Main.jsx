@@ -223,12 +223,12 @@ const Main = (props) => {
       <CssBaseline />
 
       <main>
-        <div className={classes.visual}>
+        {/* <div className={classes.visual}>
           핫챠 핫챠 운동을 하쟈
           <img src="./pose1.svg" alt="" />
           <img src="./pose2.svg" alt="" />
           <img src="./pose3.svg" alt="" />
-        </div>
+        </div> */}
         {/* Hero unit */}
         <div className={classes.heroContent}>
           <Container maxWidth="sm">

@@ -12,7 +12,7 @@ const Booking = () => {
       <div
         style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
       >
-        <Typography gutterBottom color="primary">
+        <Typography gutterBottom color="primary" style={{ width: "100%" }}>
           날짜를 선택하세요.
         </Typography>
         <BookingCalendar />

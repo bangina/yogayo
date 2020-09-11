@@ -89,7 +89,6 @@ const StyledTimeline = styled(Timeline)`
   padding: 0;
   .MuiTimeline-root {
     padding: 0;
-    margin-left: 1rem;
   }
   .MuiTimelineContent-root {
     padding: 6px 0;
@@ -105,8 +104,20 @@ const StyledTimeline = styled(Timeline)`
   }
   .MuiTimelineDot-root {
     color: #fff;
-    padding: 5px 10px;
-    border-radius: 50px;
+    background: rgba(207, 85, 108, 1);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    padding: 0;
+    margin-bottom: 0;
+    text-align: center;
+    display: block;
+    margin-top: 0;
+  }
+  .MuiTimelineConnector-root {
+    background: rgba(0, 0, 0, 0.15);
+    width: 1px;
   }
 `;
 const BookingSessionList = () => {
@@ -159,26 +170,26 @@ const BookingSessionList = () => {
               {/* 카드 형식 */}
               <TimelineItem key={session.id}>
                 <TimelineSeparator>
-                  <TimelineDot color="secondary">
-                    {session.startTime}
-                  </TimelineDot>
+                  <TimelineConnector />
+                  <TimelineDot>{session.startTime}</TimelineDot>
                   <TimelineConnector />
                 </TimelineSeparator>
                 <TimelineContent>
                   <Card className={cx(styles.card)} elevation={0}>
                     <CardContent
-                      style={{
-                        background:
-                          "rgba(0,0,0,0.1)",
-                      }}
+                      style={
+                        {
+                          // background: "rgba(0,0,0,0.1)",
+                        }
+                      }
                     >
                       <CardMedia
                         image="/static/images/cards/live-from-space.jpg"
                         title="Live from space album cover"
                       >
-                        <Avatar>
+                        {/* <Avatar >
                           {printDay(session.sessionDate.getDay())}
-                        </Avatar>
+                        </Avatar> */}
                       </CardMedia>
                     </CardContent>
                     <Box>
@@ -208,16 +219,16 @@ const BookingSessionList = () => {
                         </span>
                       </Box>
                       <Button
-                        variant={
-                          session.maxPeople === session.enrolledPeople
-                            ? "outlined"
-                            : "contained"
+                        color={
+                          session.maxPeople === session.enrolledPeople.length
+                            ? ""
+                            : "primary"
                         }
                         onClick={(e) => onBtnClick(e)}
                         value={session.id}
-                        color="primary"
+                        variant="outlined"
                       >
-                        {session.maxPeople === session.enrolledPeople
+                        {session.maxPeople === session.enrolledPeople.length
                           ? "대기하기"
                           : "수강신청"}
                       </Button>

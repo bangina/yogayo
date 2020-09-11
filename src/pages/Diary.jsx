@@ -122,13 +122,13 @@ const Diary = () => {
       <p
         className="msg-box"
         style={{
-          background: "rgba(0,0,0,0.1)",
+          background: "rgba(0,0,0,0.05)",
           borderRadius: "5px",
           color: "#333",
           padding: "0 1rem",
-          lineHeight: "5rem",
+          lineHeight: "3rem",
           fontSize: "1rem",
-          textIndent: "10px",
+          textIndent: "0px",
         }}
       >
         오늘 수련은 어떠셨나요?

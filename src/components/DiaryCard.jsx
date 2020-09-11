@@ -32,7 +32,7 @@ const useStyles = makeStyles(() => ({
     cursor: "pointer",
   },
   imgBackground: {
-    background: "#ff8177",
+    // background: "#ff8177",
   },
   date: {
     position: "absolute",

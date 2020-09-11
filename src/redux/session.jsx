@@ -21,7 +21,7 @@ const initialState = {
       sessionName: "빈야사 요가",
       companyName: "자메이카 요가 필라테스 센터",
       maxPeople: 10,
-      enrolledPeople: ["test2"],
+      enrolledPeople: ["test2","test3","test4","test1","test5","test6","test7","test8","test9","test10"],
     },
     {
       id: 2,
