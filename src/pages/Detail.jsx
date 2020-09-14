@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Paper from "@material-ui/core/Paper";
+import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
 import CardContent from "@material-ui/core/CardContent";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
@@ -19,10 +20,17 @@ import {
 import { useChatzInfoStyles } from "@mui-treasury/styles/info/chatz";
 import { useDynamicAvatarStyles } from "@mui-treasury/styles/avatar/dynamic";
 import { useSelector } from "react-redux";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  replyInput: {
+    height: 50,
+  },
+}));
 
 const Detail = (props) => {
+  const classes = useStyles();
   let postId = props.match.params.id;
-  const avatarStyles2 = useDynamicAvatarStyles({ size: 72 });
   const post = useSelector(
     (state) => state.posts.filter((post) => post.id == postId)[0]
   );
@@ -40,15 +48,12 @@ const Detail = (props) => {
             heading={`[${post.header}] ${post.title}`}
             body={text}
           />
-          {}
         </CardContent>
+        <Divider />
         <Column gap={2}>
           <Row mt={2} alignItems={"center"}>
             <Item position={"middle"}>
-              <Avatar
-                classes={avatarStyles2}
-                src={"https://avatarfiles.alphacoders.com/166/166630.jpg"}
-              />
+              <Avatar>SB</Avatar>
             </Item>
             <Info useStyles={useChatzInfoStyles}>
               <InfoTitle>Maria Illesaca</InfoTitle>
@@ -58,10 +63,7 @@ const Detail = (props) => {
           </Row>
           <Row mt={2} alignItems={"center"}>
             <Item position={"middle"}>
-              <Avatar
-                classes={avatarStyles2}
-                src={"https://avatarfiles.alphacoders.com/166/166630.jpg"}
-              />
+              <Avatar>SB</Avatar>
             </Item>
             <Info useStyles={useChatzInfoStyles}>
               <InfoTitle>Maria Illesaca</InfoTitle>
@@ -72,6 +74,7 @@ const Detail = (props) => {
           <Row mt={2} alignItems={"center"}>
             <FormControl fullWidth variant="outlined">
               <OutlinedInput
+                className={classes.replyInput}
                 id="outlined-adornment-amount"
                 endAdornment={
                   <InputAdornment position="end">

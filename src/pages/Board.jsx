@@ -109,7 +109,7 @@ export default function Board(props) {
         <div>
           <DropDown
             title="말머리"
-            value={["중고장터", "요가", "필라테스", "같이 운동해요","기타"]}
+            value={["중고장터", "요가", "필라테스", "같이 운동해요", "기타"]}
             onChange={(value) => console.log(value)}
           />
         </div>
@@ -130,8 +130,8 @@ export default function Board(props) {
         </div>
         <Table className={classes.table}>
           <colgroup>
-            <col style={{ width: "10%" }} />
-            <col style={{ width: "60%" }} />
+            <col style={{ width: "20%" }} />
+            <col style={{ width: "50%" }} />
             <col style={{ width: "20%" }} />
             <col style={{ width: "10%" }} />
           </colgroup>
