@@ -101,6 +101,7 @@ export default function Board(props) {
   };
 
   return (
+    
     <div>
       <Typography variant="h4" gutterBottom color="primary">
         요가요 커뮤니티

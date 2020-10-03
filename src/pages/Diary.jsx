@@ -23,7 +23,7 @@ const Diary = () => {
   const apiUrl = `http://127.0.0.1:8000/api/diaries/`;
   const apiCall = () => {
     axios
-      .get(apiUrl) //FE에서 API로 데이터 요청하면서 BE로 데이터 전달도 가능
+      .get(apiUrl)
       .then((response) => {
         setContents(response.data);
       })
@@ -43,7 +43,6 @@ const Diary = () => {
     // mood: 2
     // userLesson: 2
     // userLesson_id: 2
-    
     // {
     //   id: 1,
     //   sessionDate: new Date(),

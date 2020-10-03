@@ -10,22 +10,18 @@ import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-// import ExpandLess from "@material-ui/icons/ExpandLess";
-// import ExpandMore from "@material-ui/icons/ExpandMore";
-// import Collapse from "@material-ui/core/Collapse";
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Avatar from "@material-ui/core/Avatar";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-// import { ReactComponent as UserIcon } from "../icons/UserIcon.svg";
 import { ReactComponent as NotebookIcon } from "../icons/NotebookIcon.svg";
 import { ReactComponent as TextBubbleIcon } from "../icons/TextBubbleIcon.svg";
 import { ReactComponent as CalendarIcon } from "../icons/CalendarIcon.svg";
 import { ReactComponent as Logo } from "../icons/Logo.svg";
 import { ReactComponent as Yogayo } from "../icons/Yogayo.svg";
+import { setCookieExpire } from "../utils/authUtils";
 import { Cookies } from "react-cookie";
-
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -104,8 +100,8 @@ function ResponsiveDrawer(props) {
 
   const onLogout = () => {
     const cookies = new Cookies();
-    cookies.remove("member");
-    props.history.push("/login");
+    cookies.remove("usertoken");
+    props.history.push("/main");
   };
 
   const drawer = (
@@ -192,44 +188,6 @@ function ResponsiveDrawer(props) {
             <ListItemText primary="알림" />
           </ListItem>
         </RouterLink>
-        {/* <ListItem button onClick={handleClick}>
-          <SvgIcon
-            style={{ marginRight: "10px" }}
-            fontSize="medium"
-            viewBox="0 0 32 32"
-          >
-            <UserIcon />
-          </SvgIcon>
-          <ListItemText primary="마이페이지" />
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <RouterLink to="/mypage/bookings">
-              <ListItem button className={classes.nested}>
-                <ListItemText
-                  secondary="내 스케쥴"
-                  className={classes.subMenu}
-                />
-              </ListItem>
-            </RouterLink>
-            <RouterLink to="/mypage">
-              <ListItem button className={classes.nested}>
-                <ListItemText secondary="내 정보" className={classes.subMenu} />
-              </ListItem>
-            </RouterLink>
-            <RouterLink to="/notifications">
-              <ListItem button className={classes.nested}>
-                <ListItemText secondary="알림" className={classes.subMenu} />
-              </ListItem>
-            </RouterLink>
-          </List>
-        </Collapse> */}
-        {/* <RouterLink to="/">
-          <ListItem>
-            <ListItemText secondary="로그아웃" style={{ textIndent: "2rem" }} />
-          </ListItem>
-        </RouterLink> */}
       </List>
     </div>
   );

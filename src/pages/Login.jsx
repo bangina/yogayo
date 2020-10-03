@@ -70,19 +70,16 @@ export default function SignIn(props) {
     // dispatch(login(memberState.username, memberState.password));
     // props.history.push("/");
 
-    const apiUrl = "http://localhost:8000/api/get_token/";
+    const apiUrl = "http://127.0.0.1:8000/api/get_token/";
 
     axios
       .post(apiUrl, memberState)
       .then((response) => {
         console.log("호출 결과 :", response.data);
         const token = response.data.token;
-
-        // 쿠키고 서버에서 제공한 토큰정보를 usertoken 쿠키로 브라우저에 저장.
         let cookies = new Cookies();
         cookies.set("usertoken", token, { path: "/" }); // "/"밑에있는 모든 경로에서 접근 가능한 쿠키
-
-        // window.location = "/";
+        window.location = "/";
       })
       .catch((response) => {
         console.error(response);

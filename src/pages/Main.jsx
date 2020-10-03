@@ -14,6 +14,7 @@ import "swiper/components/navigation/navigation.scss";
 import BoardCard from "../components/BoardCard";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import EventAvailableIcon from "@material-ui/icons/EventAvailable";
+import { getUserToken } from "../utils/authUtils";
 
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 const useStyles = makeStyles((theme) => ({
@@ -192,28 +193,8 @@ const Main = (props) => {
   ];
 
   const classes = useStyles();
+  const loginUserToken = getUserToken();
 
-  const getLoggedInUser = () => {
-    const cookies = new Cookies();
-    const user = cookies.get("usertoken");
-    // return user ? (typeof user == "object" ? user : JSON.parse(user)) : null;
-    return user;
-  };
-
-  const loginUser = getLoggedInUser();
-
-  useEffect(() => {
-    if (!loginUser) {
-      props.history.push("/login");
-    }
-    console.log(loginUser);
-  });
-
-  const onLogout = () => {
-    const cookies = new Cookies();
-    cookies.remove("member");
-    props.history.push("/login");
-  };
   const list = window.matchMedia("(min-width:960px)");
   const initialSlideNum = function () {
     if (list.matches === true) {
@@ -244,7 +225,7 @@ const Main = (props) => {
           color="textPrimary"
           gutterBottom
         >
-          {loginUser ? loginUser.username : ""}님! 좋은 아침이에요.
+          {loginUserToken ? loginUserToken : ""}님! 좋은 아침이에요.
         </Typography>
         <div className={classes.heroContent}>
           {/* <Container maxWidth="sm">
