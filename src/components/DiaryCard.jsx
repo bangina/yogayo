@@ -21,6 +21,7 @@ import SentimentSatisfiedIcon from "@material-ui/icons/SentimentSatisfied";
 import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissatisfied";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Grid from "@material-ui/core/Grid";
+import axios from "axios";
 const useStyles = makeStyles(() => ({
   root: {
     maxWidth: 700,
@@ -57,7 +58,7 @@ const useStyles = makeStyles(() => ({
     backgroundColor: "#fff",
     borderRadius: 4,
   },
-  diaryText: {
+  content: {
     display: "block",
     display: "-webkit-box",
     WebkitLineClamp: "5",
@@ -83,24 +84,27 @@ export const DiaryCard = (props) => {
   const gutterStyles = usePushingGutterStyles({ firstExcluded: true });
   const content = props.content;
   const ellipsis = props.ellipsis;
+  const postLike = (e) => {
+    const apiUrl = `http://127.0.0.1:8000/api/diaries/${e.target.id}/like`;
+    axios.post(apiUrl).catch((response) => {
+      console.error(response);
+    });
+  };
 
   return (
     <Card className={styles.root}>
       <Typography variant="h6" className={styles.date}>
-        {content.sessionDate.getMonth() + 1 < 10
+        {/* {content.sessionDate.getMonth() + 1 < 10
           ? `0${content.sessionDate.getMonth() + 1}`
-          : content.sessionDate.getMonth() + 1}
+          : content.sessionDate.getMonth() + 1} */}
         월{" "}
-        {content.sessionDate.getDate() < 10
+        {/* {content.sessionDate.getDate() < 10
           ? `0${content.sessionDate.getDate()}`
-          : content.sessionDate.getDate()}
+          : content.sessionDate.getDate()} */}
         일
       </Typography>
       <div className={styles.imgBackground}>
-        <CardMedia
-          classes={mediaStyles}
-          image={`./img/diary_img_0${content.imgSrc}.png`}
-        />
+        <CardMedia classes={mediaStyles} image={content.img_path} />
       </div>
       <CardContent className={cx(shadowStyles.root, styles.content)}>
         <IconButton className={styles.favorite}>
@@ -114,9 +118,9 @@ export const DiaryCard = (props) => {
         <Typography
           color={"textSecondary"}
           variant={"body2"}
-          className={ellipsis ? cx(styles.diaryText) : ""}
+          className={ellipsis ? cx(styles.content) : ""}
         >
-          {content.diaryText}
+          {content.content}
         </Typography>
         <Box
           mt={2}
@@ -130,8 +134,11 @@ export const DiaryCard = (props) => {
             className={gutterStyles.parent}
           >
             <IconButton size={"small"}>
-              <FavoriteBorderIcon />
-              <span>3</span>
+              <FavoriteBorderIcon
+                onClick={postLike}
+                id={content.userLesson_id}
+              />
+              <span>{content.likes}</span>
             </IconButton>
           </Box>
         </Box>

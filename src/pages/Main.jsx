@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "2rem",
     padding: "0 1rem",
     borderRadius: "30px",
-    background: "salmon",
+    background: "#cf556c",
     fontSize: "1rem",
     boxShadow: "2px 2px 4px rgba(0,0,0,0.15)",
   },
