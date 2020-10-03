@@ -195,8 +195,9 @@ const Main = (props) => {
 
   const getLoggedInUser = () => {
     const cookies = new Cookies();
-    const user = cookies.get("member");
-    return user ? (typeof user == "object" ? user : JSON.parse(user)) : null;
+    const user = cookies.get("usertoken");
+    // return user ? (typeof user == "object" ? user : JSON.parse(user)) : null;
+    return user;
   };
 
   const loginUser = getLoggedInUser();
@@ -205,6 +206,7 @@ const Main = (props) => {
     if (!loginUser) {
       props.history.push("/login");
     }
+    console.log(loginUser);
   });
 
   const onLogout = () => {
@@ -242,7 +244,7 @@ const Main = (props) => {
           color="textPrimary"
           gutterBottom
         >
-          {loginUser ? loginUser.name : ""}님! 좋은 아침이에요.
+          {loginUser ? loginUser.username : ""}님! 좋은 아침이에요.
         </Typography>
         <div className={classes.heroContent}>
           {/* <Container maxWidth="sm">

@@ -16,6 +16,8 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { Cookies } from "react-cookie";
+import axios from "axios";
 
 function Copyright() {
   return (
@@ -56,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn(props) {
   const classes = useStyles();
   const [memberState, setMemberState] = useState({
-    email: "",
+    username: "",
     password: "",
   });
   const onInputChange = (e) => {
@@ -65,8 +67,26 @@ export default function SignIn(props) {
   const dispatch = useDispatch();
   const onLogin = (e) => {
     e.preventDefault();
-    dispatch(login(memberState.email, memberState.password));
-    props.history.push("/");
+    // dispatch(login(memberState.username, memberState.password));
+    // props.history.push("/");
+
+    const apiUrl = "http://localhost:8000/api/get_token/";
+
+    axios
+      .post(apiUrl, memberState)
+      .then((response) => {
+        console.log("호출 결과 :", response.data);
+        const token = response.data.token;
+
+        // 쿠키고 서버에서 제공한 토큰정보를 usertoken 쿠키로 브라우저에 저장.
+        let cookies = new Cookies();
+        cookies.set("usertoken", token, { path: "/" }); // "/"밑에있는 모든 경로에서 접근 가능한 쿠키
+
+        // window.location = "/";
+      })
+      .catch((response) => {
+        console.error(response);
+      });
   };
   return (
     <Container component="main" maxWidth="xs">
@@ -84,10 +104,10 @@ export default function SignIn(props) {
             margin="normal"
             required
             fullWidth
-            id="email"
+            id="username"
             label="이메일 주소"
-            name="email"
-            autoComplete="email"
+            name="username"
+            autoComplete="username"
             autoFocus
             onChange={onInputChange}
           />
