@@ -16,7 +16,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
-
+import axios from "axios";
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -58,11 +58,11 @@ export default function Signup() {
   const mobileRef = useRef();
   const classes = useStyles();
   const [memberState, setMemberState] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
-    passwordCheck: "",
-    mobile: "",
+    // passwordCheck: "",
+    phone: "",
   });
 
   const dispatch = useDispatch();
@@ -72,9 +72,20 @@ export default function Signup() {
 
   const onSubmit = () => {
     dispatch(insertMember(memberState));
+    const apiUrl = "http://127.0.0.1:8000/api/register/";
+    axios
+      .post(apiUrl, memberState)
+      .then((response) => {
+        console.log("호출 결과 :", response.data);
+        // window.location = "/";
+      })
+      .catch((response) => {
+        console.error(response, "오류발생");
+      });
   };
   const onInputChange = (e) => {
     setMemberState({ ...memberState, [e.target.name]: e.target.value });
+    console.log(memberState);
   };
   const checkFormValidity = (e) => {
     console.log(isValid);
@@ -137,8 +148,7 @@ export default function Signup() {
                 fullWidth
                 id="name"
                 label="이름"
-                name="name"
-                // autoComplete="name"
+                name="username"
                 autoFocus
                 inputRef={register({
                   minLength: 2,
@@ -146,7 +156,7 @@ export default function Signup() {
                 })}
                 onChange={(e) => onInputChange(e)}
               />
-              {errors.name && (
+              {errors.username && (
                 <span className="error">이름을 입력해주세요.</span>
               )}
             </Grid>
@@ -158,7 +168,7 @@ export default function Signup() {
                 id="email"
                 label="이메일 주소"
                 name="email"
-                // autoComplete="email"
+                onChange={(e) => onInputChange(e)}
                 inputRef={register({
                   pattern: /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i,
                 })}
@@ -178,12 +188,12 @@ export default function Signup() {
                 fullWidth
                 id="mobile"
                 label="휴대폰 번호"
-                name="mobile"
+                name="phone"
                 // autoComplete="mobile"
                 ref={mobileRef}
                 onKeyUp={(e) => autoHypenPhone(e)}
                 inputRef={register({
-                  pattern: /^\d{3}-\d{3,4}-\d{4}$/,
+                  pattern: /^\d{3}\d{3,4}\d{4}$/,
                 })}
                 onChange={(e) => onInputChange(e)}
                 onFocus={() => {

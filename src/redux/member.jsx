@@ -65,7 +65,6 @@ const member = (memberState = initialState, action) => {
           ...memberState,
           loginMember: loginMember,
         };
-        console.log(loginMember[0], "로그인 성공");
       } else {
         let cookies = new Cookies();
         cookies.remove("member");
