@@ -17,7 +17,7 @@ import TextField from "@material-ui/core/TextField";
 import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
 import SentimentDissatisfiedIcon from "@material-ui/icons/SentimentDissatisfied";
 import SentimentSatisfiedIcon from "@material-ui/icons/SentimentSatisfied";
-
+import axios from "axios";
 const styles = (theme) => ({
   root: {
     margin: 0,
@@ -86,6 +86,12 @@ const DiaryModal = (props) => {
     okay: "",
     bad: "",
   });
+  const [diaryContents, setDiarycontents] = useState({
+    userLesson: 2, //임시임
+    content: "",
+    mood: "",
+  });
+  const [selectecFile, setSelectedFile] = useState("");
   const handleClose = () => {
     dispatch(closeDiaryModal());
   };
@@ -98,24 +104,46 @@ const DiaryModal = (props) => {
       validityRef.current.style.display = "none";
     }
   };
-  const handleEmojiClick = (e) => {
+  const selectFile = (e) => {
+    setSelectedFile(e.target.files);
+  };
+  const onInputChange = (e) => {
+    setDiarycontents({ ...diaryContents, [e.target.name]: e.target.value });
+    console.log(diaryContents);
+  };
+  const onSubmit = () => {
+    axios({
+      method: "post",
+      url: "http://127.0.0.1:8000/api/diaries/1/upload",
+      data: diaryContents,
+      // headers: { "Content-Type": "multipart/form-data" }, //:파일데이터 보낼 때 컨텐츠 유형임.
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (response) {
+        console.log(response);
+      });
+  };
+  const onMoodChange = (e) => {
     const selectedEmoji = e.currentTarget.value;
+    setDiarycontents({ ...diaryContents, mood: selectedEmoji });
     switch (selectedEmoji) {
-      case "best":
+      case "2":
         setColor({
           best: "primary",
           okay: "",
           bad: "",
         });
         break;
-      case "okay":
+      case "1":
         setColor({
           best: "",
           okay: "primary",
           bad: "",
         });
         break;
-      case "bad":
+      case "0":
         setColor({
           best: "",
           okay: "",
@@ -129,6 +157,7 @@ const DiaryModal = (props) => {
           bad: "",
         });
     }
+    console.log(diaryContents);
   };
   return (
     <>
@@ -161,25 +190,13 @@ const DiaryModal = (props) => {
                 <Typography style={{ display: "inline-block" }}>
                   오늘 기분
                 </Typography>
-                <IconButton
-                  onClick={handleEmojiClick}
-                  value="best"
-                  color={color.best}
-                >
+                <IconButton value="2" color={color.best} onClick={onMoodChange}>
                   <SentimentVerySatisfiedIcon fontSize="small" />
                 </IconButton>
-                <IconButton
-                  color={color.okay}
-                  value="okay"
-                  onClick={handleEmojiClick}
-                >
+                <IconButton color={color.okay} value="1" onClick={onMoodChange}>
                   <SentimentSatisfiedIcon fontSize="small" />
                 </IconButton>
-                <IconButton
-                  color={color.bad}
-                  value="bad"
-                  onClick={handleEmojiClick}
-                >
+                <IconButton color={color.bad} value="0" onClick={onMoodChange}>
                   <SentimentDissatisfiedIcon fontSize="small" />
                 </IconButton>
               </div>
@@ -198,16 +215,26 @@ const DiaryModal = (props) => {
                 rows={4}
                 defaultValue=" "
                 variant="outlined"
+                name="content"
+                value={diaryContents.content}
+                onChange={onInputChange}
               />
             </form>
           </DialogContent>
         )}
+        <input
+          type="file"
+          id="imgUpload"
+          onChange={(e) => selectFile(e)}
+        ></input>
+        <label htmlFor="imgUpload">사진 올리기</label>
         <DialogActions>
           <StyledButton
             color="primary"
             variant="contained"
             size="large"
             classes="button"
+            onClick={onSubmit}
           >
             발행하기
           </StyledButton>
