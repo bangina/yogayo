@@ -20,7 +20,7 @@ import { ReactComponent as TextBubbleIcon } from "../icons/TextBubbleIcon.svg";
 import { ReactComponent as CalendarIcon } from "../icons/CalendarIcon.svg";
 import { ReactComponent as Logo } from "../icons/Logo.svg";
 import { ReactComponent as Yogayo } from "../icons/Yogayo.svg";
-import { setCookieExpire } from "../utils/authUtils";
+import { setCookieExpire, isUserAuthenticated } from "../utils/authUtils";
 import { Cookies } from "react-cookie";
 const drawerWidth = 240;
 
@@ -49,6 +49,14 @@ const useStyles = makeStyles((theme) => ({
       width: drawerWidth,
       flexShrink: 0,
     },
+  },
+  login: {
+    color: "#fff",
+    alignSelf: "flex-end",
+    position: "absolute",
+    right: "32px",
+    lineHeight: "56px",
+    fontWeight: "bold",
   },
   appBar: {
     paddingLeft: theme.spacing(4),
@@ -103,6 +111,7 @@ function ResponsiveDrawer(props) {
     cookies.remove("usertoken");
     props.history.push("/main");
   };
+  console.log(isUserAuthenticated());
 
   const drawer = (
     <div>
@@ -217,13 +226,21 @@ function ResponsiveDrawer(props) {
             <Logo style={{ marginRight: "10px" }} />
             <Yogayo />
           </RouterLink>
+          {!isUserAuthenticated() ? (
+            <RouterLink to="/login" className={classes.login}>
+              <span>로그인</span>
+            </RouterLink>
+          ) : (
+            <RouterLink to="/mypage" className={classes.login}>
+              <span>마이페이지</span>
+            </RouterLink>
+          )}
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
         <Hidden smUp implementation="css">
           <Drawer
             container={container}
-            variant="temporary"
             anchor={theme.direction === "rtl" ? "right" : "left"}
             open={mobileOpen}
             onClose={handleDrawerToggle}
@@ -256,13 +273,5 @@ function ResponsiveDrawer(props) {
     </div>
   );
 }
-
-ResponsiveDrawer.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
-  window: PropTypes.func,
-};
 
 export default withRouter(ResponsiveDrawer);

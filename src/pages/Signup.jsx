@@ -189,7 +189,6 @@ export default function Signup() {
                 id="mobile"
                 label="휴대폰 번호"
                 name="phone"
-                // autoComplete="mobile"
                 ref={mobileRef}
                 onKeyUp={(e) => autoHypenPhone(e)}
                 inputRef={register({

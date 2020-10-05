@@ -7,6 +7,8 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import DiaryModal from "../components/DiaryModal";
 import axios from "axios";
+import { Cookies } from "react-cookie";
+import { getUserToken, isUserAuthenticated } from "../utils/authUtils";
 
 const Diary = () => {
   const [pendingContents, setPendingContents] = useState([
@@ -22,8 +24,10 @@ const Diary = () => {
   ]);
   const apiUrl = `http://127.0.0.1:8000/api/diaries/`;
   const apiCall = () => {
+    let cookies = new Cookies();
+    const userToken = cookies.get("usertoken");
     axios
-      .get(apiUrl)
+      .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
         setContents(response.data);
       })
