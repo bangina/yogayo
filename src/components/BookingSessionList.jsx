@@ -19,6 +19,7 @@ import Slider from "@material-ui/core/Slider";
 import cx from "clsx";
 import { selectSession } from "../redux/session";
 import { openModal } from "../redux/modal";
+import axios from "axios";
 
 const useStyles = makeStyles(({ spacing, palette }) => {
   const family =
@@ -125,12 +126,13 @@ const BookingSessionList = () => {
   const sliderStyles = useSliderStyles();
   const globalSession = useSelector((state) => state.session);
   const dispatch = useDispatch();
-  const todaySessions = globalSession.sessions.filter(
-    (session) =>
-      session.sessionDate.getDate() === globalSession.selectedDate.getDate()
-  );
+  // const todaySessions = globalSession.sessions.filter(
+  //   (session) =>
+  //     session.date.getDate() === globalSession.selectedDate.getDate()
+  // );
   const [selectedSession, setSelectedSession] = useState({});
   const [isOpen, setIsOpen] = useState(false);
+  const [sessions, setSessions] = useState([]);
 
   const printDay = (props) => {
     switch (props) {
@@ -152,7 +154,20 @@ const BookingSessionList = () => {
         return "";
     }
   };
-
+  const apiUrl = `http://127.0.0.1:8000/api/lessons/`;
+  const apiCall = () => {
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        setSessions(response.data);
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+  };
+  useEffect(() => {
+    apiCall();
+  }, []);
   const onBtnClick = (e) => {
     const selectedSession = globalSession.sessions.filter(
       (session) => session.id.toString() === e.currentTarget.value.toString()
@@ -165,13 +180,13 @@ const BookingSessionList = () => {
     <>
       <StyledTimeline>
         <Timeline>
-          {todaySessions.map((session) => (
+          {sessions.map((session) => (
             <>
               {/* 카드 형식 */}
               <TimelineItem key={session.id}>
                 <TimelineSeparator>
                   <TimelineConnector />
-                  <TimelineDot>{session.startTime}</TimelineDot>
+                  <TimelineDot>{session.time.slice(0, 5)}</TimelineDot>
                   <TimelineConnector />
                 </TimelineSeparator>
                 <TimelineContent>
@@ -187,50 +202,49 @@ const BookingSessionList = () => {
                         image="/static/images/cards/live-from-space.jpg"
                         title="Live from space album cover"
                       >
-                        {/* <Avatar >
-                          {printDay(session.sessionDate.getDay())}
-                        </Avatar> */}
+                        {/* <Avatar>{session.date}</Avatar> */}
                       </CardMedia>
                     </CardContent>
                     <Box>
-                      <h3 className={styles.heading}>{session.sessionName}</h3>
+                      <h3 className={styles.heading}>{session.name}</h3>
                       <p variant="h5">
-                        {session.sessionDate.getMonth()}월{" "}
-                        {session.sessionDate.getDate()}일{" "}
-                        {printDay(session.sessionDate.getDay())}
-                        요일 <br />
-                        {session.startTime} - {session.endTime}
+                        {session.date.slice(5, 7)}월 {session.date.slice(8, 10)}
+                        일&nbsp;
+                        {/* {printDay(session.date)}
+                        요일 <br /> */}
+                        {session.time.slice(0, 5)}
                       </p>
                       <p className={styles.subheader}>
-                        {session.companyName} • {session.place}
+                        {session.username} • {session.room}
                       </p>
                       <Box display={"flex"} alignItems={"center"}>
                         <Slider
                           classes={sliderStyles}
-                          value={
-                            (session.enrolledPeople.length /
-                              session.maxPeople) *
-                            100
-                          }
+                          // value={
+                          //   (session.enrolledPeople.length /
+                          //     session.max_ppl) *
+                          //   100
+                          // }
                         />
                         <span className={styles.value}>
-                          {session.enrolledPeople.length}/{session.maxPeople}명
-                          신청
+                          {/* {session.enrolledPeople.length}/{session.max_ppl} */}
+                          명 신청
                         </span>
                       </Box>
                       <Button
-                        color={
-                          session.maxPeople === session.enrolledPeople.length
-                            ? ""
-                            : "primary"
-                        }
+                        // color={
+                        //   session.max_ppl === session.enrolledPeople.length
+                        //     ? ""
+                        //     : "primary"
+                        // }
                         onClick={(e) => onBtnClick(e)}
                         value={session.id}
                         variant="outlined"
                       >
-                        {session.maxPeople === session.enrolledPeople.length
+                        {/* {session.maxPeople === session.enrolledPeople.length
                           ? "대기하기"
-                          : "수강신청"}
+                          : "수강신청"} */}
+                        수강신청
                       </Button>
                     </Box>
                   </Card>
