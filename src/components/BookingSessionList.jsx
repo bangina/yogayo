@@ -135,8 +135,7 @@ const BookingSessionList = () => {
   const [sessions, setSessions] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
 
-  // const apiUrl = `http://127.0.0.1:8000/api/lessons/${selectedDate}`;
-  const apiUrl = `http://127.0.0.1:8000/api/lessons/`;
+  const apiUrl = `http://127.0.0.1:8000/api/lessons/${selectedDate}`;
   const apiCall = () => {
     axios
       .get(apiUrl)
