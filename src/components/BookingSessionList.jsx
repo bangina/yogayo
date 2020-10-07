@@ -133,27 +133,9 @@ const BookingSessionList = () => {
   const [selectedSession, setSelectedSession] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [sessions, setSessions] = useState([]);
+  const [selectedDate, setSelectedDate] = useState("");
 
-  const printDay = (props) => {
-    switch (props) {
-      case 1:
-        return "월";
-      case 2:
-        return "화";
-      case 3:
-        return "수";
-      case 4:
-        return "목";
-      case 5:
-        return "금";
-      case 6:
-        return "토";
-      case 0:
-        return "일";
-      default:
-        return "";
-    }
-  };
+  // const apiUrl = `http://127.0.0.1:8000/api/lessons/${selectedDate}`;
   const apiUrl = `http://127.0.0.1:8000/api/lessons/`;
   const apiCall = () => {
     axios
@@ -172,6 +154,7 @@ const BookingSessionList = () => {
     const selectedSession = globalSession.sessions.filter(
       (session) => session.id.toString() === e.currentTarget.value.toString()
     )[0];
+    console.log(selectedDate);
     dispatch(openModal());
     dispatch(selectSession(selectedSession));
   };
