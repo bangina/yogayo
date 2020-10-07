@@ -16,6 +16,7 @@ import DropDown from "../components/DropDown";
 import SearchBar from "../components/SearchBar";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   primaryTableHeader: {
@@ -77,22 +78,34 @@ export default function Board(props) {
   const tableHead = ["말머리", "글제목", "작성자", "등록일"];
   const [tableData, setTableData] = useState([]);
   const [allData, setAllData] = useState([]);
-  const globalPosts = useSelector((state) => state.posts);
+  const [globalPosts, setGlobalPosts] = useState([]);
 
   useEffect(() => {
-    const newData = [];
-    for (let i = 0; i < globalPosts.length; i++) {
-      newData.push([
-        globalPosts[i].id,
-        globalPosts[i].header,
-        globalPosts[i].title,
-        globalPosts[i].writer,
-        globalPosts[i].regiDate,
-      ]);
-    }
-    setAllData(newData);
-    setTableData(newData.slice(0, 10));
-  }, [globalPosts]);
+    const apiUrl = "http://localhost:8000/api/posts/";
+
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        console.log("조회목록데이터:", response.data);
+        setGlobalPosts(response.data);
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+
+    // const newData = [];
+    // for (let i = 0; i < globalPosts.length; i++) {
+    //   newData.push([
+    //     globalPosts[i].id,
+    //     globalPosts[i].header,
+    //     globalPosts[i].title,
+    //     globalPosts[i].writer,
+    //     globalPosts[i].regiDate,
+    //   ]);
+    // }
+    setAllData(globalPosts);
+    setTableData(globalPosts.slice(0, 10));
+  }, []);
 
   const handlePage = (event, value) => {
     const startNum = (value - 1) * 10;
@@ -101,7 +114,6 @@ export default function Board(props) {
   };
 
   return (
-    
     <div>
       <Typography variant="h4" gutterBottom color="primary">
         요가요 커뮤니티
@@ -155,18 +167,18 @@ export default function Board(props) {
             </TableHead>
           ) : null}
           <TableBody>
-            {tableData.map((dataItem, index) => {
+            {globalPosts.map((dataItem, index) => {
               console.log(dataItem);
               return (
                 <TableRow key={index} className={classes.tableBodyRow}>
                   <TableCell className={classes.tableCell} key={index}>
-                    <RouterLink to={`/board/detail/${dataItem[0]}`}>
-                      {dataItem[1]}
+                    <RouterLink to={`/board/detail/${dataItem.id}`}>
+                      {dataItem.category}
                     </RouterLink>
                   </TableCell>
                   <TableCell className={classes.tableCell} key={index}>
-                    <RouterLink to={`/board/detail/${dataItem[0]}`}>
-                      <div>{dataItem[2]} </div>
+                    <RouterLink to={`/board/detail/${dataItem.id}`}>
+                      <div>{dataItem.title} </div>
                       <div style={{ color: "gray" }}>
                         <VisibilityIcon style={{ fontSize: 15 }} /> 10{" "}
                         <ChatBubbleIcon style={{ fontSize: 15 }} /> 5
@@ -174,13 +186,13 @@ export default function Board(props) {
                     </RouterLink>
                   </TableCell>
                   <TableCell className={classes.tableCell} key={index}>
-                    <RouterLink to={`/board/detail/${dataItem[0]}`}>
-                      {dataItem[3]}
+                    <RouterLink to={`/board/detail/${dataItem.id}`}>
+                      {dataItem.username}
                     </RouterLink>
                   </TableCell>
                   <TableCell className={classes.tableCell} key={index}>
-                    <RouterLink to={`/board/detail/${dataItem[0]}`}>
-                      {dataItem[4]}
+                    <RouterLink to={`/board/detail/${dataItem.id}`}>
+                      {dataItem.created}
                     </RouterLink>
                   </TableCell>
                 </TableRow>

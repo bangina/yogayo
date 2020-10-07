@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Paper from "@material-ui/core/Paper";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
@@ -21,6 +21,7 @@ import { useChatzInfoStyles } from "@mui-treasury/styles/info/chatz";
 import { useDynamicAvatarStyles } from "@mui-treasury/styles/avatar/dynamic";
 import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   replyInput: {
@@ -31,12 +32,23 @@ const useStyles = makeStyles((theme) => ({
 const Detail = (props) => {
   const classes = useStyles();
   let postId = props.match.params.id;
-  const post = useSelector(
-    (state) => state.posts.filter((post) => post.id == postId)[0]
-  );
-  const text = post.contents.split("\n").map((i, key) => {
-    return <div key={key}>{i}</div>;
-  });
+  const [post, setPost] = useState({});
+  // const text = post.content.split("\n").map((i, key) => {
+  //   return <div key={key}>{i}</div>;
+  // });
+
+  useEffect(() => {
+    const apiUrl = `http://localhost:8000/api/posts/${postId}`;
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        console.log("조회목록데이터:", response.data);
+        setPost(response.data);
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+  }, []);
 
   return (
     <div>
@@ -44,9 +56,9 @@ const Detail = (props) => {
         <CardContent>
           <TextInfoContent
             useStyles={useN01TextInfoContentStyles}
-            overline={post.regiDate}
-            heading={`[${post.header}] ${post.title}`}
-            body={text}
+            overline={post.created}
+            heading={`[${post.category}] ${post.title}`}
+            body={post.content}
           />
         </CardContent>
         <Divider />
