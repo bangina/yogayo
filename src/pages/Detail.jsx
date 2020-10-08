@@ -22,6 +22,7 @@ import { useDynamicAvatarStyles } from "@mui-treasury/styles/avatar/dynamic";
 import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
+import { Cookies } from "react-cookie";
 
 const useStyles = makeStyles((theme) => ({
   replyInput: {
@@ -37,7 +38,23 @@ const Detail = (props) => {
   //   return <div key={key}>{i}</div>;
   // });
   const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState("");
+  const [newComment, setNewComment] = useState({
+    post: postId,
+    content: "",
+  });
+
+  const commentCall = () => {
+    const commentApiUrl = `http://localhost:8000/api/posts/${postId}/comment`;
+    axios
+      .get(commentApiUrl)
+      .then((response) => {
+        console.log("댓글:", response.data);
+        setComments(response.data);
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+  };
 
   useEffect(() => {
     const postApiUrl = `http://localhost:8000/api/posts/${postId}`;
@@ -51,32 +68,32 @@ const Detail = (props) => {
         console.error(response);
       });
 
-    const commentApiUrl = `http://localhost:8000/api/posts/${postId}/comment`;
-    axios
-      .get(commentApiUrl)
-      .then((response) => {
-        console.log("댓글:", response.data);
-        setComments(response.data);
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+    commentCall();
   }, []);
 
   const commentInputChange = (e) => {
-    setNewComment(e.target.value);
+    setNewComment({ ...newComment, content: e.target.value });
   };
 
   const commentSubmit = () => {
-    console.log(newComment);
+    let cookies = new Cookies();
+    const userToken = cookies.get("usertoken");
+
+    console.log("저장된 쿠키토큰값:", userToken);
+
     axios({
       method: "post",
-      url: `http://localhost:8000/api/posts/${postId}/comment`,
-      data: { post: 1, content: newComment },
+      url: `http://localhost:8000/api/posts/${postId}/comment/`,
+      data: newComment,
+      headers: {
+        Authorization: `Token 	${userToken}`,
+      },
       // headers: { "Content-Type": "multipart/form-data" }, //:파일데이터 보낼 때 컨텐츠 유형임.
     })
       .then(function (response) {
         console.log(response);
+        setNewComment({ ...newComment, content: "" });
+        commentCall();
       })
       .catch(function (response) {
         console.error(response);
@@ -116,7 +133,7 @@ const Detail = (props) => {
               <OutlinedInput
                 className={classes.replyInput}
                 id="outlined-adornment-amount"
-                value={newComment}
+                value={newComment.content}
                 endAdornment={
                   <InputAdornment position="end">
                     <Button
