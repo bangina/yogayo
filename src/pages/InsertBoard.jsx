@@ -22,32 +22,11 @@ const InsertBoard = (props) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const [post, setPost] = useState({
-    id: null,
-    header: "",
+    category: "",
     title: "",
-    contents: "",
-    writer: "",
-    regiDate: "",
+    content: "",
+    views: 0,
   });
-
-  const id = useSelector((state) => state.posts.slice(-1)[0].id + 1);
-
-  const getLoggedInUser = () => {
-    const cookies = new Cookies();
-    const user = cookies.get("member");
-    return user ? (typeof user == "object" ? user : JSON.parse(user)) : null;
-  };
-
-  const loginUser = getLoggedInUser().name;
-
-  useEffect(() => {
-    setPost({
-      ...post,
-      id: id,
-      writer: loginUser,
-      regiDate: new Date().toLocaleDateString(),
-    });
-  }, []);
 
   const onChangeHandler = (e) => {
     setPost({
@@ -73,7 +52,11 @@ const InsertBoard = (props) => {
       {alert && <Alert severity="error">모두 입력해 주세요</Alert>}
 
       <div>
-        <DropDown onChange={(value) => setPost({ ...post, header: value })} />
+        <DropDown
+          title="말머리"
+          value={["중고장터", "요가", "필라테스", "같이 운동해요", "기타"]}
+          onChange={(value) => setPost({ ...post, header: value })}
+        />
 
         <TextField
           name="title"
