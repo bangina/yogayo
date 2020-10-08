@@ -36,11 +36,13 @@ const Detail = (props) => {
   // const text = post.content.split("\n").map((i, key) => {
   //   return <div key={key}>{i}</div>;
   // });
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
-    const apiUrl = `http://localhost:8000/api/posts/${postId}`;
+    const postApiUrl = `http://localhost:8000/api/posts/${postId}`;
     axios
-      .get(apiUrl)
+      .get(postApiUrl)
       .then((response) => {
         console.log("조회목록데이터:", response.data);
         setPost(response.data);
@@ -48,7 +50,38 @@ const Detail = (props) => {
       .catch((response) => {
         console.error(response);
       });
+
+    const commentApiUrl = `http://localhost:8000/api/posts/${postId}/comment`;
+    axios
+      .get(commentApiUrl)
+      .then((response) => {
+        console.log("댓글:", response.data);
+        setComments(response.data);
+      })
+      .catch((response) => {
+        console.error(response);
+      });
   }, []);
+
+  const commentInputChange = (e) => {
+    setNewComment(e.target.value);
+  };
+
+  const commentSubmit = () => {
+    console.log(newComment);
+    axios({
+      method: "post",
+      url: `http://localhost:8000/api/posts/${postId}/comment`,
+      data: { post: 1, content: newComment },
+      // headers: { "Content-Type": "multipart/form-data" }, //:파일데이터 보낼 때 컨텐츠 유형임.
+    })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (response) {
+        console.error(response);
+      });
+  };
 
   return (
     <div>
@@ -63,39 +96,40 @@ const Detail = (props) => {
         </CardContent>
         <Divider />
         <Column gap={2}>
-          <Row mt={2} alignItems={"center"}>
-            <Item position={"middle"}>
-              <Avatar>SB</Avatar>
-            </Item>
-            <Info useStyles={useChatzInfoStyles}>
-              <InfoTitle>Maria Illesaca</InfoTitle>
-              <InfoSubtitle>Can you please send me more detail...</InfoSubtitle>
-              <InfoCaption>10:45 AM</InfoCaption>
-            </Info>
-          </Row>
-          <Row mt={2} alignItems={"center"}>
-            <Item position={"middle"}>
-              <Avatar>SB</Avatar>
-            </Item>
-            <Info useStyles={useChatzInfoStyles}>
-              <InfoTitle>Maria Illesaca</InfoTitle>
-              <InfoSubtitle>Can you please send me more detail...</InfoSubtitle>
-              <InfoCaption>10:45 AM</InfoCaption>
-            </Info>
-          </Row>
+          {comments.map((comment, index) => {
+            return (
+              <Row mt={2} alignItems={"center"} key={index}>
+                <Item position={"middle"}>
+                  <Avatar>SB</Avatar>
+                </Item>
+                <Info useStyles={useChatzInfoStyles}>
+                  <InfoTitle>{comment.username}</InfoTitle>
+                  <InfoSubtitle>{comment.content}</InfoSubtitle>
+                  <InfoCaption>{comment.created.substring(0, 10)}</InfoCaption>
+                </Info>
+              </Row>
+            );
+          })}
+
           <Row mt={2} alignItems={"center"}>
             <FormControl fullWidth variant="outlined">
               <OutlinedInput
                 className={classes.replyInput}
                 id="outlined-adornment-amount"
+                value={newComment}
                 endAdornment={
                   <InputAdornment position="end">
-                    <Button variant="contained" color="primary">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => commentSubmit()}
+                    >
                       Reply
                     </Button>
                   </InputAdornment>
                 }
                 placeholder="댓글을 입력하세요.."
+                onChange={(e) => commentInputChange(e)}
               />
             </FormControl>
           </Row>

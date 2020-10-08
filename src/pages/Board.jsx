@@ -192,7 +192,7 @@ export default function Board(props) {
                   </TableCell>
                   <TableCell className={classes.tableCell} key={index}>
                     <RouterLink to={`/board/detail/${dataItem.id}`}>
-                      {dataItem.created}
+                      {dataItem.created.substring(0, 10)}
                     </RouterLink>
                   </TableCell>
                 </TableRow>
