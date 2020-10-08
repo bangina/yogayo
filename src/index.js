@@ -2,13 +2,19 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-import { createStore } from "redux";
+import { applyMiddleware, createStore } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { Provider } from "react-redux";
 import rootReducer from "./redux/index";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import ReduxThunk from "redux-thunk";
+import { createLogger } from "redux-logger";
 
-const store = createStore(rootReducer, composeWithDevTools());
+const logger = createLogger();
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(logger))
+);
 const theme = createMuiTheme({
   palette: {
     text: {
