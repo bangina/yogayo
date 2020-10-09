@@ -88,29 +88,20 @@ export default function Board(props) {
       .then((response) => {
         console.log("조회목록데이터:", response.data);
         setGlobalPosts(response.data);
+        setTableData(response.data.slice(0, 10))
       })
       .catch((response) => {
         console.error(response);
       });
 
-    // const newData = [];
-    // for (let i = 0; i < globalPosts.length; i++) {
-    //   newData.push([
-    //     globalPosts[i].id,
-    //     globalPosts[i].header,
-    //     globalPosts[i].title,
-    //     globalPosts[i].writer,
-    //     globalPosts[i].regiDate,
-    //   ]);
-    // }
-    setAllData(globalPosts);
-    setTableData(globalPosts.slice(0, 10));
+    // setAllData(globalPosts);
+    // setTableData(globalPosts.slice(0, 10));
   }, []);
 
   const handlePage = (event, value) => {
-    const startNum = (value - 1) * 10;
-    const endNum = value * 10 - 1;
-    setTableData(allData.slice(startNum, endNum));
+    const startNum = (value - 1) * 10 ;
+    const endNum = value * 10;
+    setTableData(globalPosts.slice(startNum, endNum));
   };
 
   const categoryFn = (item) => {
@@ -182,7 +173,7 @@ export default function Board(props) {
             </TableHead>
           ) : null}
           <TableBody>
-            {globalPosts.map((dataItem, index) => {
+            {tableData.map((dataItem, index) => {
               console.log(dataItem);
               return (
                 <TableRow key={index} className={classes.tableBodyRow}>
