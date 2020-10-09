@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import DropDown from "../components/DropDown";
 import { Button } from "@material-ui/core";
-import { useSelector, useDispatch } from "react-redux";
 import { Cookies } from "react-cookie";
-import { insert } from "../redux/posts";
+import axios from "axios";
 
 import Alert from "@material-ui/lab/Alert";
 
@@ -18,14 +17,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const InsertBoard = (props) => {
-  const dispatch = useDispatch();
+const InsertBoard = () => {
   const classes = useStyles();
   const [post, setPost] = useState({
-    category: "",
+    category: "YOGA",
     title: "",
     content: "",
-    views: 0,
+    // "img_path": null,
+    views: 0
   });
 
   const onChangeHandler = (e) => {
@@ -36,16 +35,52 @@ const InsertBoard = (props) => {
   };
 
   const onClickHandler = () => {
-    if (post.header == "" || post.title == "" || post.contents == "") {
+    if (post.category == null || post.title == "" || post.content == "") {
       setAlert(true);
     } else {
-      console.log(post);
-      dispatch(insert(post));
-      props.history.push("/board");
+      console.log("post : ", post);
+      // const formData = new FormData();
+      // formData.append('category', "YOGA");
+      // formData.append('title', post.title);
+      // formData.append('content', post.content);
+      // formData.append('img_path', null);
+      // formData.append('views', 0);
+      // for (let key of formData.entries()) {
+      //   console.log(key);
+      // }
+
+
+      let cookies = new Cookies();
+      const userToken = cookies.get("usertoken");
+
+      console.log("저장된 쿠키토큰값:", userToken);
+
+
+      axios({
+        method: 'post',
+        url: 'http://localhost:8000/api/posts/',
+        data: post,
+        headers: {
+          Authorization: `Token 	${userToken}`,
+          // "Content-Type": "multipart/form-data"
+        },
+      })
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (response) {
+          console.log(response);
+        });
+        
     }
+
   };
 
   const [alert, setAlert] = useState(false);
+
+  const onChangeFile = e => {
+    setPost({...post, img_path: e.target.files})
+  }
 
   return (
     <form className={classes.root}>
@@ -55,7 +90,7 @@ const InsertBoard = (props) => {
         <DropDown
           title="말머리"
           value={["중고장터", "요가", "필라테스", "같이 운동해요", "기타"]}
-          onChange={(value) => setPost({ ...post, header: value })}
+          onChange={(value) => setPost({ ...post, category: value })}
         />
 
         <TextField
@@ -69,7 +104,7 @@ const InsertBoard = (props) => {
         />
 
         <TextField
-          name="contents"
+          name="content"
           label="내용"
           multiline
           fullWidth
@@ -77,6 +112,13 @@ const InsertBoard = (props) => {
           rows={10}
           onChange={(e) => onChangeHandler(e)}
           value={post.contents}
+        />
+
+        <TextField
+          type="file"
+          fullWidth
+          variant="outlined"
+          onChange={e => onChangeFile(e)}
         />
 
         <Button

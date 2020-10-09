@@ -113,6 +113,21 @@ export default function Board(props) {
     setTableData(allData.slice(startNum, endNum));
   };
 
+  const categoryFn = (item) => {
+    switch (item) {
+      case "SECONDHAND":
+        return "중고장터"
+      case "YOGA":
+        return "요가"
+      case "PILATES":
+        return "필라테스"
+      case "MEETUP":
+        return "같이 운동해요"
+      default:
+        return "기타";
+    }
+  }
+
   return (
     <div>
       <Typography variant="h4" gutterBottom color="primary">
@@ -173,15 +188,15 @@ export default function Board(props) {
                 <TableRow key={index} className={classes.tableBodyRow}>
                   <TableCell className={classes.tableCell} key={index}>
                     <RouterLink to={`/board/detail/${dataItem.id}`}>
-                      {dataItem.category}
+                      {categoryFn(dataItem.category)}
                     </RouterLink>
                   </TableCell>
                   <TableCell className={classes.tableCell} key={index}>
                     <RouterLink to={`/board/detail/${dataItem.id}`}>
                       <div>{dataItem.title} </div>
                       <div style={{ color: "gray" }}>
-                        <VisibilityIcon style={{ fontSize: 15 }} /> 10{" "}
-                        <ChatBubbleIcon style={{ fontSize: 15 }} /> 5
+                        <VisibilityIcon style={{ fontSize: 15 }} /> {dataItem.views}{" "}
+                        <ChatBubbleIcon style={{ fontSize: 15 }} /> {dataItem.comments}
                       </div>
                     </RouterLink>
                   </TableCell>
