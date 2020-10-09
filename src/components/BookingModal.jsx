@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { closeModal, nextModal, showResult } from "../redux/modal";
 import { withStyles } from "@material-ui/core/styles";
@@ -108,7 +108,10 @@ const BookingModal = (props) => {
   const dispatch = useDispatch();
   const validityRef = useRef();
   //예약 정책 동의 check
+
+  console.log(globalSelectedSession);
   const [checked, SetChecked] = useState(false);
+  useEffect(() => {}, [globalModal]);
   const handleClose = () => {
     dispatch(closeModal());
   };
@@ -157,11 +160,9 @@ const BookingModal = (props) => {
           }}
         >
           <Typography variant="h4" gutterBottom>
-            {globalSelectedSession.sessionName}
+            {globalSelectedSession.name}
           </Typography>
-          {globalSelectedSession.sessionDate.toLocaleDateString()} (
-          {printDay(globalSelectedSession.sessionDate.getDay())})&nbsp;
-          {globalSelectedSession.startTime}
+          {globalSelectedSession.date} {globalSelectedSession.time}
         </DialogTitle>
 
         {/* ////////////////// */}
@@ -177,17 +178,15 @@ const BookingModal = (props) => {
             <DialogContent>
               <Typography gutterBottom>
                 <AccessTimeIcon fontSize="small"></AccessTimeIcon>
-                {globalSelectedSession.startTime} -{" "}
-                {globalSelectedSession.endTime}
+                {globalSelectedSession.time}
               </Typography>
               <Typography gutterBottom>
                 <PlaceIcon fontSize="small"></PlaceIcon>
-                {globalSelectedSession.companyName} /{" "}
-                {globalSelectedSession.place}
+                {globalSelectedSession.username} / {globalSelectedSession.room}
               </Typography>
               <Typography gutterBottom>
                 <FitnessCenterIcon fontSize="small"></FitnessCenterIcon>
-                {globalSelectedSession.sessionName}
+                {globalSelectedSession.name}
               </Typography>
               <Divider light />
               <Typography component="div" gutterBottom>

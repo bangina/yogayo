@@ -13,7 +13,7 @@ import { createLogger } from "redux-logger";
 const logger = createLogger();
 const store = createStore(
   rootReducer,
-  composeWithDevTools(applyMiddleware(logger))
+  composeWithDevTools(applyMiddleware(logger, ReduxThunk))
 );
 const theme = createMuiTheme({
   palette: {

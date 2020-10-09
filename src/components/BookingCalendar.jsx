@@ -68,26 +68,10 @@ const BookingCalendar = () => {
         return "";
     }
   };
-  const year = value.getFullYear();
-  const month = value.getMonth();
-  const date = value.getDate();
-  const apiUrl = `http://127.0.0.1:8000/api/lessons/${year}-${
-    month + 1
-  }-${date}`;
-  const apiCall = () => {
-    axios
-      .get(apiUrl)
-      .then((response) => {
-        console.log(response.data, apiUrl);
-      })
-      .catch((response) => {
-        console.error(response);
-      });
-  };
+
   //선택된 날짜를 redux에 보내기(=>selectedDate에 담김)
   useEffect(() => {
     dispatch(changeDate(value));
-    apiCall();
   }, [value]);
   const maxDate = new Date(new Date().setMonth(new Date().getMonth() + 1));
   return (

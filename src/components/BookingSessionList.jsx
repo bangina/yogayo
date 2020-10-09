@@ -126,16 +126,14 @@ const BookingSessionList = () => {
   const sliderStyles = useSliderStyles();
   const globalSession = useSelector((state) => state.session);
   const dispatch = useDispatch();
-  // const todaySessions = globalSession.sessions.filter(
-  //   (session) =>
-  //     session.date.getDate() === globalSession.selectedDate.getDate()
-  // );
   const [selectedSession, setSelectedSession] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [sessions, setSessions] = useState([]);
-  const [selectedDate, setSelectedDate] = useState("");
 
-  const apiUrl = `http://127.0.0.1:8000/api/lessons/${selectedDate}`;
+  const selectedDate = globalSession.selectedDate;
+  const apiUrl = `http://127.0.0.1:8000/api/lessons/${selectedDate.getFullYear()}-${
+    selectedDate.getMonth() + 1
+  }-${selectedDate.getDate()}`;
   const apiCall = () => {
     axios
       .get(apiUrl)
@@ -148,13 +146,12 @@ const BookingSessionList = () => {
   };
   useEffect(() => {
     apiCall();
-  }, []);
+  }, [selectedDate]);
   const onBtnClick = (e) => {
-    const selectedSession = globalSession.sessions.filter(
-      (session) => session.id.toString() === e.currentTarget.value.toString()
-    )[0];
-    console.log(selectedDate);
     dispatch(openModal());
+    const selectedSession = sessions.filter(
+      (session) => session.id == e.currentTarget.value
+    )[0];
     dispatch(selectSession(selectedSession));
   };
 
