@@ -24,7 +24,6 @@ const InsertBoard = () => {
     title: "",
     content: "",
     // "img_path": null,
-    views: 0
   });
 
   const onChangeHandler = (e) => {
@@ -49,20 +48,18 @@ const InsertBoard = () => {
       //   console.log(key);
       // }
 
-
       let cookies = new Cookies();
       const userToken = cookies.get("usertoken");
 
       console.log("저장된 쿠키토큰값:", userToken);
 
-
       axios({
-        method: 'post',
-        url: 'http://localhost:8000/api/posts/',
+        method: "post",
+        url: "http://localhost:8000/api/posts/",
         data: post,
         headers: {
-          Authorization: `Token 	${userToken}`,
-          // "Content-Type": "multipart/form-data"
+          // "Content-Type": "multipart/form-data",
+          "Authorization": `Token	 ${userToken}`,
         },
       })
         .then(function (response) {
@@ -71,16 +68,14 @@ const InsertBoard = () => {
         .catch(function (response) {
           console.log(response);
         });
-        
     }
-
   };
 
   const [alert, setAlert] = useState(false);
 
-  const onChangeFile = e => {
-    setPost({...post, img_path: e.target.files})
-  }
+  const onChangeFile = (e) => {
+    setPost({ ...post, img_path: e.target.files });
+  };
 
   return (
     <form className={classes.root}>
@@ -89,7 +84,7 @@ const InsertBoard = () => {
       <div>
         <DropDown
           title="말머리"
-          value={["중고장터", "요가", "필라테스", "같이 운동해요", "기타"]}
+          value={["중고장터", "요가", "필라테스", "같이_운동해요", "기타"]}
           onChange={(value) => setPost({ ...post, category: value })}
         />
 
@@ -118,7 +113,7 @@ const InsertBoard = () => {
           type="file"
           fullWidth
           variant="outlined"
-          onChange={e => onChangeFile(e)}
+          onChange={(e) => onChangeFile(e)}
         />
 
         <Button

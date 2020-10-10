@@ -76,27 +76,7 @@ const useSliderStyles = makeStyles(() => ({
 export const SessionCard = (props) => {
   const styles = useStyles();
   const sliderStyles = useSliderStyles();
-  const enrolledSession = props.enrolledSession[0];
-  const printDay = (props) => {
-    switch (props) {
-      case 1:
-        return "월";
-      case 2:
-        return "화";
-      case 3:
-        return "수";
-      case 4:
-        return "목";
-      case 5:
-        return "금";
-      case 6:
-        return "토";
-      case 0:
-        return "일";
-      default:
-        return "";
-    }
-  };
+  const enrolledSession = props.enrolledSession;
   return (
     <Card className={cx(styles.card)} elevation={0}>
       <CardContent style={{ background: "pink" }}>
@@ -104,34 +84,30 @@ export const SessionCard = (props) => {
           image="/static/images/cards/live-from-space.jpg"
           title="Live from space album cover"
         >
-          <Avatar className={styles.color2}>
-            {printDay(enrolledSession.sessionDate.getDay())}
-          </Avatar>
+          <Avatar className={styles.color2}>{enrolledSession.date}</Avatar>
         </CardMedia>
       </CardContent>
       <Box>
-        <h3 className={styles.heading}>{enrolledSession.sessionName}</h3>
+        <h3 className={styles.heading}>{enrolledSession.name}</h3>
         <p variant="h5">
-          {enrolledSession.sessionDate.getMonth()}월{" "}
+          {/* {enrolledSession.sessionDate.getMonth()}월{" "}
           {enrolledSession.sessionDate.getDate()}일{" "}
-          {enrolledSession.sessionDate.getDay()}
+          {enrolledSession.sessionDate.getDay()} */}
           요일 <br />
-          {enrolledSession.startTime} - {enrolledSession.endTime}
+          {enrolledSession.time}
         </p>
-        <p className={styles.subheader}>
-          {enrolledSession.companyName} • {enrolledSession.place}
-        </p>
+        <p className={styles.subheader}> {enrolledSession.room}</p>
         <Box display={"flex"} alignItems={"center"}>
           <Slider
             classes={sliderStyles}
-            value={
-              (enrolledSession.enrolledPeople.length /
-                enrolledSession.maxPeople) *
-              100
-            }
+            // value={
+            //   (enrolledSession.enrolledPeople.length /
+            //     enrolledSession.max_ppl) *
+            //   100
+            // }
           />
           <span className={styles.value}>
-            {enrolledSession.enrolledPeople.length}/{enrolledSession.maxPeople}
+            {/* {enrolledSession.enrolledPeople.length}/{enrolledSession.max_ppl} */}
             명 신청
           </span>
         </Box>

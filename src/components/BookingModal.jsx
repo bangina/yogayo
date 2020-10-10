@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import { Cookies } from "react-cookie";
 import { closeModal, nextModal, showResult } from "../redux/modal";
 import { withStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
@@ -105,17 +107,66 @@ const BookingModal = (props) => {
   const globalSession = useSelector((state) => state.session);
   const globalModal = useSelector((state) => state.modal);
   const globalSelectedSession = globalSession.enrollingSession;
+  const [userInfo, setUserInfo] = useState("");
+  const [vouchers, setVouchers] = useState("");
+  const [booking, setBooking] = useState({
+    name: "호호수업",
+    room: "101호",
+    date: "2020-10-12",
+    time: "19:36:00",
+    max_ppl: 10,
+    lesson: 8,
+    user: 4,
+  });
   const dispatch = useDispatch();
   const validityRef = useRef();
   //예약 정책 동의 check
-
-  console.log(globalSelectedSession);
   const [checked, SetChecked] = useState(false);
-  useEffect(() => {}, [globalModal]);
+  useEffect(() => {
+    const UserApiUrl = `http://127.0.0.1:8000/api/myinfo/`;
+    const VoucherApiUrl = `http://127.0.0.1:8000/api/myvouchers/`;
+    const apiCall = () => {
+      let cookies = new Cookies();
+      const userToken = cookies.get("usertoken");
+      axios
+        .get(UserApiUrl, { headers: { Authorization: `Token ${userToken}` } })
+        .then((response) => {
+          setUserInfo(response.data[0]);
+        })
+        .catch((response) => {
+          console.error(response);
+        });
+      axios
+        .get(VoucherApiUrl, {
+          headers: { Authorization: `Token ${userToken}` },
+        })
+        .then((response) => {
+          //status가 true(정상사용가능)인 voucher만 필터링해서 setVouchers
+          setVouchers(response.data.filter((d) => d.status === false));
+          console.log(response.data.filter((d) => d.status === false)[0]);
+        })
+        .catch((response) => {
+          console.error(response);
+        });
+    };
+    apiCall();
+  }, []);
+  useEffect(() => {
+    console.log(userInfo);
+    setBooking({
+      ...booking,
+      name: globalSelectedSession.name,
+      room: globalSelectedSession.room,
+      date: globalSelectedSession.date,
+      time: globalSelectedSession.time,
+      max_ppl: globalSelectedSession.max_ppl,
+      lesson: globalSelectedSession.id,
+      user: userInfo.id,
+    });
+  }, [globalSelectedSession]);
   const handleClose = () => {
     dispatch(closeModal());
   };
-
   //예약하기 버튼 클릭시
   const handleInitialSubmit = () => {
     if (checked === true) {
@@ -226,11 +277,11 @@ const BookingModal = (props) => {
           <DialogContent>
             <Typography gutterBottom>
               <AccessTimeIcon fontSize="small"></AccessTimeIcon>
-              솔방울 회원님
+              {userInfo.username} 회원님
             </Typography>
             <Typography gutterBottom>
               <PlaceIcon fontSize="small"></PlaceIcon>
-              현재 회원권 잔여횟수 : 3회 (남은기간 : 10일)
+              현재 회원권 잔여횟수 : {vouchers[0].used}회 (남은기간 : 10일)
             </Typography>
             <Typography gutterBottom>
               수업 예약 취소/변경 기한 : 00까지
@@ -273,6 +324,7 @@ const BookingModal = (props) => {
               isModalOpen={globalModal.isModalOpen}
               isConfirmOpen={globalModal.isConfirmOpen}
               isResultOpen={globalModal.isResultOpen}
+              booking={booking}
             />
           </div>
         </DialogActions>

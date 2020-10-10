@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { Cookies } from "react-cookie";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import { Cookies } from "react-cookie";
 import DiaryCard from "../components/DiaryCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination, Scrollbar, A11y } from "swiper";
@@ -94,6 +95,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Main = (props) => {
+  const [userInfo, setUserInfo] = useState("");
   const loginMember = {
     name: "test1",
     email: "test1@gmail.com",
@@ -205,6 +207,24 @@ const Main = (props) => {
   };
   const [slidesPerView, setSlidesPerView] = useState(initialSlideNum);
   useEffect(() => {
+
+  const apiUrl = `http://127.0.0.1:8000/api/myinfo/`;
+  const apiCall = () => {
+    // 로그인 유저 정보 불러오기
+    let cookies = new Cookies();
+    const userToken = cookies.get("usertoken");
+    axios
+      .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
+      .then((response) => {
+        setUserInfo(response.data[0]);
+        // console.log("로그인 유저", response.data[0]);
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+  };
+  apiCall();
+//화면 가로크기 조정시 카드 width 조정
     function handleResize() {
       if (list.matches === true) {
         setSlidesPerView(3);
@@ -225,30 +245,11 @@ const Main = (props) => {
           color="textPrimary"
           gutterBottom
         >
-          {loginUserToken ? loginUserToken : ""}님! 좋은 아침이에요.
+          {loginUserToken
+            ? `${userInfo.username}님! 안녕하세요 🧘‍♀️`
+            : "안녕하세요 요가요입니다. 🧘‍♀️"}
         </Typography>
         <div className={classes.heroContent}>
-          {/* <Container maxWidth="sm">
-            <Typography align="center" color="textSecondary" paragraph>
-              {loginMember.Voucher.center} <br />
-              {loginMember.Voucher.VoucherName} <br />
-              {loginMember.Voucher.date} <br />
-              {loginMember.Voucher.attendance} <br />
-            </Typography>
-            <div className={classes.heroButtons}>
-              <Grid container spacing={2} justify="center">
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => props.history.push("/booking")}
-                  >
-                    수업 예약하러 가기 {">"}
-                  </Button>
-                </Grid>
-              </Grid>
-            </div>
-          </Container> */}
           <Container maxWidth="sm" className={classes.linkBox}>
             <EventAvailableIcon
               fontSize="large"
@@ -256,7 +257,11 @@ const Main = (props) => {
             />
             <Typography
               align="center"
-              onClick={() => props.history.push("/booking")}
+              onClick={() =>
+                loginUserToken
+                  ? props.history.push("/booking")
+                  : props.history.push("/login")
+              }
               className={classes.bookingText}
             >
               <strong>수업 예약</strong> 하러가기

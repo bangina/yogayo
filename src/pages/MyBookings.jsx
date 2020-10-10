@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import axios from "axios";
+import { Cookies } from "react-cookie";
 import SessionCard from "../components/SessionCard";
 import TabBar from "../components/TabBar";
 import TabPanel from "../components/TabPanel";
@@ -11,22 +13,30 @@ const MyBookings = () => {
   );
   const enrolledSessionIds = globalMemberSessions[0].enrolledSessions; //[1,2,3]
   const globalSessions = useSelector((state) => state.session.sessions);
-  const enrolledSessions = [];
-  for (let i = 1; i <= enrolledSessionIds.length; i++) {
-    enrolledSessions.push(
-      globalSessions.filter((globalSession) => globalSession.id === i)
-    );
-  }
-  console.log(enrolledSessionIds);
-  console.log(globalSessions);
-  console.log("enrolledSessions", enrolledSessions);
+  const [enrolledSessions, setEnrolledSessions] = useState([]);
 
   const [value, setValue] = useState(0);
-
   const handleChage = (newValue) => {
     setValue(newValue);
   };
 
+  const apiUrl = `http://127.0.0.1:8000/api/mylessons/`;
+  let cookies = new Cookies();
+  const userToken = cookies.get("usertoken");
+  const apiCall = () => {
+    axios
+      .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
+      .then((response) => {
+        setEnrolledSessions(response.data);
+        console.log("호출 결과 :", response.data);
+      })
+      .catch((response) => {
+        console.error(" 오류", response);
+      });
+  };
+  useEffect(() => {
+    apiCall();
+  }, []);
   return (
     <>
       <Typography variant="h4" gutterBottom color="primary">

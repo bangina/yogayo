@@ -2,8 +2,8 @@ import React from "react";
 import Button from "@material-ui/core/Button";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { closeModal } from "../redux/modal";
-
+import axios from "axios";
+import { Cookies } from "react-cookie";
 const StyledButton = styled(Button)`
   width: 100%;
   padding: 12px 22px;
@@ -14,8 +14,29 @@ const ModalButtonRight = (props) => {
   const isModalOpen = props.isModalOpen;
   const isConfirmOpen = props.isConfirmOpen;
   const isResultOpen = props.isResultOpen;
-  const handleClose = () => {
-    dispatch(closeModal());
+  const booking = props.booking;
+  const onSubmit = () => {
+    const BookingApiUrl = `http://127.0.0.1:8000/api/mylessons/`;
+    console.log(booking);
+    let cookies = new Cookies();
+    const userToken = cookies.get("usertoken");
+    const apiCall = () => {
+      axios({
+        method: "post",
+        url: BookingApiUrl,
+        data: booking,
+        headers: {
+          Authorization: `Token	${userToken}`,
+        },
+      })
+        .then((response) => {
+          console.log("booking 호출 결과 :", response);
+        })
+        .catch((response) => {
+          console.error("booking 오류", response);
+        });
+    };
+    apiCall();
   };
   return (
     <>
@@ -35,6 +56,7 @@ const ModalButtonRight = (props) => {
           variant="contained"
           size="large"
           classes="button"
+          onClick={onSubmit}
         >
           예약완료
         </StyledButton>
