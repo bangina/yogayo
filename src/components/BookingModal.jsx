@@ -9,7 +9,6 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import MuiDialogContent from "@material-ui/core/DialogContent";
-import MuiDialog from "@material-ui/core/DialogActions";
 import MuiDialogActions from "@material-ui/core/DialogActions";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
@@ -105,18 +104,18 @@ const printDay = (props) => {
 };
 const BookingModal = (props) => {
   const globalSession = useSelector((state) => state.session);
-  const globalModal = useSelector((state) => state.modal);
   const globalSelectedSession = globalSession.enrollingSession;
+  const globalModal = useSelector((state) => state.modal);
   const [userInfo, setUserInfo] = useState("");
   const [vouchers, setVouchers] = useState("");
   const [booking, setBooking] = useState({
-    name: "호호수업",
-    room: "101호",
-    date: "2020-10-12",
-    time: "19:36:00",
-    max_ppl: 10,
-    lesson: 8,
-    user: 4,
+    name: "",
+    room: "",
+    date: "",
+    time: "",
+    max_ppl: "",
+    lesson: "",
+    user: "",
   });
   const dispatch = useDispatch();
   const validityRef = useRef();
@@ -152,7 +151,6 @@ const BookingModal = (props) => {
     apiCall();
   }, []);
   useEffect(() => {
-    console.log(userInfo);
     setBooking({
       ...booking,
       name: globalSelectedSession.name,

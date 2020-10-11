@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { selectSession } from "../redux/session";
+import { Cookies } from "react-cookie";
 import cx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -77,6 +81,48 @@ export const SessionCard = (props) => {
   const styles = useStyles();
   const sliderStyles = useSliderStyles();
   const enrolledSession = props.enrolledSession;
+  const userInfo = props.userInfo;
+  const [booking, setBooking] = useState({
+    name: "",
+    room: "",
+    date: "",
+    time: "",
+    max_ppl: "",
+    lesson: "",
+    user: "",
+  });
+  const dispatch = useDispatch();
+  const onSubmit = (e) => {
+    dispatch(selectSession(enrolledSession));
+    console.log("enrolledSession", enrolledSession);
+    const CancleApiUrl = `http://127.0.0.1:8000/api/mylessons/${enrolledSession.lesson}/`;
+    let cookies = new Cookies();
+    const userToken = cookies.get("usertoken");
+    const apiCall = () => {
+      axios({
+        method: "delete",
+        url: CancleApiUrl,
+        data: enrolledSession,
+        headers: {
+          Authorization: `Token	${userToken}`,
+        },
+      })
+        .then((response) => {
+          console.log("수업 취소 호출 결과 :", response);
+        })
+        .catch((error) => {
+          console.error("수업 취소 오류", error);
+          console.log("CancleApiUrl", CancleApiUrl);
+        });
+    };
+    apiCall();
+  };
+  useEffect(() => {
+    setBooking(enrolledSession);
+    console.log("userInfo", userInfo);
+    console.log("enrolledSession", enrolledSession);
+    // setBooking({ ...booking, user: userInfo.id });
+  }, []);
   return (
     <Card className={cx(styles.card)} elevation={0}>
       <CardContent style={{ background: "pink" }}>
@@ -111,7 +157,7 @@ export const SessionCard = (props) => {
             명 신청
           </span>
         </Box>
-        <Button variant="outlined" color="primary">
+        <Button variant="outlined" color="primary" onClick={onSubmit}>
           취소하기
         </Button>
       </Box>
