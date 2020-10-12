@@ -13,7 +13,7 @@ const MyBookings = () => {
     (state) => state.memberSession.memberSessions
   );
   const globalSession = useSelector((state) => state.session);
-  const globalSelectedSession = globalSession.enrollingSession;
+  const globalSelectedSession = globalSession.bookingLesson;
   const [bookedLessons, setbookedLessons] = useState([]);
   const [booking, setBooking] = useState({
     name: "호호수업",
@@ -74,18 +74,15 @@ const MyBookings = () => {
       </Typography>
       <TabBar onChange={handleChage} menu="bookings">
         <TabPanel value={value} index={0}>
-          {bookedLessons.map((enrolledSession) => (
-            <SessionCard
-              key={enrolledSession.id}
-              enrolledSession={enrolledSession}
-            />
+          {bookedLessons.map((bookedLesson) => (
+            <SessionCard key={bookedLesson.id} bookedLesson={bookedLesson} />
           ))}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {bookedLessons.map((enrolledSession) => (
+          {bookedLessons.map((bookedLesson) => (
             <SessionCard
-              key={enrolledSession.id}
-              enrolledSession={enrolledSession}
+              key={bookedLesson.id}
+              bookedLesson={bookedLesson}
               booking={globalSelectedSession}
               userInfo={userInfo}
             />

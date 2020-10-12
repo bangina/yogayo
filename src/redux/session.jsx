@@ -1,12 +1,12 @@
 const DATE_CHANGE = "DATE_CHANGE";
-const SELECT_ENROLL_SESSION = "SELECT_ENROLL_SESSION";
+const SELECT_BOOK_SESSION = "SELECT_BOOK_SESSION";
 
 export const changeDate = (clickedDate) => ({
   type: DATE_CHANGE,
   clickedDate, //value
 });
 export const selectSession = (selectedSession) => ({
-  type: SELECT_ENROLL_SESSION,
+  type: SELECT_BOOK_SESSION,
   selectedSession,
 });
 
@@ -33,7 +33,7 @@ const initialState = {
       max_ppl: null,
     },
   ],
-  enrollingSession: {
+  bookingLesson: {
     id: "",
     username: "",
     name: "",
@@ -49,8 +49,8 @@ const session = (sessionState = initialState, action) => {
   switch (action.type) {
     case DATE_CHANGE:
       return { ...sessionState, selectedDate: action.clickedDate };
-    case SELECT_ENROLL_SESSION:
-      return { ...sessionState, enrollingSession: action.selectedSession };
+    case SELECT_BOOK_SESSION:
+      return { ...sessionState, bookingLesson: action.selectedSession };
     default:
       return sessionState;
   }

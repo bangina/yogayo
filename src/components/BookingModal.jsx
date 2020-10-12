@@ -104,7 +104,7 @@ const printDay = (props) => {
 };
 const BookingModal = (props) => {
   const globalSession = useSelector((state) => state.session);
-  const globalSelectedSession = globalSession.enrollingSession;
+  const globalSelectedSession = globalSession.bookingLesson;
   const globalModal = useSelector((state) => state.modal);
   const [userInfo, setUserInfo] = useState("");
   const [vouchers, setVouchers] = useState("");

@@ -80,7 +80,7 @@ const useSliderStyles = makeStyles(() => ({
 export const SessionCard = (props) => {
   const styles = useStyles();
   const sliderStyles = useSliderStyles();
-  const enrolledSession = props.enrolledSession;
+  const bookedLesson = props.bookedLesson;
   const userInfo = props.userInfo;
   const [booking, setBooking] = useState({
     name: "",
@@ -93,16 +93,16 @@ export const SessionCard = (props) => {
   });
   const dispatch = useDispatch();
   const onSubmit = (e) => {
-    dispatch(selectSession(enrolledSession));
-    console.log("enrolledSession", enrolledSession);
-    const CancleApiUrl = `http://127.0.0.1:8000/api/mylessons/${enrolledSession.lesson}/`;
+    dispatch(selectSession(bookedLesson));
+    console.log("bookedLesson", bookedLesson);
+    const CancleApiUrl = `http://127.0.0.1:8000/api/mylessons/${bookedLesson.lesson}/`;
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");
     const apiCall = () => {
       axios({
         method: "delete",
         url: CancleApiUrl,
-        data: enrolledSession,
+        data: bookedLesson,
         headers: {
           Authorization: `Token	${userToken}`,
         },
@@ -118,9 +118,9 @@ export const SessionCard = (props) => {
     apiCall();
   };
   useEffect(() => {
-    setBooking(enrolledSession);
+    setBooking(bookedLesson);
     console.log("userInfo", userInfo);
-    console.log("enrolledSession", enrolledSession);
+    console.log("bookedLesson", bookedLesson);
     // setBooking({ ...booking, user: userInfo.id });
   }, []);
   return (
@@ -130,31 +130,31 @@ export const SessionCard = (props) => {
           image="/static/images/cards/live-from-space.jpg"
           title="Live from space album cover"
         >
-          <Avatar className={styles.color2}>{enrolledSession.date}</Avatar>
+          <Avatar className={styles.color2}>{bookedLesson.date}</Avatar>
         </CardMedia>
       </CardContent>
       <Box>
-        <h3 className={styles.heading}>{enrolledSession.name}</h3>
+        <h3 className={styles.heading}>{bookedLesson.name}</h3>
         <p variant="h5">
-          {/* {enrolledSession.sessionDate.getMonth()}월{" "}
-          {enrolledSession.sessionDate.getDate()}일{" "}
-          {enrolledSession.sessionDate.getDay()} */}
+          {/* {bookedLesson.sessionDate.getMonth()}월{" "}
+          {bookedLesson.sessionDate.getDate()}일{" "}
+          {bookedLesson.sessionDate.getDay()} */}
           요일 <br />
-          {enrolledSession.time}
+          {bookedLesson.time}
         </p>
-        <p className={styles.subheader}> {enrolledSession.room}</p>
+        <p className={styles.subheader}> {bookedLesson.room}</p>
         <Box display={"flex"} alignItems={"center"}>
           <Slider
             classes={sliderStyles}
             // value={
-            //   (enrolledSession.enrolledPeople.length /
-            //     enrolledSession.max_ppl) *
+            //   (bookedLesson.bookedPeople.length /
+            //     bookedLesson.max_ppl) *
             //   100
             // }
           />
           <span className={styles.value}>
-            {/* {enrolledSession.enrolledPeople.length}/{enrolledSession.max_ppl} */}
-            명 신청
+            {/* {bookedLesson.bookedPeople.length}/{bookedLesson.max_ppl} */}명
+            신청
           </span>
         </Box>
         <Button variant="outlined" color="primary" onClick={onSubmit}>

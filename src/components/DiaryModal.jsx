@@ -76,7 +76,7 @@ const StyledButton = styled(Button)`
 const DiaryModal = (props) => {
   //   const globalSession = useSelector((state) => state.session);
   const globalModal = useSelector((state) => state.modal);
-  //   const globalSelectedSession = globalSession.enrollingSession;
+  //   const globalSelectedSession = globalSession.bookingLesson;
   const dispatch = useDispatch();
   const validityRef = useRef();
   //예약 정책 동의 check

@@ -200,19 +200,19 @@ const BookingSessionList = () => {
                         <Slider
                           classes={sliderStyles}
                           // value={
-                          //   (session.enrolledPeople.length /
+                          //   (session.bookedPeople.length /
                           //     session.max_ppl) *
                           //   100
                           // }
                         />
                         <span className={styles.value}>
-                          {/* {session.enrolledPeople.length}/{session.max_ppl} */}
+                          {/* {session.bookedPeople.length}/{session.max_ppl} */}
                           명 신청
                         </span>
                       </Box>
                       <Button
                         // color={
-                        //   session.max_ppl === session.enrolledPeople.length
+                        //   session.max_ppl === session.bookedPeople.length
                         //     ? ""
                         //     : "primary"
                         // }
@@ -220,7 +220,7 @@ const BookingSessionList = () => {
                         value={session.id}
                         variant="outlined"
                       >
-                        {/* {session.maxPeople === session.enrolledPeople.length
+                        {/* {session.maxPeople === session.bookedPeople.length
                           ? "대기하기"
                           : "수강신청"} */}
                         수강신청
