@@ -8,7 +8,6 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import FormControl from "@material-ui/core/FormControl";
 import TextInfoContent from "@mui-treasury/components/content/textInfo";
 import { useN01TextInfoContentStyles } from "@mui-treasury/styles/textInfoContent/n01";
-
 import Avatar from "@material-ui/core/Avatar";
 import { Column, Row, Item } from "@mui-treasury/components/flex";
 import {
@@ -28,6 +27,10 @@ const useStyles = makeStyles((theme) => ({
   replyInput: {
     height: 50,
   },
+
+  img : {
+    marginTop: theme.spacing(2),
+  }
 }));
 
 const Detail = (props) => {
@@ -106,10 +109,11 @@ const Detail = (props) => {
         <CardContent>
           <TextInfoContent
             useStyles={useN01TextInfoContentStyles}
-            overline={post.created}
+            overline={String(post.created).substring(0,10) + " " + post.username}
             heading={`[${post.category}] ${post.title}`}
             body={post.content}
           />
+          <img src={post.img_path} className={classes.img}/>
         </CardContent>
         <Divider />
         <Column gap={2}>

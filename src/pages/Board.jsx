@@ -94,8 +94,6 @@ export default function Board(props) {
         console.error(response);
       });
 
-    // setAllData(globalPosts);
-    // setTableData(globalPosts.slice(0, 10));
   }, []);
 
   const handlePage = (event, value) => {
@@ -104,19 +102,19 @@ export default function Board(props) {
     setTableData(globalPosts.slice(startNum, endNum));
   };
 
-  const categoryFn = (item) => {
-    switch (item) {
-      case "SECONDHAND":
-        return "중고장터"
-      case "YOGA":
-        return "요가"
-      case "PILATES":
-        return "필라테스"
-      case "MEETUP":
-        return "같이 운동해요"
-      default:
-        return "기타";
-    }
+  const categoryChange = value => {
+    const apiUrl = `http://localhost:8000/api/posts/${value}/`;
+
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        console.log("카테고리 조회:", response.data);
+        setGlobalPosts(response.data);
+        setTableData(response.data.slice(0, 10))
+      })
+      .catch((response) => {
+        console.error(response);
+      });
   }
 
   return (
@@ -128,8 +126,8 @@ export default function Board(props) {
         <div>
           <DropDown
             title="말머리"
-            value={["중고장터", "요가", "필라테스", "같이 운동해요", "기타"]}
-            onChange={(value) => console.log(value)}
+            value={["중고장터", "요가", "필라테스", "같이_운동해요", "기타"]}
+            onChange={categoryChange}
           />
         </div>
         <div style={{ float: "right" }}>
@@ -179,7 +177,7 @@ export default function Board(props) {
                 <TableRow key={index} className={classes.tableBodyRow}>
                   <TableCell className={classes.tableCell} key={index}>
                     <RouterLink to={`/board/detail/${dataItem.id}`}>
-                      {categoryFn(dataItem.category)}
+                      {dataItem.category}
                     </RouterLink>
                   </TableCell>
                   <TableCell className={classes.tableCell} key={index}>

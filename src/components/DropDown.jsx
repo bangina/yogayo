@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DropDown(props) {
   const classes = useStyles();
-  console.log(props, "props");
+  // console.log(props, "props");
   const handleChange = (event) => {
     props.onChange(event.target.value);
   };
