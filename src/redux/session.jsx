@@ -22,7 +22,7 @@ const initialState = {
       max_ppl: null,
     },
   ],
-  enrolledSessions: [
+  bookedLessons: [
     {
       id: "",
       username: "",

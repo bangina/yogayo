@@ -1,11 +1,11 @@
 const initialState = {
   memberSessions: [
-    { name: "test1", enrolledSessions: [1, 2, 3, 4, 5] },
-    { name: "test2", enrolledSessions: [3] },
-    { name: "test3", enrolledSessions: [1] },
-    { name: "test4", enrolledSessions: [1, 5] },
-    { name: "test5", enrolledSessions: [6, 7] },
-    { name: "test6", enrolledSessions: [] },
+    { name: "test1", bookedLessons: [1, 2, 3, 4, 5] },
+    { name: "test2", bookedLessons: [3] },
+    { name: "test3", bookedLessons: [1] },
+    { name: "test4", bookedLessons: [1, 5] },
+    { name: "test5", bookedLessons: [6, 7] },
+    { name: "test6", bookedLessons: [] },
   ],
 };
 

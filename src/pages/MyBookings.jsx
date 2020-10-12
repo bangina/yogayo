@@ -6,6 +6,7 @@ import SessionCard from "../components/SessionCard";
 import TabBar from "../components/TabBar";
 import TabPanel from "../components/TabPanel";
 import Typography from "@material-ui/core/Typography";
+import GenModal from "../components/GenModal";
 
 const MyBookings = () => {
   const globalMemberSessions = useSelector(
@@ -13,7 +14,7 @@ const MyBookings = () => {
   );
   const globalSession = useSelector((state) => state.session);
   const globalSelectedSession = globalSession.enrollingSession;
-  const [enrolledSessions, setEnrolledSessions] = useState([]);
+  const [bookedLessons, setbookedLessons] = useState([]);
   const [booking, setBooking] = useState({
     name: "호호수업",
     room: "101호",
@@ -36,7 +37,7 @@ const MyBookings = () => {
     axios
       .get(LessonapiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
-        setEnrolledSessions(response.data);
+        setbookedLessons(response.data);
       })
       .catch((response) => {
         console.error(" 오류", response);
@@ -73,7 +74,7 @@ const MyBookings = () => {
       </Typography>
       <TabBar onChange={handleChage} menu="bookings">
         <TabPanel value={value} index={0}>
-          {enrolledSessions.map((enrolledSession) => (
+          {bookedLessons.map((enrolledSession) => (
             <SessionCard
               key={enrolledSession.id}
               enrolledSession={enrolledSession}
@@ -81,7 +82,7 @@ const MyBookings = () => {
           ))}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {enrolledSessions.map((enrolledSession) => (
+          {bookedLessons.map((enrolledSession) => (
             <SessionCard
               key={enrolledSession.id}
               enrolledSession={enrolledSession}
@@ -90,6 +91,8 @@ const MyBookings = () => {
             />
           ))}
         </TabPanel>
+        Genmodal
+        <GenModal />
       </TabBar>
     </>
   );
