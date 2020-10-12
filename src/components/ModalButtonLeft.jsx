@@ -8,10 +8,10 @@ const StyledButton = styled(Button)`
   font-size: 1.1rem;
 `;
 const ModalButtonLeft = (props) => {
-  const isResultOpen = props.isResultOpen;
+  const isBookingResultOpen = props.isBookingResultOpen;
   return (
     <>
-      {!isResultOpen ? (
+      {!isBookingResultOpen ? (
         <StyledButton variant="outlined" size="large">
           돌아가기
         </StyledButton>

@@ -103,11 +103,24 @@ const printDay = (props) => {
   }
 };
 const BookingModal = (props) => {
-  const globalSession = useSelector((state) => state.session);
-  const globalSelectedSession = globalSession.bookingLesson;
+  const globalLesson = useSelector((state) => state.session);
+  const globalSelectedLesson = globalLesson.bookingLesson;
   const globalModal = useSelector((state) => state.modal);
+  const {
+    isBookingModalOpen,
+    isBookingConfirmOpen,
+    isBookingResultOpen,
+  } = globalModal; //비구조화 할당
   const [userInfo, setUserInfo] = useState("");
-  const [vouchers, setVouchers] = useState("");
+  const [vouchers, setVouchers] = useState({
+    date: "",
+    lesson: "",
+    max_ppl: "",
+    name: "",
+    room: "",
+    time: "",
+    user: 4,
+  });
   const [booking, setBooking] = useState({
     name: "",
     room: "",
@@ -141,8 +154,10 @@ const BookingModal = (props) => {
         })
         .then((response) => {
           //status가 true(정상사용가능)인 voucher만 필터링해서 setVouchers
-          setVouchers(response.data.filter((d) => d.status === false));
-          console.log(response.data.filter((d) => d.status === false)[0]);
+          const activeVoucher = response.data.filter((d) => d.status === true);
+          if (activeVoucher == true) {
+            setVouchers(activeVoucher);
+          }
         })
         .catch((response) => {
           console.error(response);
@@ -153,15 +168,15 @@ const BookingModal = (props) => {
   useEffect(() => {
     setBooking({
       ...booking,
-      name: globalSelectedSession.name,
-      room: globalSelectedSession.room,
-      date: globalSelectedSession.date,
-      time: globalSelectedSession.time,
-      max_ppl: globalSelectedSession.max_ppl,
-      lesson: globalSelectedSession.id,
+      name: globalSelectedLesson.name,
+      room: globalSelectedLesson.room,
+      date: globalSelectedLesson.date,
+      time: globalSelectedLesson.time,
+      max_ppl: globalSelectedLesson.max_ppl,
+      lesson: globalSelectedLesson.id,
       user: userInfo.id,
     });
-  }, [globalSelectedSession]);
+  }, [globalSelectedLesson]);
   const handleClose = () => {
     dispatch(closeModal());
   };
@@ -195,7 +210,7 @@ const BookingModal = (props) => {
       <StyledDialog
         onClose={handleClose}
         aria-labelledby="modal-title"
-        open={globalModal.isModalOpen}
+        open={isBookingModalOpen}
       >
         {/* ////////////////// */}
         {/* modal header area */}
@@ -209,9 +224,9 @@ const BookingModal = (props) => {
           }}
         >
           <Typography variant="h4" gutterBottom>
-            {globalSelectedSession.name}
+            {globalSelectedLesson.name}
           </Typography>
-          {globalSelectedSession.date} {globalSelectedSession.time}
+          {globalSelectedLesson.date} {globalSelectedLesson.time}
         </DialogTitle>
 
         {/* ////////////////// */}
@@ -221,57 +236,55 @@ const BookingModal = (props) => {
         {/* ////////////////// */}
         {/* body - 1단계  */}
         {/* ////////////////// */}
-        {globalModal.isModalOpen &&
-          !globalModal.isConfirmOpen &&
-          !globalModal.isResultOpen && (
-            <DialogContent>
-              <Typography gutterBottom>
-                <AccessTimeIcon fontSize="small"></AccessTimeIcon>
-                {globalSelectedSession.time}
-              </Typography>
-              <Typography gutterBottom>
-                <PlaceIcon fontSize="small"></PlaceIcon>
-                {globalSelectedSession.username} / {globalSelectedSession.room}
-              </Typography>
-              <Typography gutterBottom>
-                <FitnessCenterIcon fontSize="small"></FitnessCenterIcon>
-                {globalSelectedSession.name}
-              </Typography>
-              <Divider light />
-              <Typography component="div" gutterBottom>
-                <Box fontSize={16} fontWeight="fontWeightMedium" mt={1} mb={1}>
-                  취소와 변경정책
-                </Box>
-                <Box fontSize={13}>
-                  결석 무단 결석시 이용권의 남은 횟수가 차감됩니다. 수업
-                  종료시간까지 입장하지 않으면 자동결석처리 됩니다.
-                </Box>
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={checked}
-                      onClick={(e) => handleChange(e)}
-                      name="checkedB"
-                      color="primary"
-                    />
-                  }
-                  label="위 이용권 예약 정책에 동의합니다."
-                />
-                <Alert
-                  severity="error"
-                  ref={validityRef}
-                  style={{ display: "none", width: "100%" }}
-                >
-                  이용권 예약 정책에 동의해주세요.
-                </Alert>
-              </Typography>
-            </DialogContent>
-          )}
+        {isBookingModalOpen && !isBookingConfirmOpen && !isBookingResultOpen && (
+          <DialogContent>
+            <Typography gutterBottom>
+              <AccessTimeIcon fontSize="small"></AccessTimeIcon>
+              {globalSelectedLesson.time}
+            </Typography>
+            <Typography gutterBottom>
+              <PlaceIcon fontSize="small"></PlaceIcon>
+              {globalSelectedLesson.username} / {globalSelectedLesson.room}
+            </Typography>
+            <Typography gutterBottom>
+              <FitnessCenterIcon fontSize="small"></FitnessCenterIcon>
+              {globalSelectedLesson.name}
+            </Typography>
+            <Divider light />
+            <Typography component="div" gutterBottom>
+              <Box fontSize={16} fontWeight="fontWeightMedium" mt={1} mb={1}>
+                취소와 변경정책
+              </Box>
+              <Box fontSize={13}>
+                결석 무단 결석시 이용권의 남은 횟수가 차감됩니다. 수업
+                종료시간까지 입장하지 않으면 자동결석처리 됩니다.
+              </Box>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={checked}
+                    onClick={(e) => handleChange(e)}
+                    name="checkedB"
+                    color="primary"
+                  />
+                }
+                label="위 이용권 예약 정책에 동의합니다."
+              />
+              <Alert
+                severity="error"
+                ref={validityRef}
+                style={{ display: "none", width: "100%" }}
+              >
+                이용권 예약 정책에 동의해주세요.
+              </Alert>
+            </Typography>
+          </DialogContent>
+        )}
 
         {/* ////////////////// */}
         {/*  body -  2단계 */}
         {/* ////////////////// */}
-        {globalModal.isConfirmOpen && (
+        {isBookingConfirmOpen && (
           <DialogContent>
             <Typography gutterBottom>
               <AccessTimeIcon fontSize="small"></AccessTimeIcon>
@@ -279,7 +292,9 @@ const BookingModal = (props) => {
             </Typography>
             <Typography gutterBottom>
               <PlaceIcon fontSize="small"></PlaceIcon>
-              현재 회원권 잔여횟수 : {vouchers[0].used}회 (남은기간 : 10일)
+              {vouchers.length > 0
+                ? `현재 회원권 잔여횟수 : ${vouchers[0].used}회 (남은기간 : 10일)`
+                : `이용가능한 회원권이 없습니다.`}
             </Typography>
             <Typography gutterBottom>
               수업 예약 취소/변경 기한 : 00까지
@@ -290,7 +305,7 @@ const BookingModal = (props) => {
         {/* ////////////////// */}
         {/*  body -  3단계 */}
         {/* ////////////////// */}
-        {globalModal.isResultOpen && (
+        {isBookingResultOpen && (
           <DialogContent>
             <SuccessMsg message="예약이 완료되었습니다." />
           </DialogContent>
@@ -301,27 +316,27 @@ const BookingModal = (props) => {
         <DialogActions>
           {/* 모달 버튼 - LEFT */}
           {/* div태그 씌운 이유? onClick 이벤트 적용하기 위해서 */}
-          {!globalModal.isResultOpen ? (
+          {!isBookingResultOpen ? (
             <div onClick={handleClose} style={{ width: "100%" }}>
-              <ModalButtonLeft isResultOpen={globalModal.isResultOpen} />
+              <ModalButtonLeft isBookingResultOpen={isBookingResultOpen} />
             </div>
           ) : null}
 
           {/* 모달 버튼 - RIGHT */}
           <div
             onClick={
-              !globalModal.isConfirmOpen && !globalModal.isResultOpen
+              !isBookingConfirmOpen && !isBookingResultOpen
                 ? handleInitialSubmit
-                : globalModal.isConfirmOpen
+                : isBookingConfirmOpen
                 ? handleNextSubmit
                 : handleSubmit
             }
             style={{ width: "100%" }}
           >
             <ModalButtonRight
-              isModalOpen={globalModal.isModalOpen}
-              isConfirmOpen={globalModal.isConfirmOpen}
-              isResultOpen={globalModal.isResultOpen}
+              isBookingModalOpen={isBookingModalOpen}
+              isBookingConfirmOpen={isBookingConfirmOpen}
+              isBookingResultOpen={isBookingResultOpen}
               booking={booking}
             />
           </div>

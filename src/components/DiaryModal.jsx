@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { Cookies } from "react-cookie";
 import { closeDiaryModal } from "../redux/modal";
 import { withStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
@@ -74,9 +75,9 @@ const StyledButton = styled(Button)`
 `;
 
 const DiaryModal = (props) => {
-  //   const globalSession = useSelector((state) => state.session);
+  //   const globalLesson = useSelector((state) => state.session);
   const globalModal = useSelector((state) => state.modal);
-  //   const globalSelectedSession = globalSession.bookingLesson;
+  //   const globalSelectedLesson = globalLesson.bookingLesson;
   const dispatch = useDispatch();
   const validityRef = useRef();
   //예약 정책 동의 check
@@ -112,11 +113,16 @@ const DiaryModal = (props) => {
     console.log(diaryContents);
   };
   const onSubmit = () => {
+    let cookies = new Cookies();
+    const userToken = cookies.get("usertoken");
     axios({
       method: "post",
-      url: "http://127.0.0.1:8000/api/diaries/1/upload",
+      url: "http://127.0.0.1:8000/api/diaries/1/upload/",
       data: diaryContents,
-      // headers: { "Content-Type": "multipart/form-data" }, //:파일데이터 보낼 때 컨텐츠 유형임.
+      headers: {
+        // "Content-Type": "multipart/form-data",
+        Authorization: `Token ${userToken}`,
+      }, //:파일데이터 보낼 때 컨텐츠 유형임.
     })
       .then(function (response) {
         console.log(response);

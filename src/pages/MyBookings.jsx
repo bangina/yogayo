@@ -12,8 +12,9 @@ const MyBookings = () => {
   const globalMemberSessions = useSelector(
     (state) => state.memberSession.memberSessions
   );
-  const globalSession = useSelector((state) => state.session);
-  const globalSelectedSession = globalSession.bookingLesson;
+  const globalLesson = useSelector((state) => state.session);
+  const globalModal = useSelector((state) => state.modal);
+  const globalSelectedLesson = globalLesson.bookingLesson;
   const [bookedLessons, setbookedLessons] = useState([]);
   const [booking, setBooking] = useState({
     name: "호호수업",
@@ -49,24 +50,23 @@ const MyBookings = () => {
       .get(UserApiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
         setUserInfo(response.data[0]);
-        console.log("userInfo", response.data[0].id);
       })
       .catch((response) => {
         console.error(response);
       });
-  }, []);
+  }, [globalModal.isCancelModalOpen]); //모달 닫히면 재렌더링 되도록함.
   useEffect(() => {
     setBooking({
       ...booking,
-      name: globalSelectedSession.name,
-      room: globalSelectedSession.room,
-      date: globalSelectedSession.date,
-      time: globalSelectedSession.time,
-      max_ppl: globalSelectedSession.max_ppl,
-      lesson: globalSelectedSession.id,
+      name: globalSelectedLesson.name,
+      room: globalSelectedLesson.room,
+      date: globalSelectedLesson.date,
+      time: globalSelectedLesson.time,
+      max_ppl: globalSelectedLesson.max_ppl,
+      lesson: globalSelectedLesson.id,
       user: userInfo.id,
     });
-  }, [globalSelectedSession]);
+  }, [globalSelectedLesson]);
   return (
     <>
       <Typography variant="h4" gutterBottom color="primary">
@@ -83,13 +83,12 @@ const MyBookings = () => {
             <SessionCard
               key={bookedLesson.id}
               bookedLesson={bookedLesson}
-              booking={globalSelectedSession}
+              booking={globalSelectedLesson}
               userInfo={userInfo}
             />
           ))}
         </TabPanel>
-        Genmodal
-        <GenModal />
+        <GenModal selectedLesson={globalSelectedLesson} />
       </TabBar>
     </>
   );

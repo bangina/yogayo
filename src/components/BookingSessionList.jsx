@@ -124,13 +124,13 @@ const StyledTimeline = styled(Timeline)`
 const BookingSessionList = () => {
   const styles = useStyles();
   const sliderStyles = useSliderStyles();
-  const globalSession = useSelector((state) => state.session);
+  const globalLesson = useSelector((state) => state.session);
   const dispatch = useDispatch();
   const [selectedSession, setSelectedSession] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [sessions, setSessions] = useState([]);
 
-  const selectedDate = globalSession.selectedDate;
+  const selectedDate = globalLesson.selectedDate;
   const apiUrl = `http://127.0.0.1:8000/api/lessons/${selectedDate.getFullYear()}-${
     selectedDate.getMonth() + 1
   }-${selectedDate.getDate()}`;

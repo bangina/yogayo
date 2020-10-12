@@ -63,6 +63,7 @@ export default function SignIn(props) {
   });
   const onInputChange = (e) => {
     setMemberState({ ...memberState, [e.target.name]: e.target.value });
+    console.log(memberState)
   };
   const dispatch = useDispatch();
   const onLogin = (e) => {

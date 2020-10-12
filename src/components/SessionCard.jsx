@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { selectSession } from "../redux/session";
-import { Cookies } from "react-cookie";
+import { openCancelModal } from "../redux/modal";
 import cx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -94,28 +93,7 @@ export const SessionCard = (props) => {
   const dispatch = useDispatch();
   const onSubmit = (e) => {
     dispatch(selectSession(bookedLesson));
-    console.log("bookedLesson", bookedLesson);
-    const CancleApiUrl = `http://127.0.0.1:8000/api/mylessons/${bookedLesson.lesson}/`;
-    let cookies = new Cookies();
-    const userToken = cookies.get("usertoken");
-    const apiCall = () => {
-      axios({
-        method: "delete",
-        url: CancleApiUrl,
-        data: bookedLesson,
-        headers: {
-          Authorization: `Token	${userToken}`,
-        },
-      })
-        .then((response) => {
-          console.log("수업 취소 호출 결과 :", response);
-        })
-        .catch((error) => {
-          console.error("수업 취소 오류", error);
-          console.log("CancleApiUrl", CancleApiUrl);
-        });
-    };
-    apiCall();
+    dispatch(openCancelModal(true));
   };
   useEffect(() => {
     setBooking(bookedLesson);

@@ -4,6 +4,9 @@ const MODAL_NEXT = "MODAL_NEXT";
 const MODAL_RESULT = "MODAL_RESULT";
 const MODAL_DIARY_OPEN = "MODAL_DIARY_OPEN";
 const MODAL_DIARY_CLOSE = "MODAL_DIARY_CLOSE";
+const MODAL_CANCEL_OPEN = "MODAL_CANCEL_OPEN";
+const MODAL_CANCEL_CLOSE = "MODAL_CANCEL_CLOSE";
+const MODAL_CANCEL_NEXT = "MODAL_CANCEL_NEXT";
 
 export const openModal = () => ({
   type: MODAL_OPEN,
@@ -23,12 +26,23 @@ export const closeDiaryModal = () => ({
 export const openDiaryModal = () => ({
   type: MODAL_DIARY_OPEN,
 });
+export const openCancelModal = () => ({
+  type: MODAL_CANCEL_OPEN,
+});
+export const closeCancelModal = () => ({
+  type: MODAL_CANCEL_CLOSE,
+});
+export const nextCancelModal = () => ({
+  type: MODAL_CANCEL_NEXT,
+});
 
 const initialState = {
-  isModalOpen: false,
-  isConfirmOpen: false,
-  isResultOpen: false,
+  isBookingModalOpen: false,
+  isBookingConfirmOpen: false,
+  isBookingResultOpen: false,
   isDiaryModalOpen: false,
+  isCancelModalOpen: false,
+  isCancelResultOpen: false,
 };
 
 const modal = (modalState = initialState, action) => {
@@ -37,22 +51,26 @@ const modal = (modalState = initialState, action) => {
     case MODAL_OPEN:
       return {
         ...modalState,
-        isModalOpen: true,
-        isConfirmOpen: false,
-        isResultOpen: false,
+        isBookingModalOpen: true,
+        isBookingConfirmOpen: false,
+        isBookingResultOpen: false,
       };
     //modal 닫기
     case MODAL_CLOSE:
-      return { ...modalState, isModalOpen: false, isConfirmOpen: false };
+      return {
+        ...modalState,
+        isBookingModalOpen: false,
+        isBookingConfirmOpen: false,
+      };
     //modal body 교체(1->2단계)
     case MODAL_NEXT:
-      return { ...modalState, isConfirmOpen: true };
+      return { ...modalState, isBookingConfirmOpen: true };
     //modal body 교체(2->3단계)
     case MODAL_RESULT:
       return {
         ...modalState,
-        isConfirmOpen: false,
-        isResultOpen: true,
+        isBookingConfirmOpen: false,
+        isBookingResultOpen: true,
       };
     case MODAL_DIARY_CLOSE:
       return {
@@ -63,6 +81,24 @@ const modal = (modalState = initialState, action) => {
       return {
         ...modalState,
         isDiaryModalOpen: true,
+      };
+    case MODAL_CANCEL_OPEN:
+      return {
+        ...modalState,
+        isCancelModalOpen: true,
+        isCancelResultOpen: false,
+      };
+    case MODAL_CANCEL_CLOSE:
+      return {
+        ...modalState,
+        isCancelModalOpen: false,
+        isCancelResultOpen: false,
+      };
+    case MODAL_CANCEL_NEXT:
+      return {
+        ...modalState,
+        isCancelModalOpen: true,
+        isCancelResultOpen: true,
       };
     default:
       return modalState;

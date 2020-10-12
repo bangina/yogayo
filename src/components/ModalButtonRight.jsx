@@ -11,9 +11,9 @@ const StyledButton = styled(Button)`
 `;
 const ModalButtonRight = (props) => {
   const dispatch = useDispatch();
-  const isModalOpen = props.isModalOpen;
-  const isConfirmOpen = props.isConfirmOpen;
-  const isResultOpen = props.isResultOpen;
+  const isBookingModalOpen = props.isBookingModalOpen;
+  const isBookingConfirmOpen = props.isBookingConfirmOpen;
+  const isBookingResultOpen = props.isBookingResultOpen;
   const booking = props.booking;
   const onSubmit = () => {
     const BookingApiUrl = `http://127.0.0.1:8000/api/mylessons/${booking.lesson}/`;
@@ -43,7 +43,7 @@ const ModalButtonRight = (props) => {
   };
   return (
     <>
-      {isModalOpen && !isConfirmOpen && !isResultOpen && (
+      {isBookingModalOpen && !isBookingConfirmOpen && !isBookingResultOpen && (
         <StyledButton
           color="primary"
           variant="contained"
@@ -53,7 +53,7 @@ const ModalButtonRight = (props) => {
           예약하기
         </StyledButton>
       )}
-      {isConfirmOpen && (
+      {isBookingConfirmOpen && (
         <StyledButton
           color="primary"
           variant="contained"
@@ -64,7 +64,7 @@ const ModalButtonRight = (props) => {
           예약완료
         </StyledButton>
       )}
-      {isResultOpen && (
+      {isBookingResultOpen && (
         <StyledButton
           color="primary"
           variant="contained"
