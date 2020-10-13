@@ -27,7 +27,7 @@ export default function DropDown(props) {
   };
 
   return (
-    <FormControl className={classes.formControl}>
+    <FormControl className={classes.formControl} disabled={props.disabled}>
       <InputLabel id="select-label" className={classes.inputLabel}>
         {props.title}
       </InputLabel>

@@ -17,6 +17,7 @@ import SearchBar from "../components/SearchBar";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 import axios from "axios";
+import { Cookies } from "react-cookie";
 
 const useStyles = makeStyles((theme) => ({
   primaryTableHeader: {
@@ -78,6 +79,7 @@ export default function Board(props) {
   const tableHead = ["말머리", "글제목", "작성자", "등록일"];
   const [tableData, setTableData] = useState([]);
   const [globalPosts, setGlobalPosts] = useState([]);
+  const [myPostBtn, setMyPostBtn] = useState(false)
 
   const allPosts = () => {
     const apiUrl = "http://localhost:8000/api/posts/";
@@ -123,6 +125,27 @@ export default function Board(props) {
     }
   }
 
+  const myPostBtnClick = () => {
+    if(!myPostBtn) {
+      setMyPostBtn(true)
+      const apiUrl = `http://localhost:8000/api/posts/mypost/list/`;
+
+      axios
+        .get(apiUrl)
+        .then((response) => {
+          console.log("내글 조회:", response.data);
+          setGlobalPosts(response.data);
+          setTableData(response.data.slice(0, 10))
+        })
+        .catch((response) => {
+          console.error(response);
+        });
+    } else {
+      setMyPostBtn(false)
+      allPosts()
+    }
+  }
+
   return (
     <div>
       <Typography variant="h4" gutterBottom color="primary">
@@ -134,6 +157,7 @@ export default function Board(props) {
             title="말머리"
             value={["전체","중고장터", "요가", "필라테스", "같이_운동해요", "기타"]}
             onChange={categoryChange}
+            disabled={myPostBtn}
           />
         </div>
         <div style={{ float: "right" }}>
@@ -145,11 +169,9 @@ export default function Board(props) {
           >
             글쓰기
           </Button>
-          <RouterLink to="/myposts">
-            <Button variant="outlined" color="primary">
-              내 글 보기
+            <Button variant="outlined" color="primary" onClick={() => myPostBtnClick()}>
+              {myPostBtn ? "전체보기" : "내글보기"}
             </Button>
-          </RouterLink>
         </div>
         <Table className={classes.table}>
           <colgroup>

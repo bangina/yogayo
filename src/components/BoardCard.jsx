@@ -13,6 +13,7 @@ import { Link as RouterLink } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
   root: {
     // maxWidth: 345,
+    height: "347px"
   },
   media: {
     height: 0,
@@ -46,7 +47,7 @@ const BoardCard = (props) => {
   const classes = useStyles();
   // const content = props.content;
   const ellipsis = props.ellipsis;
-  const {id, title, content, username, created} = props.content
+  const {id, title, content,img_path, username, created} = props.content
   const [img, setImg] = useState()
   
   useEffect(()=>{
@@ -58,24 +59,37 @@ const BoardCard = (props) => {
     }
   },[])
 
+  const media =() => {
+    if(img_path) {
+      return (
+        <CardMedia
+          className={classes.media}
+          image={img_path}
+          title="Paella dish"
+        />
+      )
+    }
+  }
+
   
   return (
     <RouterLink to={`/board/detail/${id}`}>
       <Card className={classes.root}>
         <CardHeader
-          avatar={<Avatar>SB</Avatar>}
-          title={username}
-          subheader={created.substring(0, 10)}
+          // avatar={<Avatar>SB</Avatar>}
+          title={title}
+          subheader={created.substring(0, 10)+ " " + username}
         />
-        <CardMedia
+        {/* <CardMedia
           className={classes.media}
           image={img}
           title="Paella dish"
-        />
+        /> */}
+        {media()}
         <CardContent>
-          <Typography variant="h6" component="p" className={classes.boardTitle}>
+          {/* <Typography variant="h6" component="p" className={classes.boardTitle}>
             {title}
-          </Typography>
+          </Typography> */}
           <Typography
             variant="body2"
             color="textSecondary"
