@@ -25,7 +25,7 @@ const InsertBoard = (props) => {
     content: "",
   });
 
-  const [imgPath, setImgPath] = useState([])
+  const [imgPath, setImgPath] = useState(null)
 
   const onChangeHandler = (e) => {
     setPost({
@@ -44,7 +44,9 @@ const InsertBoard = (props) => {
       const userToken = cookies.get("usertoken");
 
       const formData = new FormData();
-      formData.append("img_path", imgPath[0]);
+      if(imgPath != null){
+        formData.append("img_path", imgPath[0]);
+      }
       formData.append("title", post.title);
       formData.append("content", post.content);
       formData.append("category", post.category);

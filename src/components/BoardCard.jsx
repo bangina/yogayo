@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
@@ -44,25 +44,37 @@ const useStyles = makeStyles((theme) => ({
 
 const BoardCard = (props) => {
   const classes = useStyles();
-  const content = props.content;
+  // const content = props.content;
   const ellipsis = props.ellipsis;
+  const {id, title, content, username, created} = props.content
+  const [img, setImg] = useState()
+  
+  useEffect(()=>{
+    // console.log(props.content)
+    if(props.content.img_path){
+      setImg(props.content.img_path)
+    } else {
+      setImg("./img/yoga.jpg")
+    }
+  },[])
 
+  
   return (
-    <RouterLink to={`/board/detail/${content.id}`}>
+    <RouterLink to={`/board/detail/${id}`}>
       <Card className={classes.root}>
         <CardHeader
           avatar={<Avatar>SB</Avatar>}
-          title={content.writer}
-          subheader={content.regiDate}
+          title={username}
+          subheader={created.substring(0, 10)}
         />
         <CardMedia
           className={classes.media}
-          image="./img/yoga.jpg"
+          image={img}
           title="Paella dish"
         />
         <CardContent>
           <Typography variant="h6" component="p" className={classes.boardTitle}>
-            {content.title}
+            {title}
           </Typography>
           <Typography
             variant="body2"
@@ -70,7 +82,7 @@ const BoardCard = (props) => {
             component="p"
             className={classes.boardText}
           >
-            {content.contents}
+            {content}
           </Typography>
         </CardContent>
         <CardActions disableSpacing></CardActions>

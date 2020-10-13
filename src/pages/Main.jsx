@@ -94,6 +94,19 @@ const useStyles = makeStyles((theme) => ({
 
 const Main = (props) => {
   const [userInfo, setUserInfo] = useState("");
+  useEffect(()=>{
+    const apiUrl = "http://localhost:8000/api/posts/";
+
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        console.log("조회목록데이터:", response.data);
+        setBoardContents(response.data)
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+  },[])
   const loginMember = {
     name: "test1",
     email: "test1@gmail.com",
@@ -154,7 +167,7 @@ const Main = (props) => {
     },
   ];
 
-  const boardContents = [];
+  const [boardContents, setBoardContents] = useState([]);
 
   const classes = useStyles();
   const loginUserToken = getUserToken();
@@ -257,12 +270,12 @@ const Main = (props) => {
           요가요 피플 커뮤니티
         </Typography>
         <br />
-        <div>
+        {/* <div>
           <span className={classes.tagIcon}> 요가</span>
           <span className={classes.tagIcon}>필테</span>
           <span className={classes.tagIcon}>중고장터</span>
           <span className={classes.tagIcon}>같이 운동해요</span>
-        </div>
+        </div> */}
         <br />
         <Swiper
           spaceBetween={20}

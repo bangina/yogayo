@@ -219,7 +219,7 @@ export default function Board(props) {
         />
       </div>
       <div style={{ textAlign: "center" }}>
-        <SearchBar />
+        {/* <SearchBar /> */}
       </div>
     </div>
   );
