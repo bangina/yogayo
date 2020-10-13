@@ -110,6 +110,7 @@ const BookingModal = (props) => {
     isBookingModalOpen,
     isBookingConfirmOpen,
     isBookingResultOpen,
+    status,
   } = globalModal; //비구조화 할당
   const [userInfo, setUserInfo] = useState("");
   const [vouchers, setVouchers] = useState({
@@ -119,8 +120,9 @@ const BookingModal = (props) => {
     name: "",
     room: "",
     time: "",
-    user: 4,
+    user: "",
   });
+  const [activeVoucher, setActiveVoucher] = useState("");
   const [booking, setBooking] = useState({
     name: "",
     room: "",
@@ -129,17 +131,19 @@ const BookingModal = (props) => {
     max_ppl: "",
     lesson: "",
     user: "",
+    voucher: "",
   });
   const dispatch = useDispatch();
   const validityRef = useRef();
   //예약 정책 동의 check
   const [checked, SetChecked] = useState(false);
+  let cookies = new Cookies();
+  const userToken = cookies.get("usertoken");
+
   useEffect(() => {
     const UserApiUrl = `http://127.0.0.1:8000/api/myinfo/`;
     const VoucherApiUrl = `http://127.0.0.1:8000/api/myvouchers/`;
-    const apiCall = () => {
-      let cookies = new Cookies();
-      const userToken = cookies.get("usertoken");
+    const GetApiCall = () => {
       axios
         .get(UserApiUrl, { headers: { Authorization: `Token ${userToken}` } })
         .then((response) => {
@@ -148,35 +152,46 @@ const BookingModal = (props) => {
         .catch((response) => {
           console.error(response);
         });
+      //보유 수강권 정보 조회
       axios
         .get(VoucherApiUrl, {
           headers: { Authorization: `Token ${userToken}` },
         })
         .then((response) => {
+          console.log("VoucherApiUrl", response.data);
           //status가 true(정상사용가능)인 voucher만 필터링해서 setVouchers
-          const activeVoucher = response.data.filter((d) => d.status === true);
+          setActiveVoucher(response.data.filter((d) => d.status === true));
           if (activeVoucher == true) {
             setVouchers(activeVoucher);
+            console.log(activeVoucher, "activeVoucher");
           }
         })
         .catch((response) => {
           console.error(response);
         });
     };
-    apiCall();
+    GetApiCall();
   }, []);
+
   useEffect(() => {
-    setBooking({
-      ...booking,
-      name: globalSelectedLesson.name,
-      room: globalSelectedLesson.room,
-      date: globalSelectedLesson.date,
-      time: globalSelectedLesson.time,
-      max_ppl: globalSelectedLesson.max_ppl,
-      lesson: globalSelectedLesson.id,
-      user: userInfo.id,
-    });
+    if (activeVoucher.length > 0) {
+      setBooking({
+        ...booking,
+        name: globalSelectedLesson.name,
+        room: globalSelectedLesson.room,
+        date: globalSelectedLesson.date,
+        time: globalSelectedLesson.time,
+        max_ppl: globalSelectedLesson.max_ppl,
+        lesson: globalSelectedLesson.id,
+        voucher: activeVoucher[0]["voucher"],
+        user: userInfo.id,
+      });
+    } else {
+      console.log("activevoucher 없음");
+    }
+    console.log(booking, "booking");
   }, [globalSelectedLesson]);
+
   const handleClose = () => {
     dispatch(closeModal());
   };
@@ -191,7 +206,11 @@ const BookingModal = (props) => {
   };
   //예약완료 버튼 클릭시
   const handleNextSubmit = () => {
-    dispatch(showResult());
+    if (activeVoucher.length > 0) {
+      dispatch(showResult());
+    } else {
+      dispatch(closeModal());
+    }
   };
   const handleSubmit = () => {
     //예약 완료
@@ -212,9 +231,6 @@ const BookingModal = (props) => {
         aria-labelledby="modal-title"
         open={isBookingModalOpen}
       >
-        {/* ////////////////// */}
-        {/* modal header area */}
-        {/* ////////////////// */}
         <DialogTitle
           id="modal-title"
           onClose={handleClose}
@@ -229,13 +245,6 @@ const BookingModal = (props) => {
           {globalSelectedLesson.date} {globalSelectedLesson.time}
         </DialogTitle>
 
-        {/* ////////////////// */}
-        {/* modal body area */}
-        {/* ////////////////// */}
-
-        {/* ////////////////// */}
-        {/* body - 1단계  */}
-        {/* ////////////////// */}
         {isBookingModalOpen && !isBookingConfirmOpen && !isBookingResultOpen && (
           <DialogContent>
             <Typography gutterBottom>
@@ -290,16 +299,24 @@ const BookingModal = (props) => {
               <AccessTimeIcon fontSize="small"></AccessTimeIcon>
               {userInfo.username} 회원님
             </Typography>
-            <Typography gutterBottom>
-              <PlaceIcon fontSize="small"></PlaceIcon>
-              {vouchers.length > 0
-                ? `현재 회원권 잔여횟수 : ${vouchers[0].used}회 (남은기간 : 10일)`
-                : `이용가능한 회원권이 없습니다.`}
-            </Typography>
-            <Typography gutterBottom>
-              수업 예약 취소/변경 기한 : 00까지
-            </Typography>
-            <Typography>신청하시겠습니까?</Typography>
+            {activeVoucher.length > 0 ? (
+              <>
+                <Typography gutterBottom>
+                  <PlaceIcon fontSize="small"></PlaceIcon>
+                  현재 회원권 잔여횟수 : {activeVoucher[0].used}회
+                </Typography>
+                <Typography gutterBottom>
+                  수업 예약 취소/변경 기한 : 수업 1일전까지
+                </Typography>
+                <Typography>신청하시겠습니까?</Typography>
+              </>
+            ) : (
+              <>
+                <Typography variant="h5">
+                  이용가능한 회원권이 없습니다.
+                </Typography>
+              </>
+            )}
           </DialogContent>
         )}
         {/* ////////////////// */}
@@ -307,7 +324,7 @@ const BookingModal = (props) => {
         {/* ////////////////// */}
         {isBookingResultOpen && (
           <DialogContent>
-            <SuccessMsg message="예약이 완료되었습니다." />
+            <SuccessMsg message={globalModal.message} status={status} />
           </DialogContent>
         )}
         {/* ////////////////// */}
@@ -338,6 +355,7 @@ const BookingModal = (props) => {
               isBookingConfirmOpen={isBookingConfirmOpen}
               isBookingResultOpen={isBookingResultOpen}
               booking={booking}
+              disabled={activeVoucher.length <= 0}
             />
           </div>
         </DialogActions>

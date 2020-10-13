@@ -41,6 +41,7 @@ const initialState = {
     date: "",
     time: "",
     max_ppl: null,
+    voucher: "",
   },
   selectedDate: new Date(),
 };
