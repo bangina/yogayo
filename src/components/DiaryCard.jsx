@@ -113,7 +113,7 @@ export const DiaryCard = (props) => {
         <h3 className={styles.title}>{content.sessionName}</h3>
         <Box color={"grey.500"} display={"flex"} alignItems={"center"} mb={1}>
           <LocationOn className={styles.locationIcon} />
-          <span>요가왕 요가원</span>
+          <span>{content.admin_name}</span>
         </Box>
         <Typography
           color={"textSecondary"}

@@ -128,10 +128,12 @@ export default function Board(props) {
   const myPostBtnClick = () => {
     if(!myPostBtn) {
       setMyPostBtn(true)
+      let cookies = new Cookies();
+      const userToken = cookies.get("usertoken");
       const apiUrl = `http://localhost:8000/api/posts/mypost/list/`;
 
       axios
-        .get(apiUrl)
+      .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
         .then((response) => {
           console.log("내글 조회:", response.data);
           setGlobalPosts(response.data);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -10,6 +10,10 @@ import ConfirmationNumberIcon from "@material-ui/icons/ConfirmationNumber";
 import Avatar from "@material-ui/core/Avatar";
 import { Button } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
+
+import axios from "axios";
+import { Cookies } from "react-cookie";
+
 const useStyles = makeStyles({
   root: {
     // background: "#f3717d",
@@ -51,7 +55,45 @@ const useSliderStyles = makeStyles(() => ({
 export default function SimpleCard() {
   const classes = useStyles();
   const sliderStyles = useSliderStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+  // const bull = <span className={classes.bullet}>•</span>;
+  const [userInfo, setUserInfo] = useState({})
+  const [voucherInfo, setVoucherInfo] = useState({})
+
+  const userApiCall = () => {
+    // 로그인 유저 정보 불러오기
+    let cookies = new Cookies();
+    const userToken = cookies.get("usertoken");
+    const apiUrl = `http://127.0.0.1:8000/api/myinfo/`;
+    axios
+      .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
+      .then((response) => {
+        setUserInfo(response.data[0]);
+        console.log("로그인 유저", response.data);
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+  };
+
+  const voucherApiCall = () => {
+    let cookies = new Cookies();
+    const userToken = cookies.get("usertoken");
+    const apiUrl = `http://127.0.0.1:8000/api/myvouchers/`;
+    axios
+      .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
+      .then((response) => {
+        setVoucherInfo(response.data[0]);
+        console.log("바우쳐정보 : ", response.data);
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+  }
+
+  useEffect(()=>{
+    userApiCall();
+    voucherApiCall()
+  },[])
 
   return (
     <div style={{ marginBottom: "15px" }}>
@@ -89,9 +131,10 @@ export default function SimpleCard() {
                     height: "100px",
                   }}
                 />
-                <div>
-                  <Typography>솔방울 회원님</Typography>
-                  <Typography gutterBottom>solbangall@gmail.com</Typography>
+                <div style={{ marginLeft: "10px"}}>
+                  <Typography><b>{userInfo.username}</b> 회원님</Typography>
+                  <Typography gutterBottom>{userInfo.email}</Typography>
+                  <Typography gutterBottom>{userInfo.phone}</Typography>
                 </div>
               </div>
             </CardContent>
@@ -99,26 +142,36 @@ export default function SimpleCard() {
         </Grid>
         <Grid item xs={12}>
           <Card className={classes.root}>
-            <CardContent>
-              <Typography className={classes.title} gutterBottom>
-                이용 정보
-              </Typography>
-
-              <Typography className={classes.title} color="" gutterBottom>
-                <PlaceIcon /> 센터 : 요가왕 요가원
-              </Typography>
-              <Typography>
-                <ConfirmationNumberIcon /> 6:1 주 2회 3개월 이용권
-              </Typography>
-              <Typography component="h2">이용권 정상 (잔여횟수 7회)</Typography>
-              <Typography color="textSecondary" gutterBottom>
-                총 10회중 3회 사용
-              </Typography>
-              <Slider classes={sliderStyles} value={30} />
-              <Typography variant="body2" component="p">
-                2020.9.8 ~ 2020.11.8 (24일 남음)
-              </Typography>
-            </CardContent>
+            
+              {voucherInfo ? (
+                <CardContent>
+                  <Typography className={classes.title} gutterBottom>
+                  이용 정보
+                </Typography>
+  
+                <Typography className={classes.title} color="" gutterBottom>
+                  <PlaceIcon /> 센터 : {voucherInfo.adminname}
+                </Typography>
+                <Typography>
+                  <ConfirmationNumberIcon /> {voucherInfo.vouchername}
+                </Typography>
+                <Typography component="h2">이용권 {
+                  voucherInfo.status ? "정상" : "사용불가"
+                } (잔여횟수 {voucherInfo.limit - voucherInfo.used}회)</Typography>
+                <Typography color="textSecondary" gutterBottom>
+                  총 {voucherInfo.limit}회중 {voucherInfo.used}회 사용
+                </Typography>
+                <Slider classes={sliderStyles} value={(voucherInfo.used/voucherInfo.limit)*100} />
+                <Typography variant="body2" component="p">
+                  {String(voucherInfo.str_date).substring(0,10)} ~
+                   {/* 2020.11.8 (24일 남음) */}
+                </Typography>
+                </CardContent>
+              ) : (
+                "이용권 정보 없음!"
+              )}
+              
+            
           </Card>
         </Grid>
       </Grid>

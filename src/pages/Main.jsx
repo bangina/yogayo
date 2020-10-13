@@ -96,10 +96,12 @@ const Main = (props) => {
   const [userInfo, setUserInfo] = useState("");
   useEffect(()=>{
     // 다이어리 불러오기
+    let cookies = new Cookies();
+    const userToken = cookies.get("usertoken");
     const diaryApiUrl = "http://localhost:8000/api/diaries/";
 
     axios
-      .get(diaryApiUrl)
+    .get(diaryApiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
         console.log("다이어리 데이터:", response.data);
         setDiaryContents(response.data)
