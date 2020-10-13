@@ -30,6 +30,7 @@ const useStyles = makeStyles((theme) => ({
 
   img : {
     marginTop: theme.spacing(2),
+    maxWidth: "100%",
   }
 }));
 
@@ -113,7 +114,7 @@ const Detail = (props) => {
             heading={`[${post.category}] ${post.title}`}
             body={post.content}
           />
-          <img src={post.img_path} className={classes.img}/>
+          <img src={post.img_path} className={classes.img} />
         </CardContent>
         <Divider />
         <Column gap={2}>

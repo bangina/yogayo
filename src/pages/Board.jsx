@@ -77,10 +77,9 @@ export default function Board(props) {
   const tableHeaderColor = "primary";
   const tableHead = ["말머리", "글제목", "작성자", "등록일"];
   const [tableData, setTableData] = useState([]);
-  const [allData, setAllData] = useState([]);
   const [globalPosts, setGlobalPosts] = useState([]);
 
-  useEffect(() => {
+  const allPosts = () => {
     const apiUrl = "http://localhost:8000/api/posts/";
 
     axios
@@ -93,7 +92,10 @@ export default function Board(props) {
       .catch((response) => {
         console.error(response);
       });
+  }
 
+  useEffect(() => {
+    allPosts()
   }, []);
 
   const handlePage = (event, value) => {
@@ -103,7 +105,10 @@ export default function Board(props) {
   };
 
   const categoryChange = value => {
-    const apiUrl = `http://localhost:8000/api/posts/${value}/`;
+    if(value === "전체") {
+      allPosts()
+    } else {
+      const apiUrl = `http://localhost:8000/api/posts/${value}/`;
 
     axios
       .get(apiUrl)
@@ -115,6 +120,7 @@ export default function Board(props) {
       .catch((response) => {
         console.error(response);
       });
+    }
   }
 
   return (
@@ -126,7 +132,7 @@ export default function Board(props) {
         <div>
           <DropDown
             title="말머리"
-            value={["중고장터", "요가", "필라테스", "같이_운동해요", "기타"]}
+            value={["전체","중고장터", "요가", "필라테스", "같이_운동해요", "기타"]}
             onChange={categoryChange}
           />
         </div>
@@ -172,7 +178,7 @@ export default function Board(props) {
           ) : null}
           <TableBody>
             {tableData.map((dataItem, index) => {
-              console.log(dataItem);
+              // console.log(dataItem);
               return (
                 <TableRow key={index} className={classes.tableBodyRow}>
                   <TableCell className={classes.tableCell} key={index}>
