@@ -17,14 +17,15 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const InsertBoard = () => {
+const InsertBoard = (props) => {
   const classes = useStyles();
   const [post, setPost] = useState({
-    category: "YOGA",
+    category: "",
     title: "",
     content: "",
-    // "img_path": null,
   });
+
+  const [imgPath, setImgPath] = useState([])
 
   const onChangeHandler = (e) => {
     setPost({
@@ -37,44 +38,38 @@ const InsertBoard = () => {
     if (post.category == null || post.title == "" || post.content == "") {
       setAlert(true);
     } else {
-      console.log("post : ", post);
-      // const formData = new FormData();
-      // formData.append('category', "YOGA");
-      // formData.append('title', post.title);
-      // formData.append('content', post.content);
-      // formData.append('img_path', null);
-      // formData.append('views', 0);
-      // for (let key of formData.entries()) {
-      //   console.log(key);
-      // }
-
+      
+      // 글 업로드
       let cookies = new Cookies();
       const userToken = cookies.get("usertoken");
 
-      console.log("저장된 쿠키토큰값:", userToken);
+      const formData = new FormData();
+      formData.append("img_path", imgPath[0]);
+      formData.append("title", post.title);
+      formData.append("content", post.content);
+      formData.append("category", post.category);
 
       axios({
         method: "post",
         url: "http://localhost:8000/api/posts/",
-        data: post,
-        headers: {
-          // "Content-Type": "multipart/form-data",
-          "Authorization": `Token	 ${userToken}`,
-        },
+        data: formData,
+        headers: { "Authorization": `Token	 ${userToken}`, "Content-Type": "multipart/form-data" },
       })
         .then(function (response) {
           console.log(response);
+          props.history.push("/board")
         })
         .catch(function (response) {
           console.log(response);
         });
+
     }
   };
 
   const [alert, setAlert] = useState(false);
 
   const onChangeFile = (e) => {
-    setPost({ ...post, img_path: e.target.files });
+    setImgPath(e.target.files)
   };
 
   return (
