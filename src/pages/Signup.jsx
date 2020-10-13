@@ -2,7 +2,6 @@ import React, { useRef, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { insertMember } from "../../src/redux/member"; //액션객체 생성함수
 import { useDispatch } from "react-redux";
-
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -42,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%",
+    width: "100%", 
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -84,7 +83,7 @@ export default function Signup() {
   };
   const onInputChange = (e) => {
     setMemberState({ ...memberState, [e.target.name]: e.target.value });
-    console.log("memberState", memberState);
+    console.log(memberState);
   };
   const checkFormValidity = (e) => {
     console.log(isValid);
@@ -92,6 +91,35 @@ export default function Signup() {
       return false;
     } else {
       return true;
+    }
+  };
+  const autoHypenPhone = function (e) {
+    let str = e.target.value;
+    str = str.replace(/[^0-9]/g, "");
+    let tmp = "";
+    if (str.length < 4) {
+      setMemberState({ ...memberState, [memberState.mobile]: str });
+      console.log(memberState.mobile);
+    } else if (str.length < 7) {
+      tmp += str.substr(0, 3);
+      tmp += "-";
+      tmp += str.substr(3);
+      setMemberState({ ...memberState, [memberState.mobile]: tmp });
+      console.log(memberState.mobile);
+    } else if (str.length < 11) {
+      tmp += str.substr(0, 3);
+      tmp += "-";
+      tmp += str.substr(3, 3);
+      tmp += "-";
+      tmp += str.substr(6);
+      return tmp;
+    } else {
+      tmp += str.substr(0, 3);
+      tmp += "-";
+      tmp += str.substr(3, 4);
+      tmp += "-";
+      tmp += str.substr(7);
+      return tmp;
     }
   };
 
@@ -160,6 +188,7 @@ export default function Signup() {
                 label="휴대폰 번호"
                 name="phone"
                 ref={mobileRef}
+                onKeyUp={(e) => autoHypenPhone(e)}
                 inputRef={register({
                   pattern: /^\d{3}\d{3,4}\d{4}$/,
                 })}
@@ -209,7 +238,7 @@ export default function Signup() {
                 inputRef={register({
                   pattern: /^[A-Za-z0-9]{6,12}$/,
                 })}
-                // onChange={(e) => onInputChange(e)}
+                onChange={(e) => onInputChange(e)}
                 onFocus={() => {
                   trigger("password");
                 }}
