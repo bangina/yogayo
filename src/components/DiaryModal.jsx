@@ -88,9 +88,9 @@ const DiaryModal = (props) => {
     bad: "",
   });
   const [diaryContents, setDiarycontents] = useState({
-    userLesson: 2, //임시임
-    content: "",
-    mood: "",
+    userLesson: props.id, //임시임
+    content: "test",
+    mood: "1",
   });
   const [selectecFile, setSelectedFile] = useState("");
   const handleClose = () => {
