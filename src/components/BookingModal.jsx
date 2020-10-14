@@ -183,7 +183,7 @@ const BookingModal = (props) => {
         time: globalSelectedLesson.time,
         max_ppl: globalSelectedLesson.max_ppl,
         lesson: globalSelectedLesson.id,
-        voucher: activeVoucher[0]["voucher"],
+        voucher: activeVoucher[0].voucher,
         user: userInfo.id,
       });
     } else {

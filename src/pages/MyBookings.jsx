@@ -39,6 +39,7 @@ const MyBookings = () => {
       .get(LessonapiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
         setbookedLessons(response.data);
+        console.log("setbookedLessons", response.data);
       })
       .catch((response) => {
         console.error(" 오류", response);

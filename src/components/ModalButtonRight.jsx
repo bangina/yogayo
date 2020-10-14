@@ -20,7 +20,7 @@ const ModalButtonRight = (props) => {
   const dispatch = useDispatch();
   const onSubmit = () => {
     const BookingApiUrl = `http://127.0.0.1:8000/api/mylessons/${booking.lesson}/`;
-    console.log(booking);
+    console.log("booking",booking);
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");
     const apiCall = () => {
