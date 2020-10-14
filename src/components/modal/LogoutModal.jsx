@@ -41,7 +41,14 @@ const LogoutModal = () => {
           </Typography>
           로그아웃
         </DialogTitle>
-        <DialogContent>로그아웃하시겠습니까?</DialogContent>
+        <DialogContent>
+          <Typography
+            variant="h6"
+            style={{ textAlign: "center", marginTop: "1rem" }}
+          >
+            로그아웃하시겠습니까?
+          </Typography>
+        </DialogContent>
         <DialogActions>
           <div onClick={handleClose} style={{ width: "100%" }}>
             <ModalButton

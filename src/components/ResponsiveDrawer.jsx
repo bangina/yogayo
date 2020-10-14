@@ -2,7 +2,6 @@ import React from "react";
 import { Link as RouterLink, withRouter } from "react-router-dom";
 import { openLogoutModal, closeLogoutModal } from "../redux/modal";
 import LogoutModal from "./modal/LogoutModal";
-import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -106,9 +105,6 @@ function ResponsiveDrawer(props) {
 
   const onLogout = () => {
     dispatch(openLogoutModal());
-    // const cookies = new Cookies();
-    // cookies.remove("usertoken");
-    // props.history.push("/main");
   };
   console.log(isUserAuthenticated());
 
@@ -126,14 +122,18 @@ function ResponsiveDrawer(props) {
         <RouterLink to="/mypage">
           <ListItemText primary="솔방울 님 >" secondary="요가왕 요가원" />
         </RouterLink>
-        <Button
-          variant="outlined"
-          color="primary"
-          name="logout"
-          onClick={onLogout}
-        >
-          로그아웃
-        </Button>
+        {isUserAuthenticated() ? (
+          <Button
+            variant="outlined"
+            color="primary"
+            name="logout"
+            onClick={onLogout}
+          >
+            로그아웃
+          </Button>
+        ) : (
+          ""
+        )}
       </List>
       <List>
         <RouterLink to="/booking">
@@ -252,6 +252,7 @@ function ResponsiveDrawer(props) {
         <div className={classes.toolbar} />
         {props.children}
       </main>
+
       <LogoutModal></LogoutModal>
     </div>
   );
