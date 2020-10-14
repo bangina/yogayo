@@ -94,23 +94,21 @@ const useStyles = makeStyles((theme) => ({
 
 const Main = (props) => {
   const [userInfo, setUserInfo] = useState("");
-  useEffect(()=>{
+  useEffect(() => {
     // 다이어리 불러오기
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");
     const diaryApiUrl = "http://localhost:8000/api/diaries/";
 
     axios
-    .get(diaryApiUrl, { headers: { Authorization: `Token ${userToken}` } })
+      .get(diaryApiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
         console.log("다이어리 데이터:", response.data);
-        setDiaryContents(response.data)
+        setDiaryContents(response.data);
       })
       .catch((response) => {
         console.error(response);
       });
-
-
 
     // 게시판 불러오기
     const boardApiUrl = "http://localhost:8000/api/posts/";
@@ -119,14 +117,12 @@ const Main = (props) => {
       .get(boardApiUrl)
       .then((response) => {
         console.log("조회목록데이터:", response.data);
-        setBoardContents(response.data)
+        setBoardContents(response.data);
       })
       .catch((response) => {
         console.error(response);
       });
-
-      
-  },[])
+  }, []);
 
   // const contents = [
   //   {
@@ -191,24 +187,23 @@ const Main = (props) => {
   };
   const [slidesPerView, setSlidesPerView] = useState(initialSlideNum);
   useEffect(() => {
-
-  const apiUrl = `http://127.0.0.1:8000/api/myinfo/`;
-  const apiCall = () => {
-    // 로그인 유저 정보 불러오기
-    let cookies = new Cookies();
-    const userToken = cookies.get("usertoken");
-    axios
-      .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
-      .then((response) => {
-        setUserInfo(response.data[0]);
-        // console.log("로그인 유저", response.data[0]);
-      })
-      .catch((response) => {
-        console.error(response);
-      });
-  };
-  apiCall();
-//화면 가로크기 조정시 카드 width 조정
+    const apiUrl = `http://127.0.0.1:8000/api/myinfo/`;
+    const apiCall = () => {
+      // 로그인 유저 정보 불러오기
+      let cookies = new Cookies();
+      const userToken = cookies.get("usertoken");
+      axios
+        .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
+        .then((response) => {
+          setUserInfo(response.data[0]);
+          // console.log("로그인 유저", response.data[0]);
+        })
+        .catch((response) => {
+          console.error(response);
+        });
+    };
+    apiCall();
+    //화면 가로크기 조정시 카드 width 조정
     function handleResize() {
       if (list.matches === true) {
         setSlidesPerView(3);
@@ -268,8 +263,8 @@ const Main = (props) => {
           onSwiper={(swiper) => console.log(swiper)}
           onSlideChange={() => console.log("slide change")}
         >
-          {diaryContents.map((content) => (
-            <SwiperSlide className={classes.swiperSlide}>
+          {diaryContents.map((content, index) => (
+            <SwiperSlide className={classes.swiperSlide} key={index}>
               <DiaryCard content={content} ellipsis={true} />
             </SwiperSlide>
           ))}
@@ -294,8 +289,8 @@ const Main = (props) => {
           onSlideChange={() => console.log("slide change")}
           className={classes.swiper}
         >
-          {boardContents.map((content) => (
-            <SwiperSlide>
+          {boardContents.map((content, index) => (
+            <SwiperSlide key={index}>
               <BoardCard content={content} ellipsis={true} />
             </SwiperSlide>
           ))}

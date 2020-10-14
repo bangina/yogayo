@@ -185,13 +185,13 @@ export default function Board(props) {
           {tableHead !== undefined ? (
             <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
               <TableRow className={classes.tableHeadRow}>
-                {tableHead.map((prop, key) => {
+                {tableHead.map((prop, index) => {
                   return (
                     <TableCell
                       className={
                         classes.tableCell + " " + classes.tableHeadCell
                       }
-                      key={key}
+                      key={index}
                     >
                       {prop}
                     </TableCell>
@@ -202,15 +202,14 @@ export default function Board(props) {
           ) : null}
           <TableBody>
             {tableData.map((dataItem, index) => {
-              // console.log(dataItem);
               return (
-                <TableRow key={index} className={classes.tableBodyRow}>
-                  <TableCell className={classes.tableCell} key={index}>
+                <TableRow key={`r${index}`} className={classes.tableBodyRow}>
+                  <TableCell className={classes.tableCell}>
                     <RouterLink to={`/board/detail/${dataItem.id}`}>
                       {dataItem.category}
                     </RouterLink>
                   </TableCell>
-                  <TableCell className={classes.tableCell} key={index}>
+                  <TableCell className={classes.tableCell}>
                     <RouterLink to={`/board/detail/${dataItem.id}`}>
                       <div>{dataItem.title} </div>
                       <div style={{ color: "gray" }}>
@@ -219,12 +218,12 @@ export default function Board(props) {
                       </div>
                     </RouterLink>
                   </TableCell>
-                  <TableCell className={classes.tableCell} key={index}>
+                  <TableCell className={classes.tableCell}>
                     <RouterLink to={`/board/detail/${dataItem.id}`}>
                       {dataItem.username}
                     </RouterLink>
                   </TableCell>
-                  <TableCell className={classes.tableCell} key={index}>
+                  <TableCell className={classes.tableCell}>
                     <RouterLink to={`/board/detail/${dataItem.id}`}>
                       {dataItem.created.substring(0, 10)}
                     </RouterLink>

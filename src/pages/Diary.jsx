@@ -171,8 +171,8 @@ const Diary = () => {
       <br />
       <br />
       <Grid container spacing={3}>
-        {pendingContents.map((content) => (
-          <Grid item xs={12} md={6} lg={4} xl={3} key={content.id}>
+        {pendingContents.map((content,index) => (
+          <Grid item xs={12} md={6} lg={4} xl={3} key={index}>
             <div onClick={openModal}>
               <DiaryCard content={content} />
             </div>
@@ -188,8 +188,8 @@ const Diary = () => {
       <br />
       <br />
       <Grid container spacing={3}>
-        {contents.map((content) => (
-          <Grid item xs={12} md={6} lg={4} xl={3} key={content.id}>
+        {contents.map((content,index) => (
+          <Grid item xs={12} md={6} lg={4} xl={3} key={index}>
             <DiaryCard content={content} />
           </Grid>
         ))}

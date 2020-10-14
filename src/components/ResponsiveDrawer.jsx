@@ -20,7 +20,7 @@ import { ReactComponent as TextBubbleIcon } from "../icons/TextBubbleIcon.svg";
 import { ReactComponent as CalendarIcon } from "../icons/CalendarIcon.svg";
 import { ReactComponent as Logo } from "../icons/Logo.svg";
 import { ReactComponent as Yogayo } from "../icons/Yogayo.svg";
-import { setCookieExpire, isUserAuthenticated } from "../utils/authUtils";
+import { isUserAuthenticated } from "../utils/authUtils";
 import { Cookies } from "react-cookie";
 const drawerWidth = 240;
 
@@ -141,7 +141,6 @@ function ResponsiveDrawer(props) {
           <ListItem>
             <SvgIcon
               style={{ marginRight: "10px" }}
-              fontSize="medium"
               viewBox="0 0 32 32"
             >
               <CalendarIcon />
@@ -153,7 +152,6 @@ function ResponsiveDrawer(props) {
           <ListItem>
             <SvgIcon
               style={{ marginRight: "10px" }}
-              fontSize="medium"
               viewBox="0 0 32 32"
             >
               <TextBubbleIcon />
@@ -165,7 +163,6 @@ function ResponsiveDrawer(props) {
           <ListItem>
             <SvgIcon
               style={{ marginRight: "10px" }}
-              fontSize="medium"
               viewBox="0 0 32 32"
             >
               <NotebookIcon />
@@ -177,7 +174,6 @@ function ResponsiveDrawer(props) {
           <ListItem>
             <SvgIcon
               style={{ marginRight: "10px" }}
-              fontSize="medium"
               viewBox="0 0 32 32"
             >
               <NotebookIcon />
@@ -185,18 +181,17 @@ function ResponsiveDrawer(props) {
             <ListItemText primary="내 스케쥴" />
           </ListItem>
         </RouterLink>
-        <RouterLink to="/notifications">
+        {/* <RouterLink to="/notifications">
           <ListItem>
             <SvgIcon
               style={{ marginRight: "10px" }}
-              fontSize="medium"
               viewBox="0 0 32 32"
             >
               <NotebookIcon />
             </SvgIcon>
             <ListItemText primary="알림" />
           </ListItem>
-        </RouterLink>
+        </RouterLink> */}
       </List>
     </div>
   );

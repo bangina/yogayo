@@ -75,14 +75,14 @@ const MyBookings = () => {
       </Typography>
       <TabBar onChange={handleChage} menu="bookings">
         <TabPanel value={value} index={0}>
-          {bookedLessons.map((bookedLesson) => (
-            <SessionCard key={bookedLesson.id} bookedLesson={bookedLesson} />
+          {bookedLessons.map((bookedLesson, index) => (
+            <SessionCard key={index} bookedLesson={bookedLesson} />
           ))}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {bookedLessons.map((bookedLesson) => (
+          {bookedLessons.map((bookedLesson, index) => (
             <SessionCard
-              key={bookedLesson.id}
+              key={index}
               bookedLesson={bookedLesson}
               booking={globalSelectedLesson}
               userInfo={userInfo}

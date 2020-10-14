@@ -43,7 +43,9 @@ const DialogTitle = withStyles(styles)((props) => {
   return (
     <>
       <MuiDialogTitle className={classes.root} {...other}>
-        <Typography variant="h6">{children}</Typography>
+        <Typography component={"div"} variant="h6">
+          {children}
+        </Typography>
         {onClose ? (
           <IconButton
             aria-label="close"
@@ -71,11 +73,6 @@ const DialogActions = withStyles((theme) => ({
     justifyContent: "space-between",
   },
 }))(MuiDialogActions);
-const StyledButton = styled(Button)`
-  width: 49%;
-  padding: 12px 22px;
-  font-size: 1.1rem;
-`;
 const StyledDialog = styled(Dialog)`
   width: 100%;
   .MuiDialog-paperWidthSm {
@@ -239,7 +236,7 @@ const BookingModal = (props) => {
             color: "#fff",
           }}
         >
-          <Typography variant="h4" gutterBottom>
+          <Typography component={"div"} variant="h4" gutterBottom>
             {globalSelectedLesson.name}
           </Typography>
           {globalSelectedLesson.date} {globalSelectedLesson.time}
@@ -247,15 +244,15 @@ const BookingModal = (props) => {
 
         {isBookingModalOpen && !isBookingConfirmOpen && !isBookingResultOpen && (
           <DialogContent>
-            <Typography gutterBottom>
+            <Typography component={"div"} gutterBottom>
               <AccessTimeIcon fontSize="small"></AccessTimeIcon>
               {globalSelectedLesson.time}
             </Typography>
-            <Typography gutterBottom>
+            <Typography component={"div"} gutterBottom>
               <PlaceIcon fontSize="small"></PlaceIcon>
               {globalSelectedLesson.username} / {globalSelectedLesson.room}
             </Typography>
-            <Typography gutterBottom>
+            <Typography component={"div"} gutterBottom>
               <FitnessCenterIcon fontSize="small"></FitnessCenterIcon>
               {globalSelectedLesson.name}
             </Typography>
@@ -295,24 +292,24 @@ const BookingModal = (props) => {
         {/* ////////////////// */}
         {isBookingConfirmOpen && (
           <DialogContent>
-            <Typography gutterBottom>
+            <Typography component={"div"} gutterBottom>
               <AccessTimeIcon fontSize="small"></AccessTimeIcon>
               {userInfo.username} 회원님
             </Typography>
             {activeVoucher.length > 0 ? (
               <>
-                <Typography gutterBottom>
+                <Typography component={"div"} gutterBottom>
                   <PlaceIcon fontSize="small"></PlaceIcon>
                   현재 회원권 잔여횟수 : {activeVoucher[0].used}회
                 </Typography>
-                <Typography gutterBottom>
+                <Typography component={"div"} gutterBottom>
                   수업 예약 취소/변경 기한 : 수업 1일전까지
                 </Typography>
-                <Typography>신청하시겠습니까?</Typography>
+                <Typography component={"div"}>신청하시겠습니까?</Typography>
               </>
             ) : (
               <>
-                <Typography variant="h5">
+                <Typography component={"div"} variant="h5">
                   이용가능한 회원권이 없습니다.
                 </Typography>
               </>
