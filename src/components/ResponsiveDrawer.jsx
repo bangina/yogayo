@@ -1,6 +1,9 @@
 import React from "react";
 import { Link as RouterLink, withRouter } from "react-router-dom";
+import { openLogoutModal, closeLogoutModal } from "../redux/modal";
+import LogoutModal from "./modal/LogoutModal";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Button from "@material-ui/core/Button";
@@ -20,8 +23,7 @@ import { ReactComponent as TextBubbleIcon } from "../icons/TextBubbleIcon.svg";
 import { ReactComponent as CalendarIcon } from "../icons/CalendarIcon.svg";
 import { ReactComponent as Logo } from "../icons/Logo.svg";
 import { ReactComponent as Yogayo } from "../icons/Yogayo.svg";
-import { setCookieExpire, isUserAuthenticated } from "../utils/authUtils";
-import { Cookies } from "react-cookie";
+import { isUserAuthenticated } from "../utils/authUtils";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -97,19 +99,16 @@ function ResponsiveDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  // const [open, setOpen] = React.useState(false);
-
-  // const handleClick = () => {
-  //   setOpen(!open);
-  // };
+  const dispatch = useDispatch();
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
 
   const onLogout = () => {
-    const cookies = new Cookies();
-    cookies.remove("usertoken");
-    props.history.push("/main");
+    dispatch(openLogoutModal());
+    // const cookies = new Cookies();
+    // cookies.remove("usertoken");
+    // props.history.push("/main");
   };
   console.log(isUserAuthenticated());
 
@@ -139,11 +138,7 @@ function ResponsiveDrawer(props) {
       <List>
         <RouterLink to="/booking">
           <ListItem>
-            <SvgIcon
-              style={{ marginRight: "10px" }}
-              fontSize="medium"
-              viewBox="0 0 32 32"
-            >
+            <SvgIcon style={{ marginRight: "10px" }} viewBox="0 0 32 32">
               <CalendarIcon />
             </SvgIcon>
             <ListItemText primary="수업 예약하기" />
@@ -151,11 +146,7 @@ function ResponsiveDrawer(props) {
         </RouterLink>
         <RouterLink to="/board">
           <ListItem>
-            <SvgIcon
-              style={{ marginRight: "10px" }}
-              fontSize="medium"
-              viewBox="0 0 32 32"
-            >
+            <SvgIcon style={{ marginRight: "10px" }} viewBox="0 0 32 32">
               <TextBubbleIcon />
             </SvgIcon>
             <ListItemText primary="요가요 커뮤니티" />
@@ -163,11 +154,7 @@ function ResponsiveDrawer(props) {
         </RouterLink>
         <RouterLink to="/diary">
           <ListItem>
-            <SvgIcon
-              style={{ marginRight: "10px" }}
-              fontSize="medium"
-              viewBox="0 0 32 32"
-            >
+            <SvgIcon style={{ marginRight: "10px" }} viewBox="0 0 32 32">
               <NotebookIcon />
             </SvgIcon>
             <ListItemText primary="수련 일기" />
@@ -175,28 +162,23 @@ function ResponsiveDrawer(props) {
         </RouterLink>
         <RouterLink to="/mybookings">
           <ListItem>
-            <SvgIcon
-              style={{ marginRight: "10px" }}
-              fontSize="medium"
-              viewBox="0 0 32 32"
-            >
+            <SvgIcon style={{ marginRight: "10px" }} viewBox="0 0 32 32">
               <NotebookIcon />
             </SvgIcon>
             <ListItemText primary="내 스케쥴" />
           </ListItem>
         </RouterLink>
-        <RouterLink to="/notifications">
+        {/* <RouterLink to="/notifications">
           <ListItem>
             <SvgIcon
               style={{ marginRight: "10px" }}
-              fontSize="medium"
               viewBox="0 0 32 32"
             >
               <NotebookIcon />
             </SvgIcon>
             <ListItemText primary="알림" />
           </ListItem>
-        </RouterLink>
+        </RouterLink> */}
       </List>
     </div>
   );
@@ -270,6 +252,7 @@ function ResponsiveDrawer(props) {
         <div className={classes.toolbar} />
         {props.children}
       </main>
+      <LogoutModal></LogoutModal>
     </div>
   );
 }

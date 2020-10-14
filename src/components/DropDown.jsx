@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function DropDown(props) {
   const classes = useStyles();
-  // console.log(props, "props");
   const handleChange = (event) => {
     props.onChange(event.target.value);
   };
@@ -32,8 +31,8 @@ export default function DropDown(props) {
         {props.title}
       </InputLabel>
       <Select onChange={handleChange} className={classes.select}>
-        {props.value.map((v) => (
-          <MenuItem value={v} className={classes.menuItem}>
+        {props.value.map((v, index) => (
+          <MenuItem value={v} className={classes.menuItem} key={index}>
             {v}
           </MenuItem>
         ))}

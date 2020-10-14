@@ -1,17 +1,14 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import { setStateTrue, setStateFalse } from "../redux/modal";
+import { setStateTrue, setStateFalse } from "../../redux/modal";
 import styled from "styled-components";
 import { Link as RouterLink } from "react-router-dom";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import { useDispatch } from "react-redux";
-const StyledButton = styled(Button)`
-  width: 100%;
-  padding: 12px 22px;
-  font-size: 1.1rem;
-`;
-const ModalButtonRight = (props) => {
+import ModalButton from "./ModalButton";
+
+const BookingModalButtons = (props) => {
   const isBookingModalOpen = props.isBookingModalOpen;
   const isBookingConfirmOpen = props.isBookingConfirmOpen;
   const isBookingResultOpen = props.isBookingResultOpen;
@@ -20,7 +17,7 @@ const ModalButtonRight = (props) => {
   const dispatch = useDispatch();
   const onSubmit = () => {
     const BookingApiUrl = `http://127.0.0.1:8000/api/mylessons/${booking.lesson}/`;
-    console.log("booking",booking);
+    console.log("booking", booking);
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");
     const apiCall = () => {
@@ -49,17 +46,17 @@ const ModalButtonRight = (props) => {
   return (
     <>
       {isBookingModalOpen && !isBookingConfirmOpen && !isBookingResultOpen && (
-        <StyledButton
+        <ModalButton
           color="primary"
           variant="contained"
           size="large"
           classes="button"
         >
           예약하기
-        </StyledButton>
+        </ModalButton>
       )}
       {isBookingConfirmOpen && !disabled && (
-        <StyledButton
+        <ModalButton
           color="primary"
           variant="contained"
           size="large"
@@ -67,11 +64,11 @@ const ModalButtonRight = (props) => {
           onClick={onSubmit}
         >
           예약완료
-        </StyledButton>
+        </ModalButton>
       )}
       {isBookingConfirmOpen && disabled && (
         <RouterLink to="/mypage">
-          <StyledButton
+          <ModalButton
             color="primary"
             variant="contained"
             size="large"
@@ -79,11 +76,11 @@ const ModalButtonRight = (props) => {
             onClick={onSubmit}
           >
             회원권 관리
-          </StyledButton>
+          </ModalButton>
         </RouterLink>
       )}
       {isBookingResultOpen && (
-        <StyledButton
+        <ModalButton
           color="primary"
           variant="contained"
           size="large"
@@ -91,10 +88,10 @@ const ModalButtonRight = (props) => {
           style={{ width: "100%" }}
         >
           확인
-        </StyledButton>
+        </ModalButton>
       )}
     </>
   );
 };
 
-export default ModalButtonRight;
+export default BookingModalButtons;

@@ -1,71 +1,18 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { closeCancelModal, nextCancelModal } from "../redux/modal";
+import { closeCancelModal, nextCancelModal } from "../../redux/modal";
 import axios from "axios";
 import { Cookies } from "react-cookie";
-import { withStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import MuiDialogContent from "@material-ui/core/DialogContent";
-import MuiDialogActions from "@material-ui/core/DialogActions";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
-import SuccessMsg from "./SuccessMsg";
+import SuccessMsg from "../SuccessMsg";
+import DialogTitle from "./DialogTitle";
+import DialogContent from "./DialogContent";
+import DialogActions from "./DialogActions";
+import ModalButton from "./ModalButton";
 
-const styles = (theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(2),
-  },
-  closeButton: {
-    position: "absolute",
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: "#fff",
-  },
-});
-
-const DialogTitle = withStyles(styles)((props) => {
-  const { theme, children, classes, onClose, ...other } = props;
-  return (
-    <>
-      <MuiDialogTitle className={classes.root} {...other}>
-        <Typography variant="h6">{children}</Typography>
-        {onClose ? (
-          <IconButton
-            aria-label="close"
-            className={classes.closeButton}
-            onClick={onClose}
-          >
-            <CloseIcon />
-          </IconButton>
-        ) : null}
-      </MuiDialogTitle>
-    </>
-  );
-});
-
-const DialogContent = withStyles((theme) => ({
-  root: {
-    padding: theme.spacing(3),
-  },
-}))(MuiDialogContent);
-
-const DialogActions = withStyles((theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(2),
-    justifyContent: "space-between",
-  },
-}))(MuiDialogActions);
-const StyledButton = styled(Button)`
-  width: 100%;
-  padding: 12px 22px;
-  font-size: 1.1rem;
-`;
 const StyledDialog = styled(Dialog)`
   width: 100%;
   .MuiDialog-paperWidthSm {
@@ -73,7 +20,7 @@ const StyledDialog = styled(Dialog)`
   }
 `;
 
-const GenModal = (props) => {
+const CancelBookingModal = (props) => {
   const globalModal = useSelector((state) => state.modal);
   const selectedLesson = props.selectedLesson;
   const { isCancelModalOpen, isCancelResultOpen } = globalModal;
@@ -112,14 +59,7 @@ const GenModal = (props) => {
         aria-labelledby="modal-title"
         open={isCancelModalOpen}
       >
-        <DialogTitle
-          id="modal-title"
-          onClose={handleClose}
-          style={{
-            background: "#cf556c",
-            color: "#fff",
-          }}
-        >
+        <DialogTitle onClose={handleClose}>
           <Typography variant="h4" gutterBottom>
             {selectedLesson.name}
           </Typography>
@@ -141,24 +81,24 @@ const GenModal = (props) => {
         </DialogContent>
         <DialogActions>
           {isCancelModalOpen && !isCancelResultOpen && (
-            <StyledButton
+            <ModalButton
               color="primary"
               variant="contained"
               size="large"
               classes="button"
             >
               <Typography onClick={cancelLesson}>취소하기</Typography>
-            </StyledButton>
+            </ModalButton>
           )}
           {isCancelModalOpen && isCancelResultOpen && (
-            <StyledButton
+            <ModalButton
               color="primary"
               variant="contained"
               size="large"
               classes="button"
             >
               <Typography onClick={handleClose}>닫기</Typography>
-            </StyledButton>
+            </ModalButton>
           )}
         </DialogActions>
       </StyledDialog>
@@ -166,4 +106,4 @@ const GenModal = (props) => {
   );
 };
 
-export default GenModal;
+export default CancelBookingModal;

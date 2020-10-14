@@ -160,9 +160,9 @@ const BookingSessionList = () => {
       <StyledTimeline>
         <Timeline>
           {sessions.map((session) => (
-            <>
+            <React.Fragment key={session.id}>
               {/* 카드 형식 */}
-              <TimelineItem key={session.id}>
+              <TimelineItem>
                 <TimelineSeparator>
                   <TimelineConnector />
                   <TimelineDot>{session.time.slice(0, 5)}</TimelineDot>
@@ -229,7 +229,7 @@ const BookingSessionList = () => {
                   </Card>
                 </TimelineContent>
               </TimelineItem>
-            </>
+            </React.Fragment>
           ))}
         </Timeline>
       </StyledTimeline>

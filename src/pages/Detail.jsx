@@ -38,9 +38,6 @@ const Detail = (props) => {
   const classes = useStyles();
   let postId = props.match.params.id;
   const [post, setPost] = useState({});
-  // const text = post.content.split("\n").map((i, key) => {
-  //   return <div key={key}>{i}</div>;
-  // });
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState({
     post: postId,
