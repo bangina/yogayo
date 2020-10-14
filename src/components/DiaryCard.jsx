@@ -110,7 +110,7 @@ export const DiaryCard = (props) => {
         <IconButton className={styles.favorite}>
           <SentimentVerySatisfiedIcon />
         </IconButton>
-        <h3 className={styles.title}>{content.sessionName}</h3>
+        <h3 className={styles.title}>{content.lesson_name}</h3> {/*수업 이름*/}
         <Box color={"grey.500"} display={"flex"} alignItems={"center"} mb={1}>
           <LocationOn className={styles.locationIcon} />
           <span>{content.admin_name}</span>
