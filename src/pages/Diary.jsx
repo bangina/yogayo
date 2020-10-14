@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { closeDiaryModal, openDiaryModal } from "../redux/modal";
+import { openDiaryModal } from "../redux/modal";
 import DiaryCard from "../components/DiaryCard";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import DiaryModal from "../components/DiaryModal";
+import DiaryModal from "../components/modal/DiaryModal";
 import axios from "axios";
 import { Cookies } from "react-cookie";
-import { getUserToken, isUserAuthenticated } from "../utils/authUtils";
 
 const Diary = () => {
   const [pendingContents, setPendingContents] = useState([
@@ -30,7 +29,7 @@ const Diary = () => {
       .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
         setContents(response.data);
-        console.log("다이어리 목록 : ", response.data)
+        console.log("다이어리 목록 : ", response.data);
       })
       .catch((response) => {
         console.error(response);
@@ -40,7 +39,7 @@ const Diary = () => {
     apiCall();
   }, []);
   const [contents, setContents] = useState([
-        // content: "오늘 수업 너무 좋았다 기분 상쾌 통쾌~!"
+    // content: "오늘 수업 너무 좋았다 기분 상쾌 통쾌~!"
     // created: "2020-10-03T07:02:36.043101Z"
     // id: 2
     // img_path: "http://127.0.0.1:8000/IMG_5832.HEIC"
@@ -171,7 +170,7 @@ const Diary = () => {
       <br />
       <br />
       <Grid container spacing={3}>
-        {pendingContents.map((content,index) => (
+        {pendingContents.map((content, index) => (
           <Grid item xs={12} md={6} lg={4} xl={3} key={index}>
             <div onClick={openModal}>
               <DiaryCard content={content} />
@@ -188,7 +187,7 @@ const Diary = () => {
       <br />
       <br />
       <Grid container spacing={3}>
-        {contents.map((content,index) => (
+        {contents.map((content, index) => (
           <Grid item xs={12} md={6} lg={4} xl={3} key={index}>
             <DiaryCard content={content} />
           </Grid>

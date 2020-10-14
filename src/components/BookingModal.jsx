@@ -3,15 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import { closeModal, nextModal, showResult } from "../redux/modal";
-import { withStyles } from "@material-ui/core/styles";
 import styled from "styled-components";
-import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import MuiDialogTitle from "@material-ui/core/DialogTitle";
-import MuiDialogContent from "@material-ui/core/DialogContent";
-import MuiDialogActions from "@material-ui/core/DialogActions";
-import IconButton from "@material-ui/core/IconButton";
-import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import PlaceIcon from "@material-ui/icons/Place";
@@ -23,82 +16,17 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Alert from "@material-ui/lab/Alert";
 import SuccessMsg from "./SuccessMsg";
 import ModalButtonLeft from "./ModalButtonLeft";
-import ModalButtonRight from "./ModalButtonRight";
+import BookingModalButtons from "./modal/BookingModalButtons";
+import DialogTitle from "./modal/DialogTitle";
+import DialogContent from "./modal/DialogContent";
+import DialogActions from "./modal/DialogActions";
 
-const styles = (theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(2),
-  },
-  closeButton: {
-    position: "absolute",
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-    color: "#fff",
-  },
-});
-
-const DialogTitle = withStyles(styles)((props) => {
-  const { theme, children, classes, onClose, ...other } = props;
-  return (
-    <>
-      <MuiDialogTitle className={classes.root} {...other}>
-        <Typography component={"div"} variant="h6">
-          {children}
-        </Typography>
-        {onClose ? (
-          <IconButton
-            aria-label="close"
-            className={classes.closeButton}
-            onClick={onClose}
-          >
-            <CloseIcon />
-          </IconButton>
-        ) : null}
-      </MuiDialogTitle>
-    </>
-  );
-});
-
-const DialogContent = withStyles((theme) => ({
-  root: {
-    padding: theme.spacing(3),
-  },
-}))(MuiDialogContent);
-
-const DialogActions = withStyles((theme) => ({
-  root: {
-    margin: 0,
-    padding: theme.spacing(2),
-    justifyContent: "space-between",
-  },
-}))(MuiDialogActions);
 const StyledDialog = styled(Dialog)`
   width: 100%;
   .MuiDialog-paperWidthSm {
     width: 100%;
   }
 `;
-const printDay = (props) => {
-  switch (props) {
-    case 1:
-      return "월";
-    case 2:
-      return "화";
-    case 3:
-      return "수";
-    case 4:
-      return "목";
-    case 5:
-      return "금";
-    case 6:
-      return "토";
-    case 0:
-      return "일";
-    default:
-      return "";
-  }
-};
 const BookingModal = (props) => {
   const globalLesson = useSelector((state) => state.session);
   const globalSelectedLesson = globalLesson.bookingLesson;
@@ -228,14 +156,7 @@ const BookingModal = (props) => {
         aria-labelledby="modal-title"
         open={isBookingModalOpen}
       >
-        <DialogTitle
-          id="modal-title"
-          onClose={handleClose}
-          style={{
-            background: "#cf556c",
-            color: "#fff",
-          }}
-        >
+        <DialogTitle onClose={handleClose}>
           <Typography component={"div"} variant="h4" gutterBottom>
             {globalSelectedLesson.name}
           </Typography>
@@ -332,7 +253,7 @@ const BookingModal = (props) => {
           {/* div태그 씌운 이유? onClick 이벤트 적용하기 위해서 */}
           {!isBookingResultOpen ? (
             <div onClick={handleClose} style={{ width: "100%" }}>
-              <ModalButtonLeft isBookingResultOpen={isBookingResultOpen} />
+              <ModalButtonLeft  >돌아가기</ModalButtonLeft>
             </div>
           ) : null}
 
@@ -347,7 +268,7 @@ const BookingModal = (props) => {
             }
             style={{ width: "100%" }}
           >
-            <ModalButtonRight
+            <BookingModalButtons
               isBookingModalOpen={isBookingModalOpen}
               isBookingConfirmOpen={isBookingConfirmOpen}
               isBookingResultOpen={isBookingResultOpen}

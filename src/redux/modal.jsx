@@ -9,6 +9,8 @@ const MODAL_CANCEL_CLOSE = "MODAL_CANCEL_CLOSE";
 const MODAL_CANCEL_NEXT = "MODAL_CANCEL_NEXT";
 const LESSON_BOOKED = "LESSON_BOOKED";
 const LESSON_FAILED = "LESSON_FAILED";
+const MODAL_LOGOUT_OPEN = "MODAL_LOGOUT_OPEN";
+const MODAL_LOGOUT_CLOSE = "MODAL_LOGOUT_CLOSE";
 
 export const openModal = () => ({
   type: MODAL_OPEN,
@@ -43,6 +45,12 @@ export const setStateTrue = () => ({
 export const setStateFalse = () => ({
   type: LESSON_FAILED,
 });
+export const openLogoutModal = () => ({
+  type: MODAL_LOGOUT_OPEN,
+});
+export const closeLogoutModal = () => ({
+  type: MODAL_LOGOUT_CLOSE,
+});
 
 const initialState = {
   isBookingModalOpen: false,
@@ -51,6 +59,7 @@ const initialState = {
   isDiaryModalOpen: false,
   isCancelModalOpen: false,
   isCancelResultOpen: false,
+  isLogoutModalOpen: false,
   message: "",
   status: false,
 };
@@ -121,6 +130,16 @@ const modal = (modalState = initialState, action) => {
         ...modalState,
         message: "이미 수강신청하신 수업입니다.",
         status: false,
+      };
+    case MODAL_LOGOUT_OPEN:
+      return {
+        ...modalState,
+        isLogoutModalOpen: true,
+      };
+    case MODAL_LOGOUT_CLOSE:
+      return {
+        ...modalState,
+        isLogoutModalOpen: false,
       };
     default:
       return modalState;

@@ -6,7 +6,7 @@ import SessionCard from "../components/SessionCard";
 import TabBar from "../components/TabBar";
 import TabPanel from "../components/TabPanel";
 import Typography from "@material-ui/core/Typography";
-import GenModal from "../components/GenModal";
+import CancelBookingModal from "../components/modal/CancelBookingModal";
 
 const MyBookings = () => {
   const globalMemberSessions = useSelector(
@@ -89,7 +89,7 @@ const MyBookings = () => {
             />
           ))}
         </TabPanel>
-        <GenModal selectedLesson={globalSelectedLesson} />
+        <CancelBookingModal selectedLesson={globalSelectedLesson} />
       </TabBar>
     </>
   );
