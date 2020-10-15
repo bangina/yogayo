@@ -57,7 +57,7 @@ const initialState = {
   isBookingModalOpen: false,
   isBookingConfirmOpen: false,
   isBookingResultOpen: false,
-  isDiaryModalOpen: false,
+  isDiaryModalOpen: true,
   diaryLessonID: "",
   isCancelModalOpen: false,
   isCancelResultOpen: false,

@@ -19,6 +19,11 @@ const useStyles = makeStyles((theme) => ({
     height: 0,
     paddingTop: "56.25%", // 16:9
   },
+  defaultBg:{
+    height: 0,
+    paddingTop: "56.25%",
+    background: "rgba(207, 85, 108,0.5);"
+  },
   btn: {
     marginLeft: "auto",
   },
@@ -68,7 +73,10 @@ const BoardCard = (props) => {
           title="Paella dish"
         />
       )
-    }
+    }else{return <CardMedia
+      className={classes.defaultBg}
+      title="카드 배경"
+    />}
   }
 
   
