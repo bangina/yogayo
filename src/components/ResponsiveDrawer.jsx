@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Link as RouterLink, withRouter } from "react-router-dom";
 import { openLogoutModal, closeLogoutModal } from "../redux/modal";
 import LogoutModal from "./modal/LogoutModal";
@@ -23,6 +23,8 @@ import { ReactComponent as CalendarIcon } from "../icons/CalendarIcon.svg";
 import { ReactComponent as Logo } from "../icons/Logo.svg";
 import { ReactComponent as Yogayo } from "../icons/Yogayo.svg";
 import { isUserAuthenticated } from "../utils/authUtils";
+import axios from "axios";
+import { Cookies } from "react-cookie";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -97,6 +99,8 @@ function ResponsiveDrawer(props) {
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
+  const [userInfo, setUserInfo] = useState({});
+  const [adminname, setAdminname] = useState();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const dispatch = useDispatch();
   const handleDrawerToggle = () => {
@@ -105,22 +109,64 @@ function ResponsiveDrawer(props) {
 
   const onLogout = () => {
     dispatch(openLogoutModal());
+    setUserInfo({});
+    setAdminname('');
   };
   console.log(isUserAuthenticated());
+  
+  const userApiCall = () => {
+    const apiUrl = `http://127.0.0.1:8000/api/myinfo/`;
+    // 로그인 유저 정보 불러오기
+    let cookies = new Cookies();
+    const userToken = cookies.get("usertoken");
+    axios
+      .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
+      .then((response) => {
+        setUserInfo(response.data[0]);
+        console.log("로그인 유저", response.data[0]);
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+  };
+
+  const voucherApiCall = () => {
+    const apiUrl = `http://127.0.0.1:8000/api/myvouchers/`;
+    // 로그인 유저 정보 불러오기
+    let cookies = new Cookies();
+    const userToken = cookies.get("usertoken");
+    axios
+      .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
+      .then((response) => {
+        setAdminname(response.data[0].adminname);
+        console.log("바우처 정보", response.data);
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+  };
+
+  useEffect(()=>{
+    userApiCall();
+    voucherApiCall();
+  },[])
 
   const drawer = (
     <div>
       <div className={classes.toolbar} />
       <List className={classes.profile}>
         <Avatar className={classes.avatar}>
-          <img
-            src="/pose1.svg"
+          {userInfo.img_profile ? (
+            <img
+            src={userInfo.img_profile}
             alt="user"
             style={{ width: "100%", opacity: "0.8" }}
           />
+          ) : null}
+          
         </Avatar>
         <RouterLink to="/mypage">
-          <ListItemText primary="솔방울 님 >" secondary="요가왕 요가원" />
+          <ListItemText primary={`${userInfo.username} 님 >`} secondary={adminname} />
         </RouterLink>
         {isUserAuthenticated() ? (
           <Button

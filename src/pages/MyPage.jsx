@@ -157,7 +157,7 @@ export default function SimpleCard() {
                     width: "100px",
                     height: "100px",
                   }}>
-                    <img src={userInfo.img_profile} />
+                    <img src={userInfo.img_profile} style={{ width: "100px"}}/>
                   </Avatar>                  
                 ) : (
                   <Avatar
