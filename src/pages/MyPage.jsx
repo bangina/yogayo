@@ -58,6 +58,10 @@ export default function SimpleCard() {
   // const bull = <span className={classes.bullet}>•</span>;
   const [userInfo, setUserInfo] = useState({})
   const [voucherInfo, setVoucherInfo] = useState({})
+  const [imgPath, setImgPath] = useState(null)
+  const onChangeFile = (e) => {
+    setImgPath(e.target.files)
+  };
 
   const userApiCall = () => {
     // 로그인 유저 정보 불러오기
@@ -88,6 +92,29 @@ export default function SimpleCard() {
       .catch((response) => {
         console.error(response);
       });
+  }
+
+  const onImgUpload = () => {
+    console.log("url : ", `http://localhost:8000/api/myinfo/${userInfo.id}/`)
+    let cookies = new Cookies();
+      const userToken = cookies.get("usertoken");
+
+      const formData = new FormData();
+      formData.append("img_profile", imgPath[0]);
+
+      axios({
+        method: "patch",
+        url: `http://localhost:8000/api/myinfo/${userInfo.id}/`,
+        data: formData,
+        headers: { "Authorization": `Token	 ${userToken}`, "Content-Type": "multipart/form-data" },
+      })
+        .then(function (response) {
+          setUserInfo(response.data);
+          console.log(response);
+        })
+        .catch(function (response) {
+          console.log(response);
+        });
   }
 
   useEffect(()=>{
@@ -125,17 +152,29 @@ export default function SimpleCard() {
                   alignItems: "center",
                 }}
               >
-                <Avatar
+                {userInfo.img_profile ? (
+                  <Avatar style={{
+                    width: "100px",
+                    height: "100px",
+                  }}>
+                    <img src={userInfo.img_profile} />
+                  </Avatar>                  
+                ) : (
+                  <Avatar
                   style={{
                     width: "100px",
                     height: "100px",
                   }}
                 />
+                )}
+                
                 <div style={{ marginLeft: "10px"}}>
                   <Typography><b>{userInfo.username}</b> 회원님</Typography>
                   <Typography gutterBottom>{userInfo.email}</Typography>
                   <Typography gutterBottom>{userInfo.phone}</Typography>
+                  <input type="file" onChange={e => onChangeFile(e)}/><button onClick={onImgUpload}>submit</button>
                 </div>
+                
               </div>
             </CardContent>
           </Card>
