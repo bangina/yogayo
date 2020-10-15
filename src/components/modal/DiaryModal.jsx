@@ -7,7 +7,6 @@ import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import Avatar from "@material-ui/core/Avatar";
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import DropDown from "../DropDown";
 import TextField from "@material-ui/core/TextField";
@@ -33,11 +32,15 @@ const StyledDialog = styled(Dialog)`
 
 const useStyles = makeStyles((theme) => ({
   headingTxt:{
-
+    fontSize : "1.3rem",
+    color : "#555",
+    padding: "1rem !important",
+    borderBottom : "2px solid rgba(207, 85, 108, 0.5)",
+    display: "block !important"
   },
   moodTxt:{
-    fontSize: "12px",
-    marginBottom: "1rem"
+    fontSize: "11px",
+    marginBottom: "1.5rem"
   },
   textfield: {
     width : "100%"
@@ -69,6 +72,9 @@ const useStyles = makeStyles((theme) => ({
   uploadTxt:{
     color: "#cf556c",
     marginBottom: "10px",
+    transform:"translateY(-8px)",
+    display: "inline-block",
+    paddingLeft: "0.5rem"
   },
   submitBtn:{
     width : "100% !important",
@@ -97,18 +103,18 @@ const Diary = (props) => {
     bad: "",
   });
   const [diaryContents, setDiarycontents] = useState({
-    userLesson: '',
+    userLesson: {},
     content: '',
     mood: "1",
   });
-  const [imgPath, setImgPath] = useState(null)
+  const [imgPath, setImgPath] = useState(null);
 
   const handleClose = () => {
     dispatch(closeDiaryModal());
   };
 
   useEffect(()=>{
-    setDiarycontents({...diaryContents, userLesson: globalModal.diaryLessonID})
+    setDiarycontents({...diaryContents, userLesson: globalModal.diaryLesson})
   },[globalModal])
   
   const handleChange = () => {
@@ -127,7 +133,7 @@ const Diary = (props) => {
     console.log(diaryContents);
   };
   const onSubmit = () => {
-    console.log(diaryContents)
+    console.log("diaryContents",diaryContents)
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");
     
@@ -135,7 +141,7 @@ const Diary = (props) => {
       if(imgPath != null){
         formData.append("img_path", imgPath[0]);
       }
-      formData.append("userLesson", diaryContents.userLesson);
+      formData.append("userLesson", diaryContents.userLesson.id);
       formData.append("content", diaryContents.content);
       formData.append("mood", diaryContents.mood);
 
@@ -203,7 +209,7 @@ const Diary = (props) => {
           <DialogContent style={{ overflowY: "initial"}}>
             <div>
               <Typography className={classes.headingTxt} style={{ display: "inline-block", marginBottom: "10px" }}>
-          이번 "아쉬탕가 중급 수업"은 어떠셨나요?
+        이번 "{diaryContents.userLesson.name}" 수업은 어떠셨나요?
               </Typography> 
               <br/>
               <div style={{ float: "right" }}>
@@ -243,7 +249,7 @@ const Diary = (props) => {
         <label htmlFor="imgUpload" className={classes.uploadBtn}><PhotoCameraIcon/></label>
         <span className={classes.uploadTxt}>사진을 첨부해주세요.</span>
         <div className={classes.photoBox}>
-          <img src="/diaryphoto.png" alt="" className={classes.photo}/>
+          {/* <img src="/diaryphoto.png" alt="" className={classes.photo}/> */}
         </div>
         </div>
         <DialogActions>

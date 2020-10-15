@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
+import { Cookies } from "react-cookie";
 import cx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -20,17 +21,21 @@ import SentimentDissatisfiedIcon from "@material-ui/icons/SentimentDissatisfied"
 import SentimentSatisfiedIcon from "@material-ui/icons/SentimentSatisfied";
 import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissatisfied";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import Grid from "@material-ui/core/Grid";
 import axios from "axios";
 const useStyles = makeStyles(() => ({
   root: {
     maxWidth: 700,
     backgroundColor: "transparent",
-    paddingBottom: "1rem",
     position: "relative",
     borderRadius: "10px",
     overflow: "hidden",
     cursor: "pointer",
+  },
+  like:{
+    fill : "rgb(212, 61, 89)"
+  },
+  unlike:{
+    fill : "rgba(0, 0, 0, 0.54)"
   },
   imgBackground: {
     // background: "#ff8177",
@@ -41,7 +46,7 @@ const useStyles = makeStyles(() => ({
     top: "0.5rem",
     color: "#fff",
     fontWeight: "light",
-    textShadow: "1px 1px 3px rgba(0,0,0,0.2)",
+    textShadow: "3px 3px 4px rgba(0,0,0,0.2)",
     letterSpacing: "-0.05em",
   },
   title: {
@@ -65,6 +70,7 @@ const useStyles = makeStyles(() => ({
     WebkitBoxOrient: "vertical",
     overflow: "hidden",
     textOverflow: "ellipsis",
+    position : "relative"
   },
   favorite: {
     position: "absolute",
@@ -84,13 +90,62 @@ export const DiaryCard = (props) => {
   const gutterStyles = usePushingGutterStyles({ firstExcluded: true });
   const content = props.content;
   const ellipsis = props.ellipsis;
-  const postLike = (e) => {
-    const apiUrl = `http://127.0.0.1:8000/api/diaries/${e.target.id}/like`;
-    axios.post(apiUrl).catch((response) => {
+  const [liked,setLiked]= useState(false);
+  const [diaryLiked,setDiaryLiked]=useState({id: content.id, liked:""});
+  let cookies = new Cookies();
+  const userToken = cookies.get("usertoken");
+
+  //좋아요 여부 체크
+  const getLiked = (e) => {
+    const apiUrl = `http://127.0.0.1:8000/api/diaries/${diaryLiked.id}/like/`;
+    axios({
+      method: "get",
+      url: apiUrl,
+      headers: {
+        Authorization: `Token	${userToken}`,
+      },
+    })
+    .then((response) => {
+      setDiaryLiked({...diaryLiked, liked : response.data[0].id });
+    })
+    .catch((response) => {
       console.error(response);
     });
   };
-
+  //좋아요 생성/삭제
+  const postLike = (e) => {
+    const apiUrl = `http://127.0.0.1:8000/api/diaries/${e.target.id}/like/`;
+    axios({
+      method: "post",
+      url: apiUrl,
+      headers: {
+        Authorization: `Token	${userToken}`,
+      },
+    })
+    .then((response) => {
+      setLiked(response.data);
+      setDiaryLiked({...diaryLiked, liked : response.data.id});
+      console.log("like 호출 결과 :", response);
+    })
+    .catch((response) => {
+      console.error(response);
+    });
+  };
+  const paintMoodEmoji=(mood)=>{
+    switch (mood) {
+      case 0:
+        return <SentimentVerySatisfiedIcon  color="primary"/>
+      case 1:
+        return <SentimentSatisfiedIcon  color="primary"/>
+      case 2:
+        return <SentimentVeryDissatisfiedIcon  color="primary"/>
+      default: return <SentimentVerySatisfiedIcon  color="primary"/>
+    }
+  };
+  useEffect(()=>{
+    props.apiCall();
+    getLiked();
+  },[liked])
   return (
     <Card className={styles.root}>
       <Typography variant="h6" className={styles.date}>
@@ -103,10 +158,10 @@ export const DiaryCard = (props) => {
         <CardMedia classes={mediaStyles} image={content.img_path} />
       </div>
       <CardContent className={cx(shadowStyles.root, styles.content)}>
+        <h3 className={styles.title}>{content.lesson_name}</h3>
         <IconButton className={styles.favorite}>
-          <SentimentVerySatisfiedIcon />
+          {paintMoodEmoji(content.mood)}
         </IconButton>
-        <h3 className={styles.title}>{content.lesson_name}</h3> {/*수업 이름*/}
         <Box color={"grey.500"} display={"flex"} alignItems={"center"} mb={1}>
           <LocationOn className={styles.locationIcon} />
           <span>{content.admin_name}</span>
@@ -132,7 +187,8 @@ export const DiaryCard = (props) => {
             <IconButton size={"small"}>
               <FavoriteBorderIcon
                 onClick={postLike}
-                id={content.userLesson_id}
+                id={content.id}
+                className={diaryLiked.liked? styles.like : styles.unlike}
               />
               <span>{content.likes}</span>
             </IconButton>

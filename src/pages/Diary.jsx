@@ -106,15 +106,13 @@ const Diary = () => {
 
       <br />
       <br />
-      <Grid container spacing={3}>
         {pendingContents.map((content) => (
-          <Grid item xs={3} md={6} lg={4} xl={3} key={content.id}>
+          <Grid item xs={12} md={6} lg={4} xl={3} key={content.id}>
             <div >
-              <LessonCard content={content} onClick={()=>openModal(content.id)} />
+              <LessonCard content={content} onClick={()=>openModal(content)} />
             </div>
           </Grid>
         ))}
-      </Grid>
       <br />
       <br />
       <Typography variant="h4" gutterBottom color="primary">
@@ -126,7 +124,7 @@ const Diary = () => {
       <Grid container spacing={3}>
         {contents.map((content, index) => (
           <Grid item xs={12} md={6} lg={4} xl={3} key={index}>
-            <DiaryCard content={content} />
+            <DiaryCard content={content} apiCall={apiCall} />
           </Grid>
         ))}
       </Grid>
