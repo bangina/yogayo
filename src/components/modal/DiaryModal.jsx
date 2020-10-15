@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Cookies } from "react-cookie";
 import { closeDiaryModal } from "../../redux/modal";
@@ -35,15 +35,15 @@ const Diary = (props) => {
     bad: "",
   });
   const [diaryContents, setDiarycontents] = useState({
-    userLesson: props.id, //임시임
-    content: "test",
+    userLesson: globalModal.diaryLessonID,
+    content: '',
     mood: "1",
   });
   const [selectecFile, setSelectedFile] = useState("");
   const handleClose = () => {
     dispatch(closeDiaryModal());
   };
-
+  
   const handleChange = () => {
     SetChecked(!checked);
     //누를 시점에 false인 경우(즉 false->true로 바뀔 때)
