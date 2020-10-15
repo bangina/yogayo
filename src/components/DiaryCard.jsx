@@ -94,13 +94,9 @@ export const DiaryCard = (props) => {
   return (
     <Card className={styles.root}>
       <Typography variant="h6" className={styles.date}>
-        {/* {content.sessionDate.getMonth() + 1 < 10
-          ? `0${content.sessionDate.getMonth() + 1}`
-          : content.sessionDate.getMonth() + 1} */}
+          {content.created.substring(5,7)}
         월{" "}
-        {/* {content.sessionDate.getDate() < 10
-          ? `0${content.sessionDate.getDate()}`
-          : content.sessionDate.getDate()} */}
+          {content.created.substring(8,10)}
         일
       </Typography>
       <div className={styles.imgBackground}>

@@ -27,8 +27,9 @@ export const showResult = () => ({
 export const closeDiaryModal = () => ({
   type: MODAL_DIARY_CLOSE,
 });
-export const openDiaryModal = () => ({
+export const openDiaryModal = (id) => ({
   type: MODAL_DIARY_OPEN,
+  diaryLessonID : id
 });
 export const openCancelModal = () => ({
   type: MODAL_CANCEL_OPEN,
@@ -57,6 +58,7 @@ const initialState = {
   isBookingConfirmOpen: false,
   isBookingResultOpen: false,
   isDiaryModalOpen: true,
+  diaryLessonID: "",
   isCancelModalOpen: false,
   isCancelResultOpen: false,
   isLogoutModalOpen: false,
@@ -95,11 +97,13 @@ const modal = (modalState = initialState, action) => {
       return {
         ...modalState,
         isDiaryModalOpen: false,
+        diaryLessonID: ''
       };
     case MODAL_DIARY_OPEN:
       return {
         ...modalState,
         isDiaryModalOpen: true,
+        diaryLessonID: action.diaryLessonID
       };
     case MODAL_CANCEL_OPEN:
       return {

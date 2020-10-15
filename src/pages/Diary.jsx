@@ -71,8 +71,8 @@ const Diary = () => {
     }
   };
   const loadMore = () => {};
-  const openModal = () => {
-    dispatch(openDiaryModal());
+  const openModal = (id) => {
+    dispatch(openDiaryModal(id));
   };
   return (
     <div>
@@ -110,8 +110,7 @@ const Diary = () => {
         {pendingContents.map((content) => (
           <Grid item xs={3} md={6} lg={4} xl={3} key={content.id}>
             <div >
-              <LessonCard content={content} onClick={openModal} />
-              <DiaryModal id={content.id}></DiaryModal>
+              <LessonCard content={content} onClick={()=>openModal(content.id)} />
             </div>
           </Grid>
         ))}
@@ -145,7 +144,7 @@ const Diary = () => {
       >
         더 보기
       </Button>
-      {/* <DiaryModal></DiaryModal> */}
+      <DiaryModal></DiaryModal>
     </div>
   );
 };
