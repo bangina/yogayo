@@ -253,7 +253,7 @@ const BookingModal = (props) => {
           {/* div태그 씌운 이유? onClick 이벤트 적용하기 위해서 */}
           {!isBookingResultOpen ? (
             <div onClick={handleClose} style={{ width: "100%" }}>
-              <ModalButtonLeft  >돌아가기</ModalButtonLeft>
+              <ModalButtonLeft>돌아가기</ModalButtonLeft>
             </div>
           ) : null}
 
