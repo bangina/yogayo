@@ -35,14 +35,19 @@ const Diary = (props) => {
     bad: "",
   });
   const [diaryContents, setDiarycontents] = useState({
-    userLesson: globalModal.diaryLessonID,
+    userLesson: '',
     content: '',
     mood: "1",
   });
-  const [selectecFile, setSelectedFile] = useState("");
+  const [imgPath, setImgPath] = useState(null)
+
   const handleClose = () => {
     dispatch(closeDiaryModal());
   };
+
+  useEffect(()=>{
+    setDiarycontents({...diaryContents, userLesson: globalModal.diaryLessonID})
+  },[globalModal])
   
   const handleChange = () => {
     SetChecked(!checked);
@@ -53,26 +58,34 @@ const Diary = (props) => {
     }
   };
   const selectFile = (e) => {
-    setSelectedFile(e.target.files);
+    setImgPath(e.target.files)
   };
   const onInputChange = (e) => {
     setDiarycontents({ ...diaryContents, [e.target.name]: e.target.value });
     console.log(diaryContents);
   };
   const onSubmit = () => {
+    console.log(diaryContents)
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");
+    
+    const formData = new FormData();
+      if(imgPath != null){
+        formData.append("img_path", imgPath[0]);
+      }
+      formData.append("userLesson", diaryContents.userLesson);
+      formData.append("content", diaryContents.content);
+      formData.append("mood", diaryContents.mood);
+
     axios({
       method: "post",
-      url: "http://127.0.0.1:8000/api/diaries/1/upload/",
-      data: diaryContents,
-      headers: {
-        // "Content-Type": "multipart/form-data",
-        Authorization: `Token ${userToken}`,
-      }, //:파일데이터 보낼 때 컨텐츠 유형임.
+      url: "http://127.0.0.1:8000/api/diaries/",
+      data: formData,
+      headers: { "Authorization": `Token	 ${userToken}`, "Content-Type": "multipart/form-data" },
     })
       .then(function (response) {
         console.log(response);
+        dispatch(closeDiaryModal())
       })
       .catch(function (response) {
         console.log(response);
