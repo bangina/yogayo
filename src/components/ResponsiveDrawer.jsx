@@ -100,6 +100,7 @@ function ResponsiveDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [userInfo, setUserInfo] = useState({});
+  const propUserInfo = props.userInfo;
   const [adminname, setAdminname] = useState();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const dispatch = useDispatch();
@@ -147,9 +148,12 @@ function ResponsiveDrawer(props) {
   };
 
   useEffect(()=>{
-    userApiCall();
     voucherApiCall();
   },[])
+
+  useEffect(()=>{
+    userApiCall();
+  },[propUserInfo])
 
   const imgChange =() => {
     console.log("imgChange!")
@@ -298,7 +302,7 @@ function ResponsiveDrawer(props) {
           </Drawer>
         </Hidden>
       </nav>
-      <main className={classes.content} imgChange={imgChange}>
+      <main className={classes.content} >
         <div className={classes.toolbar} />
         {props.children}
       </main>

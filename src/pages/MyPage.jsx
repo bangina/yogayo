@@ -122,9 +122,9 @@ export default function SimpleCard(props) {
     voucherApiCall()
   },[])
 
-  // useEffect(()=>{
-  //   props.imgChange()
-  // },[userInfo.img_profile])
+  useEffect(()=>{
+    props.apiCall();
+  },[userInfo])
 
   return (
     <div style={{ marginBottom: "15px" }}>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import ResponsiveDrawer from "./components/ResponsiveDrawer";
@@ -13,15 +13,37 @@ import Detail from "./pages/Detail";
 import InsertBoard from "./pages/InsertBoard";
 import Notifications from "./pages/Notifications";
 import Edit from "./pages/Edit";
+import axios from "axios";
+import { Cookies } from "react-cookie";
 
 //Read me
 //컴포넌트 이름에 Styled 가 붙은 것들 ==> styled components 패키지로 css 적용된 컴포넌트임.
 //material-ui 의 Link = <Link> / react-router-dom의 Link는 RouterLink로 표시.
 function App() {
+  const [userInfo, setUserInfo] = useState({});
+  const userApiCall = () => {
+    const apiUrl = `http://127.0.0.1:8000/api/myinfo/`;
+    // 로그인 유저 정보 불러오기
+    let cookies = new Cookies();
+    const userToken = cookies.get("usertoken");
+    axios
+      .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
+      .then((response) => {
+        setUserInfo(response.data[0]);
+        console.log("app.js", response.data[0]);
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+  };
+
+  // useEffect(() => {
+  //   userApiCall();
+  // }, [userInfo.img_profile]);
   return (
     <div>
       <Router>
-        <ResponsiveDrawer>
+        <ResponsiveDrawer userInfo={userInfo}>
           <Route path="/" component={Main} exact={true}></Route>
           <Route path="/login" component={Login} exact={true}></Route>
           <Route path="/signup" component={Signup}></Route>
@@ -32,7 +54,10 @@ function App() {
           <Route path="/board/insert" component={InsertBoard}></Route>
           <Route path="/diary" component={Diary}></Route>
           <Route path="/mybookings" component={MyBookings}></Route>
-          <Route path="/mypage" component={MyPage} exact></Route>
+          {/* <Route path="/mypage" component={MyPage} exact></Route> */}
+          <Route path="/mypage">
+            <MyPage apiCall={userApiCall} />
+          </Route>
           <Route path="/mypage/edit" component={Edit} exact></Route>
           <Route path="/notifications" component={Notifications}></Route>
         </ResponsiveDrawer>
