@@ -120,7 +120,10 @@ const Detail = (props) => {
               <Row mt={2} alignItems={"center"} key={index}>
                 <Item position={"middle"}>
                   <Avatar>
-                    <img src={`http://127.0.0.1:8000/media/${comment.img_profile}`} style={{ width: '100%' }} />
+                    {comment.img_profile ? (
+                      <img src={`http://127.0.0.1:8000/media/${comment.img_profile}`} style={{ width: '100%' }} />
+                    ) : null}
+                    
                   </Avatar>
                 </Item>
                 <Info useStyles={useChatzInfoStyles}>
