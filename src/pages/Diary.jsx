@@ -12,6 +12,8 @@ import { Cookies } from "react-cookie";
 
 const Diary = () => {
   const [pendingContents, setPendingContents] = useState([]);
+  const [page, setPage] = useState(1);
+  const [cnt , setCnt] = useState()
 
   
   const lessonCall = () => {
@@ -29,14 +31,16 @@ const Diary = () => {
       });
   }
   
-  const apiCall = () => {
+  const apiCall = (pageNum) => {
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");
-    const apiUrl = `http://127.0.0.1:8000/api/diaries/mydiaries/`;
+    const apiUrl = `http://127.0.0.1:8000/api/diaries/mydiaries/?page=${pageNum}`;
     axios
       .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
-        setContents(response.data);
+        const tempArr = contents.concat(response.data.results)
+        setContents(tempArr)
+        setCnt(response.data.count)
         console.log("다이어리 목록 : ", response.data);
       })
       .catch((response) => {
@@ -44,33 +48,18 @@ const Diary = () => {
       });
   };
   useEffect(() => {
-    apiCall();
     lessonCall();
   }, []);
+
+  useEffect(()=>{
+    apiCall(page)
+  },[page])
   const [contents, setContents] = useState([]);
   const globalModal = useSelector((state) => state.modal);
   const dispatch = useDispatch();
-  const printDay = (props) => {
-    switch (props) {
-      case 1:
-        return "월";
-      case 2:
-        return "화";
-      case 3:
-        return "수";
-      case 4:
-        return "목";
-      case 5:
-        return "금";
-      case 6:
-        return "토";
-      case 0:
-        return "일";
-      default:
-        return "";
-    }
+  const loadMore = () => {
+    setPage(page + 1)
   };
-  const loadMore = () => {};
   const openModal = (id) => {
     dispatch(openDiaryModal(id));
   };
@@ -116,7 +105,7 @@ const Diary = () => {
       <br />
       <br />
       <Typography variant="h4" gutterBottom color="primary">
-        오늘의 요기 피드
+        나의 일기
       </Typography>
       <br />
       <br />
@@ -128,20 +117,22 @@ const Diary = () => {
           </Grid>
         ))}
       </Grid>
-      <Button
-        onClick={loadMore}
-        variant="outlined"
-        color="primary"
-        size="large"
-        style={{
-          position: "relative",
-          left: "50%",
-          transform: "translateX(-50%)",
-          marginTop: "1rem",
-        }}
-      >
-        더 보기
-      </Button>
+      {contents.length !== cnt ? (
+          <Button
+          onClick={loadMore}
+          variant="outlined"
+          color="primary"
+          size="large"
+          style={{
+            position: "relative",
+            left: "50%",
+            transform: "translateX(-50%)",
+            marginTop: "1rem",
+          }}
+        >
+          더 보기
+        </Button>
+      ) : null}
       <DiaryModal></DiaryModal>
     </div>
   );

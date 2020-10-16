@@ -94,38 +94,44 @@ const useStyles = makeStyles((theme) => ({
 
 const Main = (props) => {
   const [userInfo, setUserInfo] = useState("");
-  useEffect(() => {
-    // 다이어리 불러오기
+  const diaryCall = () => {
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");
-    const diaryApiUrl = "http://localhost:8000/api/diaries/";
+    const diaryApiUrl = "http://localhost:8000/api/diaries/?page=1";
 
     axios
       .get(diaryApiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
         console.log("다이어리 데이터:", response.data);
-        setDiaryContents(response.data);
+        setDiaryContents(response.data.results);
       })
       .catch((response) => {
         console.error(response);
       });
+    }
 
-    // 게시판 불러오기
+  const boardCall = () => {
     const boardApiUrl = "http://localhost:8000/api/posts/";
 
     axios
       .get(boardApiUrl)
       .then((response) => {
         console.log("조회목록데이터:", response.data);
-        setBoardContents(response.data);
+        setBoardContents(response.data.slice(0, 10));
       })
       .catch((response) => {
         console.error(response);
       });
+  }
+  useEffect(() => {
+    // 다이어리 불러오기
+    diaryCall()
+
+    // 게시판 불러오기
+    boardCall()
   }, []);
 
   const [diaryContents, setDiaryContents] = useState([]);
-  const [mydiaryContents, setMydiaryContents] = useState([]);
   const [boardContents, setBoardContents] = useState([]);
 
   const classes = useStyles();
@@ -168,20 +174,6 @@ const Main = (props) => {
     window.addEventListener("resize", handleResize);
   }, []);
 
-  const myDiaryApiCall = () => {
-    let cookies = new Cookies();
-    const userToken = cookies.get("usertoken");
-    const apiUrl = `http://127.0.0.1:8000/api/diaries/mydiaries/`;
-    axios
-      .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
-      .then((response) => {
-        setMydiaryContents(response.data);
-        console.log("다이어리 목록 : ", response.data);
-      })
-      .catch((response) => {
-        console.error(response);
-      });
-  };
   return (
     <React.Fragment>
       <CssBaseline />
@@ -234,7 +226,7 @@ const Main = (props) => {
         >
           {diaryContents.map((content, index) => (
             <SwiperSlide className={classes.swiperSlide} key={index}>
-              <DiaryCard content={content} ellipsis={true} apiCall={myDiaryApiCall}  />
+              <DiaryCard content={content} ellipsis={true} apiCall={diaryCall}  />
             </SwiperSlide>
           ))}
         </Swiper>
