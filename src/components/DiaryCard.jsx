@@ -10,9 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import Rating from "@material-ui/lab/Rating";
 import IconButton from "@material-ui/core/IconButton";
 import LocationOn from "@material-ui/icons/LocationOn";
-import MoreHoriz from "@material-ui/icons/MoreHoriz";
 import Favorite from "@material-ui/icons/Favorite";
-import FaceGroup from "@mui-treasury/components/group/face";
 import { useWideCardMediaStyles } from "@mui-treasury/styles/cardMedia/wide";
 import { useFadedShadowStyles } from "@mui-treasury/styles/shadow/faded";
 import { usePushingGutterStyles } from "@mui-treasury/styles/gutter/pushing";
@@ -166,6 +164,10 @@ export const DiaryCard = (props) => {
         <Box color={"grey.500"} display={"flex"} alignItems={"center"} mb={1}>
           <LocationOn className={styles.locationIcon} />
           <span>{content.admin_name}</span>
+        </Box>
+        <Box color={"grey.500"} display={"flex"} alignItems={"center"} mb={1}>
+          {/* <FaceGroup className={styles.locationIcon} /> */}
+          <span>{content.username}</span>
         </Box>
         <Typography
           color={"textSecondary"}

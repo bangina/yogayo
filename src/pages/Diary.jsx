@@ -7,13 +7,12 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import DiaryModal from "../components/modal/DiaryModal";
+import ResultModal from "../components/modal/ResultModal";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 
 const Diary = () => {
   const [pendingContents, setPendingContents] = useState([]);
-
-  
   const lessonCall = () => {
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");
@@ -43,10 +42,6 @@ const Diary = () => {
         console.error(response);
       });
   };
-  useEffect(() => {
-    apiCall();
-    lessonCall();
-  }, []);
   const [contents, setContents] = useState([]);
   const globalModal = useSelector((state) => state.modal);
   const dispatch = useDispatch();
@@ -74,6 +69,12 @@ const Diary = () => {
   const openModal = (id) => {
     dispatch(openDiaryModal(id));
   };
+  useEffect(() => {
+    lessonCall();
+  }, []);
+  useEffect(() => {
+    apiCall();
+  }, [globalModal]);
   return (
     <div>
       <Typography variant="h4" gutterBottom color="primary">
@@ -142,7 +143,10 @@ const Diary = () => {
       >
         더 보기
       </Button>
-      <DiaryModal></DiaryModal>
+      <DiaryModal />
+
+    <ResultModal directTo="/diary" message="다이어리가 정상적으로 게시되었습니다."/>
+    
     </div>
   );
 };

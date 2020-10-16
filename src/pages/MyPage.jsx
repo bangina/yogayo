@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
@@ -10,26 +10,67 @@ import ConfirmationNumberIcon from "@material-ui/icons/ConfirmationNumber";
 import Avatar from "@material-ui/core/Avatar";
 import { Button } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
+import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 
 import axios from "axios";
 import { Cookies } from "react-cookie";
 
 const useStyles = makeStyles({
   root: {
-    // background: "#f3717d",
-    // color: "#fff",
-  },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)",
+    minHeight:"270px"
   },
   title: {
-    fontSize: 14,
+   marginBottom: "2rem",
+  //  fontWeight:"bold",
+   color:"#555"
   },
   pos: {
     // marginBottom: 12,
   },
+  innerBox:{
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center", 
+  },
+  descText:{
+    fontSize : "1rem",
+    lineHeight:"1.7rem"
+  },
+  inputFile:{
+    display: "none"
+  },
+  inputFileIcon:{
+    border : "1px solid #f3717d",
+    borderRadius:"50%",
+    display: "inline-block",
+    width: "40px",
+    height: "40px",
+    padding: "0",
+    textAlign:"center", 
+    position:"relative"
+  },
+  inputFileSvg:{
+     position:"absolute",
+     left:"50%",
+     top:"50%",
+     transform :"translate(-50%,-50%)"
+  },
+  inputFileText:{
+    padding:" 3px 16px",
+    fontSize: "0.875rem",
+    minWidth: "64px",
+    boxSizing: "border-box",
+    border:"1px solid #f3717d",
+    color:"#999",
+    margin:"0 5px",
+    borderRadius:"5px",
+  },
+  inputContainer:{
+    border:"1px solid #f3717d",
+    padding:"3px",
+    borderRadius:"5px",
+    display:"flex"
+  }
 });
 
 const useSliderStyles = makeStyles(() => ({
@@ -55,14 +96,21 @@ const useSliderStyles = makeStyles(() => ({
 export default function SimpleCard(props) {
   const classes = useStyles();
   const sliderStyles = useSliderStyles();
-  // const bull = <span className={classes.bullet}>•</span>;
-  const [userInfo, setUserInfo] = useState({})
+  const [userInfo, setUserInfo] = useState({phone:""})
   const [voucherInfo, setVoucherInfo] = useState({})
-  const [imgPath, setImgPath] = useState(null)
+  const [imgPath, setImgPath] = useState(null);
+  const [imgPathText, setImgPathText] = useState(null);
+  const filePathText = useRef();
   const onChangeFile = (e) => {
-    setImgPath(e.target.files)
+    setImgPath(e.target.files);
+    console.log(e.target.value);
+    console.log(imgPath);
+    console.log(filePathText.current.value);
+    setImgPathText(e.target.value);
   };
-
+  const paintImgPathText=()=>{
+    filePathText.current.value= imgPathText;
+  }
   const userApiCall = () => {
     // 로그인 유저 정보 불러오기
     let cookies = new Cookies();
@@ -125,29 +173,30 @@ export default function SimpleCard(props) {
   useEffect(()=>{
     props.apiCall();
   },[userInfo])
+  useEffect(()=>{
+    paintImgPathText();
+  },[imgPathText]);
+
+//첨부 이미지 파일명 보여주기
+
+const file = useRef();
+
 
   return (
     <div style={{ marginBottom: "15px" }}>
-      <Typography variant="h4" color="" gutterBottom>
+      <Typography variant="h4"  color="primary" gutterBottom>
         마이 페이지
-      </Typography>
+      </Typography><br/>
       <Grid container spacing={3}>
-        <Grid item xs={12}>
+        <Grid item xs={12} lg={6}>
           <Card className={classes.root}>
             <CardContent>
               <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
+                className={classes.innerBox}
               >
-                <Typography className={classes.title} gutterBottom>
+                <Typography component="h5" variant="h5" className={classes.title} gutterBottom>
                   나의 정보
                 </Typography>
-                <RouterLink to="/mypage/edit">
-                  <Button variant="outlined">정보 변경하기</Button>
-                </RouterLink>
               </div>
               <div
                 style={{
@@ -172,27 +221,33 @@ export default function SimpleCard(props) {
                 />
                 )}
                 
-                <div style={{ marginLeft: "10px"}}>
-                  <Typography><b>{userInfo.username}</b> 회원님</Typography>
-                  <Typography gutterBottom>{userInfo.email}</Typography>
-                  <Typography gutterBottom>{userInfo.phone}</Typography>
-                  <input type="file" onChange={e => onChangeFile(e)}/><button onClick={onImgUpload}>submit</button>
+                <div style={{ marginLeft: "10px"}}  >
+                  <Typography color="primary" className={classes.descText}><b>{userInfo.username}</b> 회원님</Typography> <br/> 
+                  <Typography gutterBottom  className={classes.descText}>이메일 주소 : {userInfo.email}</Typography>
+                  <Typography gutterBottom className={classes.descText}>휴대폰 번호 : {userInfo.phone.slice(0,3)}-{userInfo.phone.slice(3,7)}-{userInfo.phone.slice(7,11)}</Typography>
+                  <div className={classes.inputContainer}>
+                  <input type="file" id="file" className={classes.inputFile} onChange={onChangeFile}/>
+                  <label for="file" className={classes.inputFileIcon}><PhotoCameraIcon color="primary" className={classes.inputFileSvg}/></label>
+                  <input value="파일 주소" type="text" ref={filePathText} className={classes.inputFileText}/>
+                  <Button onClick={onImgUpload} variant="contained" color="primary">사진 업로드</Button>
+                  </div>
+                  
                 </div>
                 
               </div>
             </CardContent>
           </Card>
         </Grid>
-        <Grid item xs={12}>
+        <Grid item  xs={12} lg={6}> 
           <Card className={classes.root}>
             
-              {voucherInfo ? (
+              {voucherInfo ? (  
                 <CardContent>
-                  <Typography className={classes.title} gutterBottom>
+                  <Typography  component="h5" variant="h5" className={classes.title} gutterBottom>
                   이용 정보
                 </Typography>
   
-                <Typography className={classes.title} color="" gutterBottom>
+                <Typography gutterBottom>
                   <PlaceIcon /> 센터 : {voucherInfo.adminname}
                 </Typography>
                 <Typography>

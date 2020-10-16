@@ -12,7 +12,6 @@ import Diary from "./pages/Diary";
 import Detail from "./pages/Detail";
 import InsertBoard from "./pages/InsertBoard";
 import Notifications from "./pages/Notifications";
-import Edit from "./pages/Edit";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 
@@ -58,7 +57,6 @@ function App() {
           <Route path="/mypage">
             <MyPage apiCall={userApiCall} />
           </Route>
-          <Route path="/mypage/edit" component={Edit} exact></Route>
           <Route path="/notifications" component={Notifications}></Route>
         </ResponsiveDrawer>
       </Router>

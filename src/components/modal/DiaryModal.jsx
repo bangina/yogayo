@@ -18,6 +18,9 @@ import axios from "axios";
 import DialogTitle from "./DialogTitle";
 import DialogContent from "./DialogContent";
 import DialogActions from "./DialogActions";
+import ResultModal from "./ResultModal";
+import { openResultModal} from "../../redux/modal";
+
 const StyledButton = styled(Button)`
   width: 49%;
   padding: 12px 22px;
@@ -110,7 +113,8 @@ const Diary = (props) => {
   const [imgPath, setImgPath] = useState(null);
 
   const handleClose = () => {
-    dispatch(closeDiaryModal());
+    dispatch(openResultModal());
+    // dispatch(closeDiaryModal());
   };
 
   useEffect(()=>{
@@ -153,7 +157,8 @@ const Diary = (props) => {
     })
       .then(function (response) {
         console.log(response);
-        dispatch(closeDiaryModal())
+        dispatch(closeDiaryModal());
+        dispatch(openResultModal());
       })
       .catch(function (response) {
         console.log(response);
@@ -262,8 +267,7 @@ const Diary = (props) => {
             발행하기
           </StyledButton>
         </DialogActions>
-    </StyledDialog>
-    </>
+    </StyledDialog></>
   );
 };
 

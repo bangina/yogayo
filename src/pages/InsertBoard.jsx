@@ -5,6 +5,9 @@ import DropDown from "../components/DropDown";
 import { Button } from "@material-ui/core";
 import { Cookies } from "react-cookie";
 import axios from "axios";
+import { openResultModal} from "../redux/modal";
+import { useDispatch } from "react-redux";
+import ResultModal from "../components/modal/ResultModal";
 
 import Alert from "@material-ui/lab/Alert";
 
@@ -19,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 
 const InsertBoard = (props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [post, setPost] = useState({
     category: "",
     title: "",
@@ -59,7 +63,7 @@ const InsertBoard = (props) => {
       })
         .then(function (response) {
           console.log(response);
-          props.history.push("/board")
+          dispatch(openResultModal());
         })
         .catch(function (response) {
           console.log(response);
@@ -75,6 +79,7 @@ const InsertBoard = (props) => {
   };
 
   return (
+    <>
     <form className={classes.root}>
       {alert && <Alert severity="error">모두 입력해 주세요</Alert>}
 
@@ -124,6 +129,8 @@ const InsertBoard = (props) => {
         </Button>
       </div>
     </form>
+    <ResultModal directTo="/board" message="정상적으로 게시되었습니다."/>
+    </>
   );
 };
 

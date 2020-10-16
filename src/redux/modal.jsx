@@ -11,6 +11,8 @@ const LESSON_BOOKED = "LESSON_BOOKED";
 const LESSON_FAILED = "LESSON_FAILED";
 const MODAL_LOGOUT_OPEN = "MODAL_LOGOUT_OPEN";
 const MODAL_LOGOUT_CLOSE = "MODAL_LOGOUT_CLOSE";
+const MODAL_RESULT_OPEN = "MODAL_RESULT_OPEN";
+const MODAL_RESULT_CLOSE = "MODAL_RESULT_CLOSE";
 
 export const openModal = () => ({
   type: MODAL_OPEN,
@@ -52,6 +54,13 @@ export const openLogoutModal = () => ({
 export const closeLogoutModal = () => ({
   type: MODAL_LOGOUT_CLOSE,
 });
+//일반(범용) 결과 표시 alert 모달 
+export const openResultModal = () => ({
+  type: MODAL_RESULT_OPEN,
+});
+export const closeResultModal = () => ({
+  type: MODAL_RESULT_CLOSE,
+});
 
 const initialState = {
   isBookingModalOpen: false,
@@ -64,6 +73,7 @@ const initialState = {
   message: "",
   status: false,
   diaryLesson: "",
+  isResultModalOpen:false,
 };
 
 const modal = (modalState = initialState, action) => {
@@ -144,6 +154,16 @@ const modal = (modalState = initialState, action) => {
       return {
         ...modalState,
         isLogoutModalOpen: false,
+      };
+    case MODAL_RESULT_OPEN:
+      return {
+        ...modalState,
+        isResultModalOpen: true,
+      };
+    case MODAL_RESULT_CLOSE:
+      return {
+        ...modalState,
+        isResultModalOpen: false,
       };
     default:
       return modalState;

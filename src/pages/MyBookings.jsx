@@ -55,6 +55,14 @@ const MyBookings = () => {
   const globalModal = useSelector((state) => state.modal);
   const globalSelectedLesson = globalLesson.bookingLesson;
   const [bookedLessons, setbookedLessons] = useState([]);
+  const today = new Date();
+  const year = `${today.getFullYear()}`;
+  const month = today.getMonth()+1>9? `${today.getMonth()+1}` : `0${today.getMonth()+1}`;
+  const date = today.getDate()>9? `${today.getDate()}` : `0${today.getDate()}`;
+  const todayDate = year + month + date; //20201016
+  console.log(todayDate)
+  const pastLessons =bookedLessons.filter((lesson)=>lesson.date);
+  const futureLessons =[];
   const [booking, setBooking] = useState({
     name: "호호수업",
     room: "101호",

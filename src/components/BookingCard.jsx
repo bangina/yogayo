@@ -92,10 +92,12 @@ const BookingCard = (props) => {
     const session = props.session;
     const type = props.type;
     const dispatch = useDispatch();
+    //   예약하기 페이지에서 사용시(type:Booking)
     const openBModal = () => {
         dispatch(openModal());
         dispatch(selectSession(session));
       };
+    //   예약 취소 페이지에서 사용시(type:Cancel)
     const openCModal = () => {
         dispatch(selectSession(session));
         dispatch(openCancelModal(true));

@@ -86,14 +86,14 @@ const BookingCalendar = () => {
         defaultValue={new Date()}
         value={value}
         //오늘부터 선택가능
-        minDate={new Date()}
+        // minDate={new Date()}
         // 오늘로부터 한달까지만 선택 가능
         maxDate={maxDate}
         //next year 버튼 텍스트 없앰
         next2Label=""
         prev2Label=""
         //수업 없는 날은 비활성화 시키는 기능 추가?
-        tileDisabled={({ activeStartDate, date, view }) => date.getDay() === 0}
+        // tileDisabled={({ activeStartDate, date, view }) => date.getDay() === 0}
         locale="ko"
       />
     </div>
