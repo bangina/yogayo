@@ -2,11 +2,50 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { Cookies } from "react-cookie";
-import SessionCard from "../components/SessionCard";
+import Timeline from "@material-ui/lab/Timeline";
+import styled from "styled-components";
 import TabBar from "../components/TabBar";
 import TabPanel from "../components/TabPanel";
 import Typography from "@material-ui/core/Typography";
 import CancelBookingModal from "../components/modal/CancelBookingModal";
+import BookingCard from "../components/BookingCard";
+
+const StyledTimeline = styled(Timeline)`
+  color: red;
+  padding: 0;
+  .MuiTimeline-root {
+    padding: 0;
+  }
+  .MuiTimelineContent-root {
+    padding: 6px 0;
+  }
+  .MuiTimelineItem-missingOppositeContent:before {
+    flex: 0;
+  }
+  .MuiTimelineItem-missingOppositeContent:before {
+    padding: 0;
+  }
+  .MuiTimelineSeparator-root {
+    margin-right: 5px;
+  }
+  .MuiTimelineDot-root {
+    color: #fff;
+    background: rgba(207, 85, 108, 1);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    padding: 0;
+    margin-bottom: 0;
+    text-align: center;
+    display: block;
+    margin-top: 0;
+  }
+  .MuiTimelineConnector-root {
+    background: rgba(0, 0, 0, 0.15);
+    width: 1px;
+  }
+`;
 
 const MyBookings = () => {
   const globalMemberSessions = useSelector(
@@ -70,27 +109,23 @@ const MyBookings = () => {
   }, [globalSelectedLesson]);
   return (
     <>
+    <StyledTimeline>
       <Typography variant="h4" gutterBottom color="primary">
         내 스케쥴
       </Typography>
       <TabBar onChange={handleChage} menu="bookings">
         <TabPanel value={value} index={0}>
-          {bookedLessons.map((bookedLesson, index) => (
-            <SessionCard key={index} bookedLesson={bookedLesson} />
+          {/* 아직 시작되지 않은 수업 */}
+          {bookedLessons.map((bookedLesson, index) => ( 
+          <BookingCard session={bookedLesson} key={bookedLesson.id} type="cancel"/>
           ))}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          {bookedLessons.map((bookedLesson, index) => (
-            <SessionCard
-              key={index}
-              bookedLesson={bookedLesson}
-              booking={globalSelectedLesson}
-              userInfo={userInfo}
-            />
-          ))}
+          {/* 이미 시작한 수업(지난 수업) */}
         </TabPanel>
         <CancelBookingModal selectedLesson={globalSelectedLesson} />
       </TabBar>
+      </StyledTimeline>
     </>
   );
 };

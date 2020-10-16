@@ -134,9 +134,8 @@ export const DiaryCard = (props) => {
   },[])
   useEffect(()=>{
     props.apiCall();
-    
   },[diaryLiked]);
-  
+
   const paintMoodEmoji=(mood)=>{
     switch (mood) {
       case 0:

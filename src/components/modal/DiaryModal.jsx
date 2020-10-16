@@ -249,7 +249,6 @@ const Diary = (props) => {
         <label htmlFor="imgUpload" className={classes.uploadBtn}><PhotoCameraIcon/></label>
         <span className={classes.uploadTxt}>사진을 첨부해주세요.</span>
         <div className={classes.photoBox}>
-          {/* <img src="/diaryphoto.png" alt="" className={classes.photo}/> */}
         </div>
         </div>
         <DialogActions>
