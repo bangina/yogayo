@@ -17,7 +17,6 @@ import { useWideCardMediaStyles } from "@mui-treasury/styles/cardMedia/wide";
 import { useFadedShadowStyles } from "@mui-treasury/styles/shadow/faded";
 import { usePushingGutterStyles } from "@mui-treasury/styles/gutter/pushing";
 import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
-import SentimentDissatisfiedIcon from "@material-ui/icons/SentimentDissatisfied";
 import SentimentSatisfiedIcon from "@material-ui/icons/SentimentSatisfied";
 import SentimentVeryDissatisfiedIcon from "@material-ui/icons/SentimentVeryDissatisfied";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
@@ -90,7 +89,6 @@ export const DiaryCard = (props) => {
   const gutterStyles = usePushingGutterStyles({ firstExcluded: true });
   const content = props.content;
   const ellipsis = props.ellipsis;
-  const [liked,setLiked]= useState(false);
   const [diaryLiked,setDiaryLiked]=useState({id: content.id, liked:""});
   let cookies = new Cookies();
   const userToken = cookies.get("usertoken");
@@ -123,7 +121,6 @@ export const DiaryCard = (props) => {
       },
     })
     .then((response) => {
-      setLiked(response.data);
       setDiaryLiked({...diaryLiked, liked : response.data.id});
       console.log("like 호출 결과 :", response);
     })
@@ -131,6 +128,12 @@ export const DiaryCard = (props) => {
       console.error(response);
     });
   };
+
+  useEffect(()=>{
+    props.apiCall();
+    getLiked();
+  },[diaryLiked]);
+  
   const paintMoodEmoji=(mood)=>{
     switch (mood) {
       case 0:
@@ -142,10 +145,6 @@ export const DiaryCard = (props) => {
       default: return <SentimentVerySatisfiedIcon  color="primary"/>
     }
   };
-  useEffect(()=>{
-    props.apiCall();
-    getLiked();
-  },[liked])
   return (
     <Card className={styles.root}>
       <Typography variant="h6" className={styles.date}>
