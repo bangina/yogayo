@@ -30,16 +30,12 @@ function App() {
       .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
         setUserInfo(response.data[0]);
-        console.log("app.js", response.data[0]);
       })
       .catch((response) => {
         console.error(response);
       });
   };
 
-  // useEffect(() => {
-  //   userApiCall();
-  // }, [userInfo.img_profile]);
   return (
     <div>
       <Router>

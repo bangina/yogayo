@@ -124,7 +124,6 @@ function ResponsiveDrawer(props) {
       .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
         setUserInfo(response.data[0]);
-        console.log("로그인 유저", response.data[0]);
       })
       .catch((response) => {
         console.error(response);

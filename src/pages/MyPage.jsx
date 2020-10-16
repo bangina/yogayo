@@ -10,7 +10,8 @@ import ConfirmationNumberIcon from "@material-ui/icons/ConfirmationNumber";
 import Avatar from "@material-ui/core/Avatar";
 import { Button } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
-
+import TextField from "@material-ui/core/TextField";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 
@@ -59,9 +60,38 @@ export default function SimpleCard(props) {
   const [userInfo, setUserInfo] = useState({})
   const [voucherInfo, setVoucherInfo] = useState({})
   const [imgPath, setImgPath] = useState(null)
+  const [newVoucher, setNewVoucher] = useState({
+    status: true,
+    used: 0,
+    voucher: ''
+  })
   const onChangeFile = (e) => {
     setImgPath(e.target.files)
   };
+
+  const voucherChage = e => {
+    setNewVoucher({...newVoucher, voucher : e.target.value});
+  }
+
+  const voucherSubmit = () => {
+    console.log("new voucher : ", newVoucher)
+    let cookies = new Cookies();
+    const userToken = cookies.get("usertoken");
+    const apiUrl = `http://127.0.0.1:8000/api/myvouchers/`;
+    axios({
+      method: "post",
+      url: apiUrl,
+      data: newVoucher,
+      headers: { "Authorization": `Token	 ${userToken}`},
+    })
+      .then(function (response) {
+        console.log(response);
+        voucherApiCall()
+      })
+      .catch(function (response) {
+        console.error(response);
+      });
+  }
 
   const userApiCall = () => {
     // 로그인 유저 정보 불러오기
@@ -87,6 +117,7 @@ export default function SimpleCard(props) {
       .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
         setVoucherInfo(response.data[0]);
+        setNewVoucher({...newVoucher,user : response.data[0].id})
         console.log("바우쳐정보 : ", response.data);
       })
       .catch((response) => {
@@ -124,7 +155,10 @@ export default function SimpleCard(props) {
 
   useEffect(()=>{
     props.apiCall();
+    setNewVoucher({...newVoucher, user: userInfo.id})
   },[userInfo])
+
+
 
   return (
     <div style={{ marginBottom: "15px" }}>
@@ -207,11 +241,27 @@ export default function SimpleCard(props) {
                 <Slider classes={sliderStyles} value={(voucherInfo.used/voucherInfo.limit)*100} />
                 <Typography variant="body2" component="p">
                   {String(voucherInfo.str_date).substring(0,10)} ~
-                   {/* 2020.11.8 (24일 남음) */}
+                   
                 </Typography>
                 </CardContent>
               ) : (
-                "이용권 정보 없음!"
+                <CardContent>
+                  <Typography className={classes.title} gutterBottom>
+                  이용권 정보 없음!
+                </Typography>
+ 
+                <Typography className={classes.title} color="" gutterBottom>
+                  인증번호 : 
+                </Typography>
+                <TextField id="outlined-basic" placeholder="인증번호" variant="outlined" value={newVoucher.voucher} onChange={e => voucherChage(e)}/>
+                <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => voucherSubmit()}
+                    >
+                      등록
+                    </Button>
+                </CardContent>
               )}
               
             
