@@ -60,28 +60,29 @@ export default function SimpleCard(props) {
   const [userInfo, setUserInfo] = useState({})
   const [voucherInfo, setVoucherInfo] = useState({})
   const [imgPath, setImgPath] = useState(null)
-  const [newVoucher, setNewVoucher] = useState({
-    status: true,
-    used: 0,
-    voucher: ''
-  })
+  const [code, setCode] = useState();
   const onChangeFile = (e) => {
     setImgPath(e.target.files)
   };
 
   const voucherChage = e => {
-    setNewVoucher({...newVoucher, voucher : e.target.value});
+    setCode(e.target.value)
   }
 
   const voucherSubmit = () => {
-    console.log("new voucher : ", newVoucher)
+    // console.log("new voucher : ", `http://127.0.0.1:8000/api/myvouchers/${code}`)
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");
-    const apiUrl = `http://127.0.0.1:8000/api/myvouchers/`;
+    const apiUrl = `http://127.0.0.1:8000/api/myvouchers/${code}`;
     axios({
       method: "post",
       url: apiUrl,
-      data: newVoucher,
+      data : {
+        // user, voucher가 안들어가면 bad request 라고 떠서 아무 값이나 넣어준거고
+        // 생성될때는 요청한 user와 인증번호 입력한 voucher로 생성됨
+        user : 1,
+        voucher : 1
+      },
       headers: { "Authorization": `Token	 ${userToken}`},
     })
       .then(function (response) {
@@ -117,7 +118,6 @@ export default function SimpleCard(props) {
       .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
         setVoucherInfo(response.data[0]);
-        setNewVoucher({...newVoucher,user : response.data[0].id})
         console.log("바우쳐정보 : ", response.data);
       })
       .catch((response) => {
@@ -155,7 +155,6 @@ export default function SimpleCard(props) {
 
   useEffect(()=>{
     props.apiCall();
-    setNewVoucher({...newVoucher, user: userInfo.id})
   },[userInfo])
 
 
@@ -253,7 +252,7 @@ export default function SimpleCard(props) {
                 <Typography className={classes.title} color="" gutterBottom>
                   인증번호 : 
                 </Typography>
-                <TextField id="outlined-basic" placeholder="인증번호" variant="outlined" value={newVoucher.voucher} onChange={e => voucherChage(e)}/>
+                <TextField id="outlined-basic" placeholder="인증번호" variant="outlined" value={code} onChange={e => voucherChage(e)}/>
                 <Button
                       variant="contained"
                       color="primary"
