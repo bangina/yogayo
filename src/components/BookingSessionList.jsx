@@ -2,11 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Timeline from "@material-ui/lab/Timeline";
-import TimelineItem from "@material-ui/lab/TimelineItem";
-import TimelineSeparator from "@material-ui/lab/TimelineSeparator";
-import TimelineConnector from "@material-ui/lab/TimelineConnector";
-import TimelineContent from "@material-ui/lab/TimelineContent";
-import TimelineDot from "@material-ui/lab/TimelineDot";
 import styled from "styled-components";
 import { Button } from "@material-ui/core";
 import BookingModal from "./BookingModal";
@@ -17,6 +12,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Slider from "@material-ui/core/Slider";
 import cx from "clsx";
+import BookingCard from "./BookingCard"
 import { selectSession } from "../redux/session";
 import { openModal } from "../redux/modal";
 import axios from "axios";
@@ -122,14 +118,10 @@ const StyledTimeline = styled(Timeline)`
   }
 `;
 const BookingSessionList = () => {
-  const styles = useStyles();
-  const sliderStyles = useSliderStyles();
   const globalLesson = useSelector((state) => state.session);
-  const dispatch = useDispatch();
   const [selectedSession, setSelectedSession] = useState({});
   const [isOpen, setIsOpen] = useState(false);
   const [sessions, setSessions] = useState([]);
-
   const selectedDate = globalLesson.selectedDate;
   const apiUrl = `http://127.0.0.1:8000/api/lessons/${selectedDate.getFullYear()}-${
     selectedDate.getMonth() + 1
@@ -139,6 +131,7 @@ const BookingSessionList = () => {
       .get(apiUrl)
       .then((response) => {
         setSessions(response.data);
+        console.log("sessions 부킹 세션 리스트", response.data)
       })
       .catch((response) => {
         console.error(response);
@@ -147,91 +140,13 @@ const BookingSessionList = () => {
   useEffect(() => {
     apiCall();
   }, [selectedDate]);
-  const onBtnClick = (e) => {
-    dispatch(openModal());
-    const selectedSession = sessions.filter(
-      (session) => session.id == e.currentTarget.value
-    )[0];
-    dispatch(selectSession(selectedSession));
-  };
-
+  
   return (
     <>
       <StyledTimeline>
-        <Timeline>
           {sessions.map((session) => (
-            <React.Fragment key={session.id}>
-              {/* 카드 형식 */}
-              <TimelineItem>
-                <TimelineSeparator>
-                  <TimelineConnector />
-                  <TimelineDot>{session.time.slice(0, 5)}</TimelineDot>
-                  <TimelineConnector />
-                </TimelineSeparator>
-                <TimelineContent>
-                  <Card className={cx(styles.card)} elevation={0}>
-                    <CardContent
-                      style={
-                        {
-                          // background: "rgba(0,0,0,0.1)",
-                        }
-                      }
-                    >
-                      <CardMedia
-                        image="/static/images/cards/live-from-space.jpg"
-                        title="Live from space album cover"
-                      >
-                        {/* <Avatar>{session.date}</Avatar> */}
-                      </CardMedia>
-                    </CardContent>
-                    <Box>
-                      <h3 className={styles.heading}>{session.name}</h3>
-                      <p variant="h5">
-                        {session.date.slice(5, 7)}월 {session.date.slice(8, 10)}
-                        일&nbsp;
-                        {/* {printDay(session.date)}
-                        요일 <br /> */}
-                        {session.time.slice(0, 5)}
-                      </p>
-                      <p className={styles.subheader}>
-                        {session.username} • {session.room}
-                      </p>
-                      <Box display={"flex"} alignItems={"center"}>
-                        <Slider
-                          classes={sliderStyles}
-                          // value={
-                          //   (session.bookedPeople.length /
-                          //     session.max_ppl) *
-                          //   100
-                          // }
-                        />
-                        <span className={styles.value}>
-                          {/* {session.bookedPeople.length}/{session.max_ppl} */}
-                          명 신청
-                        </span>
-                      </Box>
-                      <Button
-                        // color={
-                        //   session.max_ppl === session.bookedPeople.length
-                        //     ? ""
-                        //     : "primary"
-                        // }
-                        onClick={(e) => onBtnClick(e)}
-                        value={session.id}
-                        variant="outlined"
-                      >
-                        {/* {session.maxPeople === session.bookedPeople.length
-                          ? "대기하기"
-                          : "수강신청"} */}
-                        수강신청
-                      </Button>
-                    </Box>
-                  </Card>
-                </TimelineContent>
-              </TimelineItem>
-            </React.Fragment>
+            <BookingCard session={session} key={session.id} type="booking"/>
           ))}
-        </Timeline>
       </StyledTimeline>
       <BookingModal isOpen={isOpen} selectedSession={selectedSession} />
     </>

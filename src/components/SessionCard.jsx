@@ -91,10 +91,7 @@ export const SessionCard = (props) => {
     user: "",
   });
   const dispatch = useDispatch();
-  const onSubmit = (e) => {
-    dispatch(selectSession(bookedLesson));
-    dispatch(openCancelModal(true));
-  };
+
   useEffect(() => {
     setBooking(bookedLesson);
     console.log("userInfo", userInfo);
