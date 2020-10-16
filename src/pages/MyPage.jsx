@@ -52,7 +52,7 @@ const useSliderStyles = makeStyles(() => ({
   },
 }));
 
-export default function SimpleCard() {
+export default function SimpleCard(props) {
   const classes = useStyles();
   const sliderStyles = useSliderStyles();
   // const bull = <span className={classes.bullet}>•</span>;
@@ -121,6 +121,10 @@ export default function SimpleCard() {
     userApiCall();
     voucherApiCall()
   },[])
+
+  // useEffect(()=>{
+  //   props.imgChange()
+  // },[userInfo.img_profile])
 
   return (
     <div style={{ marginBottom: "15px" }}>

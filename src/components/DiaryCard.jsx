@@ -130,8 +130,11 @@ export const DiaryCard = (props) => {
   };
 
   useEffect(()=>{
-    props.apiCall();
     getLiked();
+  },[])
+  useEffect(()=>{
+    props.apiCall();
+    
   },[diaryLiked]);
   
   const paintMoodEmoji=(mood)=>{

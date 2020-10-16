@@ -45,7 +45,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
     width: "4rem",
     height: "4rem",
-    padding: "0.5rem",
+    // padding: "0.5rem",
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
@@ -150,6 +150,10 @@ function ResponsiveDrawer(props) {
     userApiCall();
     voucherApiCall();
   },[])
+
+  const imgChange =() => {
+    console.log("imgChange!")
+  }
 
   const drawer = (
     <div>
@@ -294,7 +298,7 @@ function ResponsiveDrawer(props) {
           </Drawer>
         </Hidden>
       </nav>
-      <main className={classes.content}>
+      <main className={classes.content} imgChange={imgChange}>
         <div className={classes.toolbar} />
         {props.children}
       </main>
