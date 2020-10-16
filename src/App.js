@@ -14,6 +14,7 @@ import InsertBoard from "./pages/InsertBoard";
 import Notifications from "./pages/Notifications";
 import axios from "axios";
 import { Cookies } from "react-cookie";
+import AllDiary from "./pages/AllDiary";
 
 //Read me
 //컴포넌트 이름에 Styled 가 붙은 것들 ==> styled components 패키지로 css 적용된 컴포넌트임.
@@ -29,16 +30,12 @@ function App() {
       .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
         setUserInfo(response.data[0]);
-        console.log("app.js", response.data[0]);
       })
       .catch((response) => {
         console.error(response);
       });
   };
 
-  // useEffect(() => {
-  //   userApiCall();
-  // }, [userInfo.img_profile]);
   return (
     <div>
       <Router>
@@ -51,7 +48,8 @@ function App() {
           <Route path="/board" component={Board} exact={true}></Route>
           <Route path="/board/detail/:id" component={Detail}></Route>
           <Route path="/board/insert" component={InsertBoard}></Route>
-          <Route path="/diary" component={Diary}></Route>
+          <Route path="/diary/mydiary" component={Diary}></Route>
+          <Route path="/diary" component={AllDiary} exact={true}></Route>
           <Route path="/mybookings" component={MyBookings}></Route>
           {/* <Route path="/mypage" component={MyPage} exact></Route> */}
           <Route path="/mypage">

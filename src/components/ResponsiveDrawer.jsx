@@ -124,7 +124,6 @@ function ResponsiveDrawer(props) {
       .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
         setUserInfo(response.data[0]);
-        console.log("로그인 유저", response.data[0]);
       })
       .catch((response) => {
         console.error(response);
@@ -173,10 +172,12 @@ function ResponsiveDrawer(props) {
           ) : null}
           
         </Avatar>
-        <RouterLink to="/mypage">
-          <ListItemText primary={`${userInfo.username} 님 >`} secondary={adminname} />
-        </RouterLink>
+        
         {isUserAuthenticated() ? (
+          <>
+          <RouterLink to="/mypage">
+            <ListItemText primary={`${userInfo.username} 님 >`} secondary={adminname} />
+          </RouterLink>
           <Button
             variant="outlined"
             color="primary"
@@ -185,8 +186,9 @@ function ResponsiveDrawer(props) {
           >
             로그아웃
           </Button>
+          </>
         ) : (
-          ""
+          <ListItemText primary="로그인 해주세요!" secondary={adminname} />
         )}
       </List>
       <List>

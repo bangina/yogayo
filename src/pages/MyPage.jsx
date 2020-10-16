@@ -11,7 +11,8 @@ import Avatar from "@material-ui/core/Avatar";
 import { Button } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
-
+import TextField from "@material-ui/core/TextField";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 
@@ -101,6 +102,7 @@ export default function SimpleCard(props) {
   const [imgPath, setImgPath] = useState(null);
   const [imgPathText, setImgPathText] = useState(null);
   const filePathText = useRef();
+  const [code, setCode] = useState();
   const onChangeFile = (e) => {
     setImgPath(e.target.files);
     console.log(e.target.value);
@@ -111,6 +113,36 @@ export default function SimpleCard(props) {
   const paintImgPathText=()=>{
     filePathText.current.value= imgPathText;
   }
+
+  const voucherChage = e => {
+    setCode(e.target.value)
+  }
+
+  const voucherSubmit = () => {
+    // console.log("new voucher : ", `http://127.0.0.1:8000/api/myvouchers/${code}`)
+    let cookies = new Cookies();
+    const userToken = cookies.get("usertoken");
+    const apiUrl = `http://127.0.0.1:8000/api/myvouchers/${code}`;
+    axios({
+      method: "post",
+      url: apiUrl,
+      data : {
+        // user, voucher가 안들어가면 bad request 라고 떠서 아무 값이나 넣어준거고
+        // 생성될때는 요청한 user와 인증번호 입력한 voucher로 생성됨
+        user : 1,
+        voucher : 1
+      },
+      headers: { "Authorization": `Token	 ${userToken}`},
+    })
+      .then(function (response) {
+        console.log(response);
+        voucherApiCall()
+      })
+      .catch(function (response) {
+        console.error(response);
+      });
+  }
+
   const userApiCall = () => {
     // 로그인 유저 정보 불러오기
     let cookies = new Cookies();
@@ -180,6 +212,8 @@ export default function SimpleCard(props) {
 //첨부 이미지 파일명 보여주기
 
 const file = useRef();
+
+
 
 
   return (
@@ -262,11 +296,27 @@ const file = useRef();
                 <Slider classes={sliderStyles} value={(voucherInfo.used/voucherInfo.limit)*100} />
                 <Typography variant="body2" component="p">
                   {String(voucherInfo.str_date).substring(0,10)} ~
-                   {/* 2020.11.8 (24일 남음) */}
+                   
                 </Typography>
                 </CardContent>
               ) : (
-                "이용권 정보 없음!"
+                <CardContent>
+                  <Typography className={classes.title} gutterBottom>
+                  이용권 정보 없음!
+                </Typography>
+ 
+                <Typography className={classes.title} color="" gutterBottom>
+                  인증번호 : 
+                </Typography>
+                <TextField id="outlined-basic" placeholder="인증번호" variant="outlined" value={code} onChange={e => voucherChage(e)}/>
+                <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => voucherSubmit()}
+                    >
+                      등록
+                    </Button>
+                </CardContent>
               )}
               
             
