@@ -110,10 +110,11 @@ const BookingCard = (props) => {
           }else{ return "취소하기" }
         case "diary":
           return "수련일기 쓰기"
-        default:
-          break;
+        case "booking":
+          return "수강신청"
+        default: 
+          return "수강신청"
       }
-      // {type==="cancel"? "취소하기" :  ? "대기하기"  : "수강신청"}
 }
     const dispatch = useDispatch();
     const [usersList, setUsersList]=useState([]);
