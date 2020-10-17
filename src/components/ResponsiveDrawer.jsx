@@ -82,6 +82,8 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(4),
+    maxWidth:"1300px",
+    margin: "auto"
   },
   nested: {
     paddingLeft: theme.spacing(2),

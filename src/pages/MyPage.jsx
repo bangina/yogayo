@@ -18,15 +18,11 @@ import { Cookies } from "react-cookie";
 
 const useStyles = makeStyles({
   root: {
-    minHeight:"270px"
   },
   title: {
    marginBottom: "2rem",
-  //  fontWeight:"bold",
-   color:"#555"
-  },
-  pos: {
-    // marginBottom: 12,
+   color:"#555",
+   position:"relative",
   },
   innerBox:{
       display: "flex",
@@ -37,57 +33,77 @@ const useStyles = makeStyles({
     fontSize : "1rem",
     lineHeight:"1.7rem"
   },
+  imgUploadBox:{
+    position:"relative",
+  },
   inputFile:{
     display: "none"
   },
   inputFileIcon:{
-    border : "1px solid #f3717d",
     borderRadius:"50%",
     display: "inline-block",
-    width: "40px",
-    height: "40px",
+    width: "30px",
+    height: "30px",
     padding: "0",
     textAlign:"center", 
-    position:"relative"
+    position:"relative",
+    background:"rgb(212, 61, 89)"
   },
   inputFileSvg:{
      position:"absolute",
      left:"50%",
      top:"50%",
-     transform :"translate(-50%,-50%)"
-  },
-  inputFileText:{
-    padding:" 3px 16px",
-    fontSize: "0.875rem",
-    minWidth: "64px",
-    boxSizing: "border-box",
-    border:"1px solid #f3717d",
-    color:"#999",
-    margin:"0 5px",
-    borderRadius:"5px",
+     transform :"translate(-50%,-50%)",
+     color:"#fff"
   },
   inputContainer:{
-    border:"1px solid #f3717d",
     padding:"3px",
     borderRadius:"5px",
-    display:"flex"
+    display:"flex",
+    width:"36px",
+    position :"absolute",
+    right:"0px",
+    top:"0px",
+    cursor:"pointer"
+  },
+  voucherStatBox:{
+    display:"inline-block",
+    padding:"20px",
+    textAlign:"center",
+    borderRadius:"20px",
+    border:"1px solid rgb(212, 61, 89)",
+    letterSpacing:"0.02em"
+  },
+  voucherInfo:{
+    display:"inline-block",
+    marginLeft:"20px",
+  },
+  svgIcon:{
+    transform:"translateY(6px)"
+  },
+  voucherDetail:{
+    marginTop:"2rem",
+    textAlign:"center"
   }
 });
 
 const useSliderStyles = makeStyles(() => ({
   root: {
     height: 4,
-    width: "100%",
+    width: "calc(100% - 8rem)",
+    transform:"translateY(7px)",
   },
   rail: {
     borderRadius: 10,
-    height: 4,
-    backgroundColor: "rgb(202,211,225)",
+    height: 8,
+    backgroundColor: "#444",
+    boxShadow:"2px 2px 3px rgba(0,0,0,0.3)"
   },
   track: {
     borderRadius: 10,
-    height: 4,
-    backgroundColor: "#f3717d",
+    height: 8,
+    backgroundColor: "rgb(207, 85, 108)",
+    opacity:"0.8"
   },
   thumb: {
     display: "none",
@@ -99,29 +115,34 @@ export default function SimpleCard(props) {
   const sliderStyles = useSliderStyles();
   const [userInfo, setUserInfo] = useState({phone:""})
   const [voucherInfo, setVoucherInfo] = useState({})
-  const [imgPath, setImgPath] = useState(null);
-  const [imgPathText, setImgPathText] = useState(null);
-  const filePathText = useRef();
   const [code, setCode] = useState();
   const onChangeFile = (e) => {
-    setImgPath(e.target.files);
-    console.log(e.target.value);
-    console.log(imgPath);
-    console.log(filePathText.current.value);
-    setImgPathText(e.target.value);
+    
+    const formData = new FormData();
+    formData.append("img_profile", e.target.files[0]);
+
+    axios({
+      method: "patch",
+      url: `http://localhost:8000/api/myinfo/${userInfo.id}/`,
+      data: formData,
+      headers: { "Authorization": `Token	 ${userToken}`, "Content-Type": "multipart/form-data" },
+    })
+      .then(function (response) {
+        setUserInfo(response.data);
+        console.log(response);
+      })
+      .catch(function (response) {
+        console.log(response);
+      });
   };
-  const paintImgPathText=()=>{
-    filePathText.current.value= imgPathText;
-  }
 
   const voucherChage = e => {
     setCode(e.target.value)
   }
 
+  let cookies = new Cookies();
+  const userToken = cookies.get("usertoken");
   const voucherSubmit = () => {
-    // console.log("new voucher : ", `http://127.0.0.1:8000/api/myvouchers/${code}`)
-    let cookies = new Cookies();
-    const userToken = cookies.get("usertoken");
     const apiUrl = `http://127.0.0.1:8000/api/myvouchers/${code}`;
     axios({
       method: "post",
@@ -145,8 +166,6 @@ export default function SimpleCard(props) {
 
   const userApiCall = () => {
     // 로그인 유저 정보 불러오기
-    let cookies = new Cookies();
-    const userToken = cookies.get("usertoken");
     const apiUrl = `http://127.0.0.1:8000/api/myinfo/`;
     axios
       .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
@@ -160,8 +179,6 @@ export default function SimpleCard(props) {
   };
 
   const voucherApiCall = () => {
-    let cookies = new Cookies();
-    const userToken = cookies.get("usertoken");
     const apiUrl = `http://127.0.0.1:8000/api/myvouchers/`;
     axios
       .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
@@ -173,30 +190,6 @@ export default function SimpleCard(props) {
         console.error(response);
       });
   }
-
-  const onImgUpload = () => {
-    console.log("url : ", `http://localhost:8000/api/myinfo/${userInfo.id}/`)
-    let cookies = new Cookies();
-      const userToken = cookies.get("usertoken");
-
-      const formData = new FormData();
-      formData.append("img_profile", imgPath[0]);
-
-      axios({
-        method: "patch",
-        url: `http://localhost:8000/api/myinfo/${userInfo.id}/`,
-        data: formData,
-        headers: { "Authorization": `Token	 ${userToken}`, "Content-Type": "multipart/form-data" },
-      })
-        .then(function (response) {
-          setUserInfo(response.data);
-          console.log(response);
-        })
-        .catch(function (response) {
-          console.log(response);
-        });
-  }
-
   useEffect(()=>{
     userApiCall();
     voucherApiCall()
@@ -205,10 +198,6 @@ export default function SimpleCard(props) {
   useEffect(()=>{
     props.apiCall();
   },[userInfo])
-  useEffect(()=>{
-    paintImgPathText();
-  },[imgPathText]);
-
 //첨부 이미지 파일명 보여주기
 
 const file = useRef();
@@ -222,7 +211,7 @@ const file = useRef();
         마이 페이지
       </Typography><br/>
       <Grid container spacing={3}>
-        <Grid item xs={12} lg={6}>
+        <Grid item xs={12} >
           <Card className={classes.root}>
             <CardContent>
               <div
@@ -239,6 +228,7 @@ const file = useRef();
                   alignItems: "center",
                 }}
               >
+                <div className={classes.imgUploadBox}>
                 {userInfo.img_profile ? (
                   <Avatar style={{
                     width: "100px",
@@ -254,53 +244,40 @@ const file = useRef();
                   }}
                 />
                 )}
-                
-                <div style={{ marginLeft: "10px"}}  >
-                  <Typography color="primary" className={classes.descText}><b>{userInfo.username}</b> 회원님</Typography> <br/> 
-                  <Typography gutterBottom  className={classes.descText}>이메일 주소 : {userInfo.email}</Typography>
-                  <Typography gutterBottom className={classes.descText}>휴대폰 번호 : {userInfo.phone.slice(0,3)}-{userInfo.phone.slice(3,7)}-{userInfo.phone.slice(7,11)}</Typography>
-                  <div className={classes.inputContainer}>
-                  <input type="file" id="file" className={classes.inputFile} onChange={onChangeFile}/>
-                  <label for="file" className={classes.inputFileIcon}><PhotoCameraIcon color="primary" className={classes.inputFileSvg}/></label>
-                  <input value="파일 주소" type="text" ref={filePathText} className={classes.inputFileText}/>
-                  <Button onClick={onImgUpload} variant="contained" color="primary">사진 업로드</Button>
-                  </div>
-                  
+                <div className={classes.inputContainer}>
+                    <input  type="file" id="file" className={classes.inputFile} onChange={onChangeFile}/>
+                    <label for="file" className={classes.inputFileIcon}><PhotoCameraIcon color="primary" className={classes.inputFileSvg} fontSize="small"/></label>
+                </div>
+                </div>
+                <div style={{ marginLeft: "20px"}}  >
+                    <Typography  className={classes.descText}><b>{userInfo.username}</b> 회원님</Typography> <br/> 
+                    <Typography gutterBottom  className={classes.descText}>이메일 주소 : {userInfo.email}</Typography>
+                    <Typography gutterBottom className={classes.descText}>휴대폰 번호 : {userInfo.phone.slice(0,3)}-{userInfo.phone.slice(3,7)}-{userInfo.phone.slice(7,11)}</Typography>
                 </div>
                 
               </div>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item  xs={12} lg={6}> 
-          <Card className={classes.root}>
-            
-              {voucherInfo ? (  
-                <CardContent>
+           <br/>
+            <hr/>
+            <br/>
+           {voucherInfo ? (  
+                <>
                   <Typography  component="h5" variant="h5" className={classes.title} gutterBottom>
-                  이용 정보
+                  회원권 정보
                 </Typography>
-  
-                <Typography gutterBottom>
-                  <PlaceIcon /> 센터 : {voucherInfo.adminname}
-                </Typography>
-                <Typography>
-                  <ConfirmationNumberIcon /> {voucherInfo.vouchername}
-                </Typography>
-                <Typography component="h2">이용권 {
+                <Typography color="primary" className={classes.voucherStatBox}>이용권 {
                   voucherInfo.status ? "정상" : "사용불가"
-                } (잔여횟수 {voucherInfo.limit - voucherInfo.used}회)</Typography>
-                <Typography color="textSecondary" gutterBottom>
-                  총 {voucherInfo.limit}회중 {voucherInfo.used}회 사용
+                } <br/>(잔여횟수 {voucherInfo.limit - voucherInfo.used}회)</Typography>
+                <Typography gutterBottom className={classes.voucherInfo}>
+                  <PlaceIcon color="primary" className={classes.svgIcon}/> 센터 : {voucherInfo.adminname}<br/>
+                  <ConfirmationNumberIcon  color="primary" className={classes.svgIcon}/> {voucherInfo.vouchername}
                 </Typography>
-                <Slider classes={sliderStyles} value={(voucherInfo.used/voucherInfo.limit)*100} />
-                <Typography variant="body2" component="p">
-                  {String(voucherInfo.str_date).substring(0,10)} ~
-                   
-                </Typography>
-                </CardContent>
+                <br/><br/>
+                <Slider classes={sliderStyles} value={(voucherInfo.used/voucherInfo.limit)*100}/>
+                <span style={{paddingLeft:"10px", color:"#666"}}>총 {voucherInfo.used}회 / {voucherInfo.limit}회 사용</span>
+                <br/>
+                </>
               ) : (
-                <CardContent>
+                <>
                   <Typography className={classes.title} gutterBottom>
                   이용권 정보 없음!
                 </Typography>
@@ -316,8 +293,15 @@ const file = useRef();
                     >
                       등록
                     </Button>
-                </CardContent>
+                    </>
               )}
+
+            </CardContent>
+          </Card>
+        </Grid>
+        <Grid item  xs={12}> 
+          <Card className={classes.root}>
+            
               
             
           </Card>
