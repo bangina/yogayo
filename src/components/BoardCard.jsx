@@ -52,7 +52,7 @@ const BoardCard = (props) => {
   const classes = useStyles();
   // const content = props.content;
   const ellipsis = props.ellipsis;
-  const {id, title, content,img_path, username, created} = props.content
+  const {id, title, content,img_path, username, img_profile, created} = props.content
   const [img, setImg] = useState()
   
   useEffect(()=>{
@@ -79,13 +79,25 @@ const BoardCard = (props) => {
     />}
   }
 
+  const avatarImg = () => {
+  //   if(img_profile){
+  //     return (
+  //       <Avatar><img src={img_profile} style={{ width: '100%' }} /></Avatar>
+  //     )
+  //   } else {
+  //     return <Avatar />
+  //   }
+    return <Avatar></Avatar>
+  }
+
+
   
   return (
     <RouterLink to={`/board/detail/${id}`}>
       <Card className={classes.root}>
         <CardHeader
-          // avatar={<Avatar>SB</Avatar>}
-          title={title}
+          avatar={<Avatar>{img_profile && <img src={img_profile} style={{ width: '100%'}}/>}</Avatar>}
+          title={username}
           subheader={created.substring(0, 10)+ " " + username}
         />
         {/* <CardMedia
@@ -95,9 +107,9 @@ const BoardCard = (props) => {
         /> */}
         {media()}
         <CardContent>
-          {/* <Typography variant="h6" component="p" className={classes.boardTitle}>
+          <Typography variant="h6" component="p" className={classes.boardTitle}>
             {title}
-          </Typography> */}
+          </Typography>
           <Typography
             variant="body2"
             color="textSecondary"
