@@ -31,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
   img : {
     marginTop: theme.spacing(2),
     maxWidth: "100%",
+  },
+
+  btn : {
+    marginRight: theme.spacing(1),
   }
 }));
 
@@ -43,6 +47,7 @@ const Detail = (props) => {
     post: postId,
     content: "",
   });
+  const [myInfo, setMyInfo] = useState({})
 
   const commentCall = () => {
     const commentApiUrl = `http://localhost:8000/api/posts/${postId}/comment`;
@@ -57,7 +62,7 @@ const Detail = (props) => {
       });
   };
 
-  useEffect(() => {
+  const postCall = () => {
     const postApiUrl = `http://localhost:8000/api/posts/${postId}`;
     axios
       .get(postApiUrl)
@@ -68,8 +73,44 @@ const Detail = (props) => {
       .catch((response) => {
         console.error(response);
       });
+  }
 
+  const myInfoCall = () => {
+    // 로그인 유저 정보 불러오기
+    let cookies = new Cookies();
+    const userToken = cookies.get("usertoken");
+    const myInfoApiUrl = `http://127.0.0.1:8000/api/myinfo/`;
+    axios
+      .get(myInfoApiUrl, { headers: { Authorization: `Token ${userToken}` } })
+      .then((response) => {
+        setMyInfo(response.data[0]);
+        // console.log("로그인 유저", response.data[0]);
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+  };
+
+  const onDelete = () => {
+    let cookies = new Cookies();
+    const userToken = cookies.get("usertoken");
+    const deleteApiUrl = `http://localhost:8000/api/posts/${postId}`;
+    axios
+      .delete(deleteApiUrl, { headers: { Authorization: `Token ${userToken}` } })
+      .then((response) => {
+        console.log(response);
+        alert("삭제완료!")
+        props.history.push('/board')
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+  }
+
+  useEffect(() => {    
+    postCall();
     commentCall();
+    myInfoCall();
   }, []);
 
   const commentInputChange = (e) => {
@@ -159,13 +200,35 @@ const Detail = (props) => {
           </Row>
           <Row mt={2} alignItems={"center"}>
             <Button
-              className="write-btn"
+              className={classes.btn}
               variant="outlined"
               color="primary"
               onClick={() => props.history.goBack()}
             >
               뒤로가기
             </Button>
+            {post.username == myInfo.username && 
+              (
+              <>
+                <Button
+                  className={classes.btn}
+                  variant="outlined"
+                  color="primary"
+                  // onClick={}
+                >
+                  수정
+                </Button>
+                <Button
+                  className={classes.btn}
+                  variant="outlined"
+                  color="primary"
+                  onClick={() => onDelete()}
+                >
+                  삭제
+                </Button>
+            </>
+            )}
+            
           </Row>
         </Column>
       </Paper>
