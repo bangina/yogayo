@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Timeline from "@material-ui/lab/Timeline";
@@ -9,10 +9,8 @@ import TimelineConnector from "@material-ui/lab/TimelineConnector";
 import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineDot from "@material-ui/lab/TimelineDot";
 import { Button } from "@material-ui/core";
-import BookingModal from "./BookingModal";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
-import Avatar from "@material-ui/core/Avatar";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Slider from "@material-ui/core/Slider";
@@ -20,6 +18,8 @@ import cx from "clsx";
 import { selectSession } from "../redux/session";
 import { openCancelModal, openModal } from "../redux/modal";
 import axios from "axios";
+import { Cookies } from "react-cookie";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(({ spacing, palette }) => {
     const family =
@@ -90,8 +90,34 @@ const BookingCard = (props) => {
     const styles = useStyles();
     const sliderStyles = useSliderStyles();
     const session = props.session;
+    const [lessonId, setLessonId]=useState();
     const type = props.type;
+    const ispast = props.ispast;
+
+    //booking/cancel타입 각각 내려주는 prop.session의 필드가 다르므로 케이스별로 필드명 구분지어줌 
+    const returnLessonId=()=>{
+      if(type==="booking"){
+        setLessonId(session.id);
+      }else if(type==="cancel" || type==="diary"){
+        setLessonId(session.lesson);
+      }
+    };
+    const returnButtonMsg=()=>{
+      switch (type) {
+        case "cancel":
+          if(session.maxPeople === usersList.length){
+            return "대기하기"
+          }else{ return "취소하기" }
+        case "diary":
+          return "수련일기 쓰기"
+        default:
+          break;
+      }
+      // {type==="cancel"? "취소하기" :  ? "대기하기"  : "수강신청"}
+}
     const dispatch = useDispatch();
+    const [usersList, setUsersList]=useState([]);
+    let history = useHistory();
     //   예약하기 페이지에서 사용시(type:Booking)
     const openBModal = () => {
         dispatch(openModal());
@@ -108,11 +134,32 @@ const BookingCard = (props) => {
                 return openBModal(); 
             case "cancel":
                 return openCModal();
+            case "diary":
+              history.push("/diary/mydiary");
             default:
                 break;
         }
     }
-    
+    let cookies = new Cookies();
+    const userToken = cookies.get("usertoken");
+    const BookingApiUrl = `http://127.0.0.1:8000/api/lesson/${lessonId}/`;
+    const apiCall = () => {
+      axios
+      .get(BookingApiUrl, { headers: { Authorization: `Token ${userToken}` } })
+        .then((response) => {
+          setUsersList(response.data);
+          console.log("수강신청한 회원목록 호출 결과 :", response);
+        })
+        .catch((error) => {
+          console.error("수강신청한 회원목록 호출 결과 :", error);
+        });
+    };
+    useEffect(() => {
+      apiCall();
+    }, [lessonId]);
+    useEffect(() => {
+      returnLessonId();
+    }, [])
     return (
         <>
             <React.Fragment key={session.id} session={session}>
@@ -153,31 +200,33 @@ const BookingCard = (props) => {
                       <Box display={"flex"} alignItems={"center"}>
                         <Slider
                           classes={sliderStyles}
-                          // value={
-                          //   (session.bookedPeople.length /
-                          //     session.max_ppl) *
-                          //   100
-                          // }
+                          value={
+                            (usersList.length /
+                              session.max_ppl) *
+                            100
+                          }
                         />
                         <span className={styles.value}>
-                          {/* {session.bookedPeople.length}/{session.max_ppl} */}
+                          {usersList.length}/{session.max_ppl}
                           명 신청
                         </span>
                       </Box>
                       <Button
-                        // color={
-                        //   session.max_ppl === session.bookedPeople.length
-                        //     ? ""
-                        //     : "primary"
-                        // }
+                        color={
+                          type==="cancel"
+                            ? ""
+                            : "primary"
+                        }
                         onClick={handleSubmit}
                         value={session.id}
-                        variant="outlined"
+                        variant={
+                          session.max_ppl === usersList.length
+                            ? "outlined"
+                            : type==="cancel" ? "outlined" : "contained"
+                        }
                       >
-                        {/* {session.maxPeople === session.bookedPeople.length
-                          ? "대기하기"
-                          : "수강신청"} */}
-                        수강신청
+                        {returnButtonMsg()}
+                          
                       </Button>
                     </Box>
                   </Card>

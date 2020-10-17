@@ -84,6 +84,12 @@ const useStyles = makeStyles({
   voucherDetail:{
     marginTop:"2rem",
     textAlign:"center"
+  },
+  codeInput:{
+    margin:"0 10px",
+    "& > input[type='text']":{
+    padding:"10px 14px"
+    }
   }
 });
 
@@ -251,19 +257,20 @@ const file = useRef();
                 </div>
                 <div style={{ marginLeft: "20px"}}  >
                     <Typography  className={classes.descText}><b>{userInfo.username}</b> 회원님</Typography> <br/> 
-                    <Typography gutterBottom  className={classes.descText}>이메일 주소 : {userInfo.email}</Typography>
-                    <Typography gutterBottom className={classes.descText}>휴대폰 번호 : {userInfo.phone.slice(0,3)}-{userInfo.phone.slice(3,7)}-{userInfo.phone.slice(7,11)}</Typography>
+                    <Typography gutterBottom  className={classes.descText}> • &nbsp; 이메일 주소 : {userInfo.email}</Typography>
+                    <Typography gutterBottom className={classes.descText}> • &nbsp; 휴대폰 번호 : {userInfo.phone.slice(0,3)}-{userInfo.phone.slice(3,7)}-{userInfo.phone.slice(7,11)}</Typography>
                 </div>
                 
               </div>
            <br/>
             <hr/>
             <br/>
-           {voucherInfo ? (  
-                <>
-                  <Typography  component="h5" variant="h5" className={classes.title} gutterBottom>
+            <Typography  component="h5" variant="h5" className={classes.title} gutterBottom>
                   회원권 정보
                 </Typography>
+           {voucherInfo ? (  
+                <>
+                 
                 <Typography color="primary" className={classes.voucherStatBox}>이용권 {
                   voucherInfo.status ? "정상" : "사용불가"
                 } <br/>(잔여횟수 {voucherInfo.limit - voucherInfo.used}회)</Typography>
@@ -278,14 +285,12 @@ const file = useRef();
                 </>
               ) : (
                 <>
-                  <Typography className={classes.title} gutterBottom>
-                  이용권 정보 없음!
+                  <Typography color="primary" gutterBottom>
+                  이용 가능한 회원권이 없습니다. <br/> 센터에서 제공받은 회원권 코드를 입력해주세요.
                 </Typography>
- 
-                <Typography className={classes.title} color="" gutterBottom>
-                  인증번호 : 
-                </Typography>
-                <TextField id="outlined-basic" placeholder="인증번호" variant="outlined" value={code} onChange={e => voucherChage(e)}/>
+                  <br/>
+                  회원권 코드 : 
+                <TextField size="small" className={classes.codeInput}  placeholder="인증번호" variant="outlined" value={code} onChange={e => voucherChage(e)}/>
                 <Button
                       variant="contained"
                       color="primary"
