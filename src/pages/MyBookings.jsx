@@ -54,15 +54,28 @@ const MyBookings = () => {
   const globalLesson = useSelector((state) => state.session);
   const globalModal = useSelector((state) => state.modal);
   const globalSelectedLesson = globalLesson.bookingLesson;
-  const [bookedLessons, setbookedLessons] = useState([]);
+  const [bookedLessons, setbookedLessons] = useState([{
+    date: "",
+    id: "",
+    lesson: "",
+    max_ppl: "",
+    name: "",
+    room: "",
+    time: "",
+    user: "",
+    voucher: ""
+  }
+  ]);
   const today = new Date();
   const year = `${today.getFullYear()}`;
   const month = today.getMonth()+1>9? `${today.getMonth()+1}` : `0${today.getMonth()+1}`;
   const date = today.getDate()>9? `${today.getDate()}` : `0${today.getDate()}`;
-  const todayDate = year + month + date; //20201016
+  const todayDate = Number(year + month + date); //20201016
   console.log(todayDate)
-  const pastLessons =bookedLessons.filter((lesson)=>lesson.date);
-  const futureLessons =[];
+  //지난 수업
+  const pastLessons =bookedLessons.filter((lesson)=>Number(lesson.date.replace(/-/g,''))<todayDate);
+  //예정 수업
+  const futureLessons =bookedLessons.filter((lesson)=>Number(lesson.date.replace(/-/g,''))>=todayDate);
   const [booking, setBooking] = useState({
     name: "호호수업",
     room: "101호",
@@ -124,12 +137,15 @@ const MyBookings = () => {
       <TabBar onChange={handleChage} menu="bookings">
         <TabPanel value={value} index={0}>
           {/* 아직 시작되지 않은 수업 */}
-          {bookedLessons.map((bookedLesson, index) => ( 
-          <BookingCard session={bookedLesson} key={bookedLesson.id} type="cancel"/>
+          {futureLessons.map((bookedLesson, index) => ( 
+          <BookingCard session={bookedLesson} key={bookedLesson.id} type="cancel" />
           ))}
         </TabPanel>
         <TabPanel value={value} index={1}>
           {/* 이미 시작한 수업(지난 수업) */}
+          {pastLessons.map((bookedLesson, index) => ( 
+          <BookingCard session={bookedLesson} key={bookedLesson.id} type="diary" />
+          ))}
         </TabPanel>
         <CancelBookingModal selectedLesson={globalSelectedLesson} />
       </TabBar>
