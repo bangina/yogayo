@@ -15,6 +15,7 @@ import Notifications from "./pages/Notifications";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import AllDiary from "./pages/AllDiary";
+import Modify from "./pages/Modify";
 
 //Read me
 //컴포넌트 이름에 Styled 가 붙은 것들 ==> styled components 패키지로 css 적용된 컴포넌트임.
@@ -48,6 +49,7 @@ function App() {
           <Route path="/board" component={Board} exact={true}></Route>
           <Route path="/board/detail/:id" component={Detail}></Route>
           <Route path="/board/insert" component={InsertBoard}></Route>
+          <Route path="/board/modify/:id" component={Modify}></Route>
           <Route path="/diary/mydiary" component={Diary}></Route>
           <Route path="/diary" component={AllDiary} exact={true}></Route>
           <Route path="/mybookings" component={MyBookings}></Route>

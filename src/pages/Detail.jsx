@@ -214,7 +214,7 @@ const Detail = (props) => {
                   className={classes.btn}
                   variant="outlined"
                   color="primary"
-                  // onClick={}
+                  onClick={() => props.history.push(`/board/modify/${postId}`)}
                 >
                   수정
                 </Button>
