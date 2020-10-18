@@ -1,19 +1,19 @@
 <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M23.625 24.5H4.375C3.4125 24.5 2.625 23.7125 2.625 22.75V7C2.625 6.0375 3.4125 5.25 4.375 5.25H23.625C24.5875 5.25 25.375 6.0375 25.375 7V22.75C25.375 23.7125 24.5875 24.5 23.625 24.5Z" stroke="#888888" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M2.625 10.5H25.375" stroke="#888888" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M7.875 7.875V3.5" stroke="#888888" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M20.125 7.875V3.5" stroke="#888888" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M11.375 13.125H9.625V14.875H11.375V13.125Z" fill="#888888"/>
-<path d="M14.875 13.125H13.125V14.875H14.875V13.125Z" fill="#888888"/>
-<path d="M18.375 13.125H16.625V14.875H18.375V13.125Z" fill="#888888"/>
-<path d="M21.875 13.125H20.125V14.875H21.875V13.125Z" fill="#888888"/>
-<path d="M7.875 16.625H6.125V18.375H7.875V16.625Z" fill="#888888"/>
-<path d="M11.375 16.625H9.625V18.375H11.375V16.625Z" fill="#888888"/>
-<path d="M14.875 16.625H13.125V18.375H14.875V16.625Z" fill="#888888"/>
-<path d="M18.375 16.625H16.625V18.375H18.375V16.625Z" fill="#888888"/>
-<path d="M21.875 16.625H20.125V18.375H21.875V16.625Z" fill="#888888"/>
-<path d="M7.875 20.125H6.125V21.875H7.875V20.125Z" fill="#888888"/>
-<path d="M11.375 20.125H9.625V21.875H11.375V20.125Z" fill="#888888"/>
-<path d="M14.875 20.125H13.125V21.875H14.875V20.125Z" fill="#888888"/>
-<path d="M18.375 20.125H16.625V21.875H18.375V20.125Z" fill="#888888"/>
+<path d="M23.625 24.5H4.375C3.4125 24.5 2.625 23.7125 2.625 22.75V7C2.625 6.0375 3.4125 5.25 4.375 5.25H23.625C24.5875 5.25 25.375 6.0375 25.375 7V22.75C25.375 23.7125 24.5875 24.5 23.625 24.5Z" stroke="#555555" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M2.625 10.5H25.375" stroke="#555555" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M7.875 7.875V3.5" stroke="#555555" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M20.125 7.875V3.5" stroke="#555555" stroke-width="2" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M11.375 13.125H9.625V14.875H11.375V13.125Z" fill="#555555"/>
+<path d="M14.875 13.125H13.125V14.875H14.875V13.125Z" fill="#555555"/>
+<path d="M18.375 13.125H16.625V14.875H18.375V13.125Z" fill="#555555"/>
+<!-- <path d="M21.875 13.125H20.125V14.875H21.875V13.125Z" fill="#555555"/> -->
+<!-- <path d="M7.875 16.625H6.125V18.375H7.875V16.625Z" fill="#555555"/> -->
+<path d="M11.375 16.625H9.625V18.375H11.375V16.625Z" fill="#555555"/>
+<path d="M14.875 16.625H13.125V18.375H14.875V16.625Z" fill="#555555"/>
+<path d="M18.375 16.625H16.625V18.375H18.375V16.625Z" fill="#555555"/>
+<!-- <path d="M21.875 16.625H20.125V18.375H21.875V16.625Z" fill="#555555"/> -->
+<!-- <path d="M7.875 20.125H6.125V21.875H7.875V20.125Z" fill="#555555"/> -->
+<path d="M11.375 20.125H9.625V21.875H11.375V20.125Z" fill="#555555"/>
+<path d="M14.875 20.125H13.125V21.875H14.875V20.125Z" fill="#555555"/>
+<path d="M18.375 20.125H16.625V21.875H18.375V20.125Z" fill="#555555"/>
 </svg>

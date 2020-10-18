@@ -18,6 +18,7 @@ import Avatar from "@material-ui/core/Avatar";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { ReactComponent as NotebookIcon } from "../icons/NotebookIcon.svg";
+import { ReactComponent as PencilIcon } from "../icons/Pencil.svg";
 import { ReactComponent as TextBubbleIcon } from "../icons/TextBubbleIcon.svg";
 import { ReactComponent as CalendarIcon } from "../icons/CalendarIcon.svg";
 import { ReactComponent as Logo } from "../icons/Logo.svg";
@@ -196,15 +197,23 @@ function ResponsiveDrawer(props) {
       <List>
         <RouterLink to="/booking">
           <ListItem>
-            <SvgIcon style={{ marginRight: "10px" }} viewBox="0 0 32 32">
+            <SvgIcon style={{ margin: "0 10px" }} viewBox="0 0 32 32">
               <CalendarIcon />
             </SvgIcon>
             <ListItemText primary="수업 예약하기" />
           </ListItem>
         </RouterLink>
+        <RouterLink to="/mybookings">
+          <ListItem>
+            <SvgIcon style={{ margin: "0 10px" }} viewBox="0 0 32 32">
+              <NotebookIcon />
+            </SvgIcon>
+            <ListItemText primary="내 스케쥴" />
+          </ListItem>
+        </RouterLink>
         <RouterLink to="/board">
           <ListItem>
-            <SvgIcon style={{ marginRight: "10px" }} viewBox="0 0 32 32">
+            <SvgIcon style={{ margin: "0 10px" }} viewBox="0 0 32 32">
               <TextBubbleIcon />
             </SvgIcon>
             <ListItemText primary="요가요 커뮤니티" />
@@ -212,24 +221,16 @@ function ResponsiveDrawer(props) {
         </RouterLink>
         <RouterLink to="/diary">
           <ListItem>
-            <SvgIcon style={{ marginRight: "10px" }} viewBox="0 0 32 32">
-              <NotebookIcon />
+            <SvgIcon style={{ margin: "0 10px" }} viewBox="0 0 32 32">
+              <PencilIcon />
             </SvgIcon>
             <ListItemText primary="수련 일기" />
-          </ListItem>
-        </RouterLink>
-        <RouterLink to="/mybookings">
-          <ListItem>
-            <SvgIcon style={{ marginRight: "10px" }} viewBox="0 0 32 32">
-              <NotebookIcon />
-            </SvgIcon>
-            <ListItemText primary="내 스케쥴" />
           </ListItem>
         </RouterLink>
         {/* <RouterLink to="/notifications">
           <ListItem>
             <SvgIcon
-              style={{ marginRight: "10px" }}
+              style={{ margin: "0 10px" }}
               viewBox="0 0 32 32"
             >
               <NotebookIcon />
@@ -263,7 +264,7 @@ function ResponsiveDrawer(props) {
             <MenuIcon />
           </IconButton>
           <RouterLink to="/">
-            <Logo style={{ marginRight: "10px" }} />
+            <Logo style={{ margin: "0 10px" }} />
             <Yogayo />
           </RouterLink>
           {!isUserAuthenticated() ? (
