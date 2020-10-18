@@ -21,6 +21,7 @@ import { ReactComponent as NotebookIcon } from "../icons/NotebookIcon.svg";
 import { ReactComponent as PencilIcon } from "../icons/Pencil.svg";
 import { ReactComponent as TextBubbleIcon } from "../icons/TextBubbleIcon.svg";
 import { ReactComponent as CalendarIcon } from "../icons/CalendarIcon.svg";
+import { ReactComponent as UserIcon } from "../icons/UserIcon.svg";
 import { ReactComponent as Logo } from "../icons/Logo.svg";
 import { ReactComponent as Yogayo } from "../icons/Yogayo.svg";
 import { isUserAuthenticated } from "../utils/authUtils";
@@ -46,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
     width: "4rem",
     height: "4rem",
-    // padding: "0.5rem",
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
@@ -59,11 +59,12 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: "flex-end",
     position: "absolute",
     right: "32px",
-    lineHeight: "56px",
+    top:"50%",
+    transform:"translateY(-50%)",
     fontWeight: "bold",
   },
   appBar: {
-    paddingLeft: theme.spacing(4),
+    paddingLeft: theme.spacing(0),
     [theme.breakpoints.up("sm")]: {
       width: `calc(100% - ${drawerWidth}px)`,
       marginLeft: drawerWidth,
@@ -75,14 +76,13 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(4),
+    padding: theme.spacing(1.5),
     maxWidth:"1300px",
     margin: "auto"
   },
@@ -253,7 +253,7 @@ function ResponsiveDrawer(props) {
         className={classes.appBar}
         style={{ background: theme.palette.primary.mainGradient }}
       >
-        <Toolbar>
+        <Toolbar style={{maxWidth:"1300px", margin:"0 auto", width:"100%"}}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -269,11 +269,13 @@ function ResponsiveDrawer(props) {
           </RouterLink>
           {!isUserAuthenticated() ? (
             <RouterLink to="/login" className={classes.login}>
-              <span>로그인</span>
+              <span>Login</span>
             </RouterLink>
           ) : (
             <RouterLink to="/mypage" className={classes.login}>
-              <span>마이페이지</span>
+            <SvgIcon>
+               <UserIcon/>
+              </SvgIcon>
             </RouterLink>
           )}
         </Toolbar>

@@ -10,7 +10,6 @@ import Typography from "@material-ui/core/Typography";
 import Rating from "@material-ui/lab/Rating";
 import IconButton from "@material-ui/core/IconButton";
 import LocationOn from "@material-ui/icons/LocationOn";
-import Favorite from "@material-ui/icons/Favorite";
 import { useWideCardMediaStyles } from "@mui-treasury/styles/cardMedia/wide";
 import { useFadedShadowStyles } from "@mui-treasury/styles/shadow/faded";
 import { usePushingGutterStyles } from "@mui-treasury/styles/gutter/pushing";
@@ -22,7 +21,7 @@ import axios from "axios";
 const useStyles = makeStyles(() => ({
   root: {
     maxWidth: 700,
-    backgroundColor: "transparent",
+    backgroundColor: "#fff",
     position: "relative",
     borderRadius: "10px",
     overflow: "hidden",

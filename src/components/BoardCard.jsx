@@ -13,8 +13,7 @@ import { Divider } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    // maxWidth: 345,
-    // height: "347px"
+    borderRadius: "10px",
   },
   media: {
     height: 0,

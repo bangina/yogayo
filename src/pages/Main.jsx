@@ -226,9 +226,6 @@ const Main = (props) => {
         <Swiper
           spaceBetween={20}
           slidesPerView={slidesPerView}
-          // navigation
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log("slide change")}
           className={classes.swiper}
         >
           {boardContents.map((content, index) => (
@@ -245,9 +242,7 @@ const Main = (props) => {
         <Swiper
           spaceBetween={20}
           slidesPerView={slidesPerView}
-          // navigation
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log("slide change")}
+          className={classes.swiper}
         >
           {diaryContents.map((content, index) => (
             <SwiperSlide className={classes.swiperSlide} key={index}>
