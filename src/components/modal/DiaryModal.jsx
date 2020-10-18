@@ -85,11 +85,12 @@ const useStyles = makeStyles((theme) => ({
   photoBox:{
     width : "100%",
   },
-  photo:{
+  thumbnail:{
     width : "100%",
     marginTop: "1rem",
-    borderRadius: "4px"
-  }
+    borderRadius: "4px",
+    display:"none"
+  },
 
 }));
 
@@ -98,6 +99,7 @@ const Diary = (props) => {
   const globalModal = useSelector((state) => state.modal);
   const dispatch = useDispatch();
   const validityRef = useRef();
+  const thumbnailRef = useRef();
   //예약 정책 동의 check
   const [checked, SetChecked] = useState(false);
   const [color, setColor] = useState({
@@ -114,7 +116,6 @@ const Diary = (props) => {
 
   const handleClose = () => {
     dispatch(openResultModal());
-    // dispatch(closeDiaryModal());
   };
 
   useEffect(()=>{
@@ -130,7 +131,17 @@ const Diary = (props) => {
     }
   };
   const selectFile = (e) => {
-    setImgPath(e.target.files)
+    //api post용 이미지 주소 세팅
+    setImgPath(e.target.files);
+    //업로드한 이미지 썸네일 표시하기
+    if(e.target.files[0]){
+      const reader = new FileReader();
+      thumbnailRef.current.style.display = "block";
+      reader.onload =function(e){
+        thumbnailRef.current.src = e.target.result;
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    }
   };
   const onInputChange = (e) => {
     setDiarycontents({ ...diaryContents, [e.target.name]: e.target.value });
@@ -254,6 +265,7 @@ const Diary = (props) => {
         <label htmlFor="imgUpload" className={classes.uploadBtn}><PhotoCameraIcon/></label>
         <span className={classes.uploadTxt}>사진을 첨부해주세요.</span>
         <div className={classes.photoBox}>
+        <img ref={thumbnailRef} src="" alt="썸네일" className={classes.thumbnail}/>
         </div>
         </div>
         <DialogActions>
