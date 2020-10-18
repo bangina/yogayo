@@ -13,6 +13,9 @@ const MODAL_LOGOUT_OPEN = "MODAL_LOGOUT_OPEN";
 const MODAL_LOGOUT_CLOSE = "MODAL_LOGOUT_CLOSE";
 const MODAL_RESULT_OPEN = "MODAL_RESULT_OPEN";
 const MODAL_RESULT_CLOSE = "MODAL_RESULT_CLOSE";
+const MODAL_DELETE_OPEN = "MODAL_DELETE_OPEN";
+const MODAL_DELETE_CLOSE = "MODAL_DELETE_CLOSE";
+const MODAL_DELETE_NEXT = "MODAL_DELETE_NEXT";
 
 export const openModal = () => ({
   type: MODAL_OPEN,
@@ -61,6 +64,15 @@ export const openResultModal = () => ({
 export const closeResultModal = () => ({
   type: MODAL_RESULT_CLOSE,
 });
+export const openDeleteModal = () => ({
+  type: MODAL_DELETE_OPEN,
+});
+export const closeDeleteModal = () => ({
+  type: MODAL_DELETE_CLOSE,
+});
+export const nextDeleteModal = () => ({
+  type: MODAL_DELETE_NEXT,
+});
 
 const initialState = {
   isBookingModalOpen: false,
@@ -74,6 +86,8 @@ const initialState = {
   status: false,
   diaryLesson: "",
   isResultModalOpen:false,
+  isDeleteModalOpen:false,
+  isDeleteResultOpen:false,
 };
 
 const modal = (modalState = initialState, action) => {
@@ -164,6 +178,24 @@ const modal = (modalState = initialState, action) => {
       return {
         ...modalState,
         isResultModalOpen: false,
+      };
+    case MODAL_DELETE_OPEN:
+      return {
+        ...modalState,
+        isDeleteModalOpen: true,
+        isDeleteResultOpen: false,
+      };
+    case MODAL_DELETE_CLOSE:
+      return {
+        ...modalState,
+        isDeleteModalOpen: false,
+        isDeleteResultOpen: false,
+      };
+    case MODAL_DELETE_NEXT:
+      return {
+        ...modalState,
+        isDeleteModalOpen: true,
+        isDeleteResultOpen: true,
       };
     default:
       return modalState;

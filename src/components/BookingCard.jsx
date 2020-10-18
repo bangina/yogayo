@@ -92,7 +92,6 @@ const BookingCard = (props) => {
     const session = props.session;
     const [lessonId, setLessonId]=useState();
     const type = props.type;
-    const ispast = props.ispast;
 
     //booking/cancel타입 각각 내려주는 prop.session의 필드가 다르므로 케이스별로 필드명 구분지어줌 
     const returnLessonId=()=>{

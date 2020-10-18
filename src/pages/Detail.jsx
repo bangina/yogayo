@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import {useDispatch } from "react-redux";
+import { openDeleteModal } from "../redux/modal";
 import Paper from "@material-ui/core/Paper";
 import Divider from "@material-ui/core/Divider";
 import Button from "@material-ui/core/Button";
@@ -17,12 +19,10 @@ import {
   InfoCaption,
 } from "@mui-treasury/components/info";
 import { useChatzInfoStyles } from "@mui-treasury/styles/info/chatz";
-import { useDynamicAvatarStyles } from "@mui-treasury/styles/avatar/dynamic";
-import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import axios from "axios";
 import { Cookies } from "react-cookie";
-
+import DeleteBookingModal from "../components/modal/DeleteBookingModal";
 const useStyles = makeStyles((theme) => ({
   replyInput: {
     height: 50,
@@ -41,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 const Detail = (props) => {
   const classes = useStyles();
   let postId = props.match.params.id;
+  const dispatch = useDispatch();
   const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState({
@@ -91,21 +92,6 @@ const Detail = (props) => {
       });
   };
 
-  const onDelete = () => {
-    let cookies = new Cookies();
-    const userToken = cookies.get("usertoken");
-    const deleteApiUrl = `http://localhost:8000/api/posts/${postId}`;
-    axios
-      .delete(deleteApiUrl, { headers: { Authorization: `Token ${userToken}` } })
-      .then((response) => {
-        console.log(response);
-        alert("삭제완료!")
-        props.history.push('/board')
-      })
-      .catch((response) => {
-        console.error(response);
-      });
-  }
 
   useEffect(() => {    
     postCall();
@@ -141,7 +127,9 @@ const Detail = (props) => {
         console.error(response);
       });
   };
-
+  const openModal=()=>{
+    dispatch(openDeleteModal());
+  }
   return (
     <div>
       <Paper>
@@ -222,7 +210,8 @@ const Detail = (props) => {
                   className={classes.btn}
                   variant="outlined"
                   color="primary"
-                  onClick={() => onDelete()}
+                  // onClick={() => onDelete()}
+                  onClick={openModal}
                 >
                   삭제
                 </Button>
@@ -232,6 +221,7 @@ const Detail = (props) => {
           </Row>
         </Column>
       </Paper>
+      <DeleteBookingModal postId={postId}/>
     </div>
   );
 };
