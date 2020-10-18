@@ -27,10 +27,21 @@ const useStyles = makeStyles((theme) => ({
   replyInput: {
     height: 50,
   },
-
+  imgsContainer:{
+    display:"flex",
+    justifyContent:"space-between",
+    verticalAlign:"middle",
+    flexWrap:"wrap",
+    marginTop:"2rem"
+  },
+  imgBox:{
+    textAlign:"center",
+    margin:"auto",
+    padding:"1rem"
+  },
   img : {
-    marginTop: theme.spacing(2),
-    maxWidth: "100%",
+    borderRadius:"10px",
+    width:"100%"
   },
 
   btn : {
@@ -140,10 +151,13 @@ const Detail = (props) => {
             heading={`[${post.category}] ${post.title}`}
             body={post.content}
           />
-          <img src={post.img_path1} className={classes.img} />
-          <img src={post.img_path2} className={classes.img} />
-          <img src={post.img_path3} className={classes.img} />
-          <img src={post.img_path4} className={classes.img} />
+
+          <div className={classes.imgsContainer} >
+            <div className={classes.imgBox}><img src={post.img_path1} className={classes.img} /></div>
+            <div className={classes.imgBox}><img src={post.img_path2} className={classes.img} /></div>
+            <div className={classes.imgBox}><img src={post.img_path3} className={classes.img} /></div>
+            <div className={classes.imgBox}><img src={post.img_path4} className={classes.img} /></div>
+          </div>
         </CardContent>
         <Divider />
         <Column gap={2}>
@@ -220,7 +234,6 @@ const Detail = (props) => {
                 </Button>
             </>
             )}
-            
           </Row>
         </Column>
       </Paper>

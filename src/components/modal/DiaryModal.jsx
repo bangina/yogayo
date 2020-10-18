@@ -8,7 +8,6 @@ import Dialog from "@material-ui/core/Dialog";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
-import DropDown from "../DropDown";
 import TextField from "@material-ui/core/TextField";
 import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
 import SentimentDissatisfiedIcon from "@material-ui/icons/SentimentDissatisfied";
@@ -97,7 +96,6 @@ const Diary = (props) => {
   const classes = useStyles();
   const globalModal = useSelector((state) => state.modal);
   const dispatch = useDispatch();
-  const validityRef = useRef();
   const thumbnailRef = useRef();
   //예약 정책 동의 check
   const [checked, SetChecked] = useState(false);
@@ -120,15 +118,7 @@ const Diary = (props) => {
   useEffect(()=>{
     setDiarycontents({...diaryContents, userLesson: globalModal.diaryLesson})
   },[globalModal])
-  
-  const handleChange = () => {
-    SetChecked(!checked);
-    //누를 시점에 false인 경우(즉 false->true로 바뀔 때)
-    //유효성 검사문구 숨기기
-    if (checked === false) {
-      validityRef.current.style.display = "none";
-    }
-  };
+
   const selectFile = (e) => {
     //api post용 이미지 주소 세팅
     setImgPath(e.target.files);
@@ -206,7 +196,6 @@ const Diary = (props) => {
           bad: "",
         });
     }
-    console.log(diaryContents);
   };
   return (
     <>
@@ -261,11 +250,11 @@ const Diary = (props) => {
           className={classes.uploadInput}
         ></input>
         <div className={classes.uploadBox}>
-        <label htmlFor="imgUpload" className={classes.uploadBtn}><PhotoCameraIcon/></label>
-        <span className={classes.uploadTxt}>사진을 첨부해주세요.</span>
-        <div className={classes.photoBox}>
-        <img ref={thumbnailRef} src="" alt="썸네일" className={classes.thumbnail}/>
-        </div>
+          <label htmlFor="imgUpload" className={classes.uploadBtn}><PhotoCameraIcon/></label>
+          <span className={classes.uploadTxt}>사진을 첨부해주세요.</span>
+          <div className={classes.photoBox}>
+            <img ref={thumbnailRef} src="" alt="썸네일" className={classes.thumbnail}/>
+          </div>
         </div>
         <DialogActions>
           <StyledButton

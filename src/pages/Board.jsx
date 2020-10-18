@@ -24,12 +24,13 @@ const useStyles = makeStyles((theme) => ({
     color: "#cf556c",
   },
   table: {
-    marginBottom: "0",
+    margin:"3rem 0 0",
     width: "100%",
     maxWidth: "100%",
-    backgroundColor: "transparent",
+    backgroundColor: "#fff",
     borderSpacing: "0",
     borderCollapse: "collapse",
+    borderRadius:"1rem",
   },
   tableHeadCell: {
     color: "inherit",
@@ -54,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
     display: "table-row",
     outline: "none",
     verticalAlign: "middle",
+    marginTop:"1rem"
   },
   tableBodyRow: {
     height: "48px",
