@@ -1,6 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
+import Timeline from "@material-ui/lab/Timeline";
+import styled from "styled-components";
+import TimelineItem from "@material-ui/lab/TimelineItem";
+import TimelineSeparator from "@material-ui/lab/TimelineSeparator";
+import TimelineConnector from "@material-ui/lab/TimelineConnector";
+import TimelineContent from "@material-ui/lab/TimelineContent";
+import TimelineDot from "@material-ui/lab/TimelineDot";
 import { Button } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
@@ -156,12 +163,20 @@ const BookingCardTimeline = (props) => {
     return (
         <>
             <React.Fragment key={session.id} session={session}>
+              <TimelineItem>
+                <TimelineSeparator>
+                  <TimelineConnector />
+                  <TimelineDot>{session.time.slice(0, 5)}</TimelineDot>
+                  <TimelineConnector />
+                </TimelineSeparator>
+                <TimelineContent>
                   <Card className={cx(styles.card)} elevation={0}>
                     <CardContent>
                       <CardMedia
                         image="/static/images/cards/live-from-space.jpg"
                         title="Live from space album cover"
                       >
+                        {/* <Avatar>{session.date}</Avatar> */}
                       </CardMedia>
                     </CardContent>
                     <Box>
@@ -209,6 +224,8 @@ const BookingCardTimeline = (props) => {
                       </Button>
                     </Box>
                   </Card>
+                </TimelineContent>
+              </TimelineItem>
             </React.Fragment>
         </>
     );

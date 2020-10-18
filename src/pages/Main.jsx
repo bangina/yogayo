@@ -14,6 +14,7 @@ import BoardCard from "../components/BoardCard";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 import { getUserToken } from "../utils/authUtils";
+import BookingCard from "../components/BookingCard";
 
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 const useStyles = makeStyles((theme) => ({
@@ -94,11 +95,20 @@ const useStyles = makeStyles((theme) => ({
 
 const Main = (props) => {
   const [userInfo, setUserInfo] = useState("");
+  const [bookedLessons, setbookedLessons] = useState([{
+    date: "",
+    id: "",
+    lesson: "",
+    max_ppl: "",
+    name: "",
+    room: "",
+    time: "",
+    user: "",
+    voucher: ""
+  }
+  ]);
   const diaryCall = () => {
-    let cookies = new Cookies();
-    const userToken = cookies.get("usertoken");
     const diaryApiUrl = "http://localhost:8000/api/diaries/?page=1";
-
     axios
       .get(diaryApiUrl)
       .then((response) => {
@@ -123,6 +133,18 @@ const Main = (props) => {
         console.error(response);
       });
   }
+  const bookingapiCall = () => {
+  const LessonapiUrl = `http://127.0.0.1:8000/api/mylessons/`;
+    axios
+      .get(LessonapiUrl)
+      .then((response) => {
+        setbookedLessons(response.data);
+        console.log("sessions 부킹 세션 리스트", response.data)
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+  };
   useEffect(() => {
     // 다이어리 불러오기
     diaryCall()
@@ -177,6 +199,7 @@ const Main = (props) => {
   return (
     <React.Fragment>
       <CssBaseline />
+      <br/>
       <main>
         <Typography
           component="h2"
@@ -212,6 +235,14 @@ const Main = (props) => {
             </Typography>
           </Container>
         </div>
+        <Typography variant="h5" gutterBottom fontWeight="fontWeightBold">
+          예약하신 수업
+        </Typography>
+        <br/>
+        {bookedLessons.map((bookedLesson, index) => ( 
+          <BookingCard session={bookedLesson} key={bookedLesson.id} type="cancel" timeline={false}/>
+          ))}
+          <br/><br/>
         <Typography variant="h5" color="" gutterBottom>
           요가요 피플 커뮤니티
         </Typography>

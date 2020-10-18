@@ -8,7 +8,7 @@ import TabBar from "../components/TabBar";
 import TabPanel from "../components/TabPanel";
 import Typography from "@material-ui/core/Typography";
 import CancelBookingModal from "../components/modal/CancelBookingModal";
-import BookingCard from "../components/BookingCard";
+import BookingCardTimeline from "../components/BookingCardTimeline";
 
 const StyledTimeline = styled(Timeline)`
   color: red;
@@ -48,9 +48,6 @@ const StyledTimeline = styled(Timeline)`
 `;
 
 const MyBookings = () => {
-  const globalMemberSessions = useSelector(
-    (state) => state.memberSession.memberSessions
-  );
   const globalLesson = useSelector((state) => state.session);
   const globalModal = useSelector((state) => state.modal);
   const globalSelectedLesson = globalLesson.bookingLesson;
@@ -138,13 +135,13 @@ const MyBookings = () => {
         <TabPanel value={value} index={0}>
           {/* 아직 시작되지 않은 수업 */}
           {futureLessons.map((bookedLesson, index) => ( 
-          <BookingCard session={bookedLesson} key={bookedLesson.id} type="cancel" />
+          <BookingCardTimeline session={bookedLesson} key={bookedLesson.id} type="cancel" />
           ))}
         </TabPanel>
         <TabPanel value={value} index={1}>
           {/* 이미 시작한 수업(지난 수업) */}
           {pastLessons.map((bookedLesson, index) => ( 
-          <BookingCard session={bookedLesson} key={bookedLesson.id} type="diary" />
+          <BookingCardTimeline session={bookedLesson} key={bookedLesson.id} type="diary" />
           ))}
         </TabPanel>
         <CancelBookingModal selectedLesson={globalSelectedLesson} />

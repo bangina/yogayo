@@ -12,7 +12,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Slider from "@material-ui/core/Slider";
 import cx from "clsx";
-import BookingCard from "./BookingCard"
+import BookingCardTimeline from "./BookingCardTimeline"
 import { selectSession } from "../redux/session";
 import { openModal } from "../redux/modal";
 import axios from "axios";
@@ -145,7 +145,7 @@ const BookingSessionList = () => {
     <>
       <StyledTimeline>
           {sessions.map((session) => (
-            <BookingCard session={session} key={session.id} type="booking"/>
+            <BookingCardTimeline session={session} key={session.id} type="booking"/>
           ))}
       </StyledTimeline>
       <BookingModal isOpen={isOpen} selectedSession={selectedSession} />

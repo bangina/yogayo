@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import styled from "styled-components";
-import axios from "axios";
 const StyledCalendar = styled(Calendar)`
   border: none;
   border-radius: 10px;
