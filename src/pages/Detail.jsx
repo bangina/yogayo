@@ -140,7 +140,10 @@ const Detail = (props) => {
             heading={`[${post.category}] ${post.title}`}
             body={post.content}
           />
-          <img src={post.img_path} className={classes.img} />
+          <img src={post.img_path1} className={classes.img} />
+          <img src={post.img_path2} className={classes.img} />
+          <img src={post.img_path3} className={classes.img} />
+          <img src={post.img_path4} className={classes.img} />
         </CardContent>
         <Divider />
         <Column gap={2}>
@@ -198,17 +201,17 @@ const Detail = (props) => {
             {post.username == myInfo.username && 
               (
               <>
-                <Button
+                {/* <Button
                   className={classes.btn}
                   variant="outlined"
                   color="primary"
                   onClick={() => props.history.push(`/board/modify/${postId}`)}
                 >
                   수정
-                </Button>
+                </Button> */}
                 <Button
                   className={classes.btn}
-                  variant="outlined"
+                  variant="contained"
                   color="primary"
                   // onClick={() => onDelete()}
                   onClick={openModal}

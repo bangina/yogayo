@@ -30,7 +30,12 @@ const InsertBoard = (props) => {
     content: "",
   });
 
-  const [imgPath, setImgPath] = useState(null)
+  const [imgPath, setImgPath] = useState({
+    img_path1 : null,
+    img_path2 : null,
+    img_path3 : null,
+    img_path4 : null,
+  })
 
   const onChangeHandler = (e) => {
     setPost({
@@ -49,8 +54,17 @@ const InsertBoard = (props) => {
       const userToken = cookies.get("usertoken");
 
       const formData = new FormData();
-      if(imgPath != null){
-        formData.append("img_path", imgPath[0]);
+      if(imgPath.img_path1 != null){
+        formData.append("img_path1", imgPath.img_path1[0]);
+      }
+      if(imgPath.img_path2 != null){
+        formData.append("img_path2", imgPath.img_path2[0]);
+      }
+      if(imgPath.img_path3 != null){
+        formData.append("img_path3", imgPath.img_path3[0]);
+      }
+      if(imgPath.img_path4 != null){
+        formData.append("img_path4", imgPath.img_path4[0]);
       }
       formData.append("title", post.title);
       formData.append("content", post.content);
@@ -76,7 +90,9 @@ const InsertBoard = (props) => {
   const [alert, setAlert] = useState(false);
 
   const onChangeFile = (e) => {
-    setImgPath(e.target.files)
+    setImgPath({
+      ...imgPath, [e.target.name] : e.target.files
+    })
   };
 
   useEffect(()=>{
@@ -120,6 +136,28 @@ const InsertBoard = (props) => {
 
         <TextField
           type="file"
+          name="img_path1"
+          fullWidth
+          variant="outlined"
+          onChange={(e) => onChangeFile(e)}
+        />
+        <TextField
+          type="file"
+          name="img_path2"
+          fullWidth
+          variant="outlined"
+          onChange={(e) => onChangeFile(e)}
+        />
+        <TextField
+          type="file"
+          name="img_path3"
+          fullWidth
+          variant="outlined"
+          onChange={(e) => onChangeFile(e)}
+        />
+        <TextField
+          type="file"
+          name="img_path4"
           fullWidth
           variant="outlined"
           onChange={(e) => onChangeFile(e)}
