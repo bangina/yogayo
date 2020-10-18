@@ -210,17 +210,17 @@ const Detail = (props) => {
             {post.username == myInfo.username && 
               (
               <>
-                <Button
+                {/* <Button
                   className={classes.btn}
                   variant="outlined"
                   color="primary"
                   onClick={() => props.history.push(`/board/modify/${postId}`)}
                 >
                   수정
-                </Button>
+                </Button> */}
                 <Button
                   className={classes.btn}
-                  variant="outlined"
+                  variant="contained"
                   color="primary"
                   onClick={() => onDelete()}
                 >
