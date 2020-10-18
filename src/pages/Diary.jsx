@@ -134,9 +134,7 @@ const Diary = () => {
       </Button>
     ) : null}
       <DiaryModal />
-
-    <ResultModal directTo="/diary" message="다이어리가 정상적으로 게시되었습니다." header="수련일기"/>
-    
+    <ResultModal directTo="/diary/mydiary" message="다이어리가 정상적으로 게시되었습니다." header="수련일기"/>
     </div>
   );
 };
