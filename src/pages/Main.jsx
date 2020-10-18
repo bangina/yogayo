@@ -212,25 +212,6 @@ const Main = (props) => {
             </Typography>
           </Container>
         </div>
-        <Typography variant="h6" gutterBottom fontWeight="fontWeightBold">
-          오늘 올라온 수련일기
-        </Typography>
-        <br />
-        <br />
-        <Swiper
-          spaceBetween={20}
-          slidesPerView={slidesPerView}
-          // navigation
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log("slide change")}
-        >
-          {diaryContents.map((content, index) => (
-            <SwiperSlide className={classes.swiperSlide} key={index}>
-              <DiaryCard content={content} ellipsis={true} apiCall={diaryCall}  />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-        <br />
         <Typography variant="h5" color="" gutterBottom>
           요가요 피플 커뮤니티
         </Typography>
@@ -256,6 +237,26 @@ const Main = (props) => {
             </SwiperSlide>
           ))}
         </Swiper>
+        <Typography variant="h5" gutterBottom fontWeight="fontWeightBold">
+          오늘 올라온 수련일기
+        </Typography>
+        <br />
+        <br />
+        <Swiper
+          spaceBetween={20}
+          slidesPerView={slidesPerView}
+          // navigation
+          onSwiper={(swiper) => console.log(swiper)}
+          onSlideChange={() => console.log("slide change")}
+        >
+          {diaryContents.map((content, index) => (
+            <SwiperSlide className={classes.swiperSlide} key={index}>
+              <DiaryCard content={content} ellipsis={true} apiCall={diaryCall}  />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+        <br />
+        
       </main>
     </React.Fragment>
   );

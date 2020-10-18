@@ -9,6 +9,7 @@ import CardActions from "@material-ui/core/CardActions";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import { Link as RouterLink } from "react-router-dom";
+import { Divider } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,24 +53,24 @@ const BoardCard = (props) => {
   const classes = useStyles();
   // const content = props.content;
   const ellipsis = props.ellipsis;
-  const {id, title, content,img_path, username, img_profile, created} = props.content
+  const {id, title, content,img_path1, username, img_profile, created} = props.content
   const [img, setImg] = useState()
   
   useEffect(()=>{
     // console.log(props.content)
-    if(props.content.img_path){
-      setImg(props.content.img_path)
+    if(props.content.img_path1){
+      setImg(props.content.img_path1)
     } else {
       setImg("./img/yoga.jpg")
     }
   },[])
 
   const media =() => {
-    if(img_path) {
+    if(img_path1) {
       return (
         <CardMedia
           className={classes.media}
-          image={img_path}
+          image={img_path1}
           title="Paella dish"
         />
       )
@@ -95,11 +96,7 @@ const BoardCard = (props) => {
   return (
     <RouterLink to={`/board/detail/${id}`}>
       <Card className={classes.root}>
-        <CardHeader
-          avatar={<Avatar>{img_profile && <img src={img_profile} style={{ width: '100%'}}/>}</Avatar>}
-          title={username}
-          subheader={created.substring(0, 10)+ " " + username}
-        />
+        
         {/* <CardMedia
           className={classes.media}
           image={img}
@@ -119,6 +116,12 @@ const BoardCard = (props) => {
             {content}
           </Typography>
         </CardContent>
+        <Divider />
+        <CardHeader
+          avatar={<Avatar>{img_profile && <img src={img_profile} style={{ width: '100%'}}/>}</Avatar>}
+          title={username}
+          subheader={created.substring(0, 10)+ " " + username}
+        />
         <CardActions disableSpacing></CardActions>
       </Card>
     </RouterLink>

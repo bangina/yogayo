@@ -152,7 +152,10 @@ const Detail = (props) => {
             heading={`[${post.category}] ${post.title}`}
             body={post.content}
           />
-          <img src={post.img_path} className={classes.img} />
+          <img src={post.img_path1} className={classes.img} />
+          <img src={post.img_path2} className={classes.img} />
+          <img src={post.img_path3} className={classes.img} />
+          <img src={post.img_path4} className={classes.img} />
         </CardContent>
         <Divider />
         <Column gap={2}>
