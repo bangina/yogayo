@@ -16,6 +16,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import ResultModal from "../components/modal/ResultModal";
+import { openResultModal} from "../redux/modal";
+
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -74,8 +77,7 @@ export default function Signup() {
     axios
       .post(apiUrl, memberState)
       .then((response) => {
-        console.log("호출 결과 :", response.data);
-        // window.location = "/";
+        dispatch(openResultModal());
       })
       .catch((response) => {
         console.error(response, "오류발생");
@@ -124,6 +126,7 @@ export default function Signup() {
   };
 
   return (
+    <>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
@@ -282,5 +285,7 @@ export default function Signup() {
         <Copyright />
       </Box>
     </Container>
-  );
+    <ResultModal directTo="/login" message="회원가입이 완료되었습니다."  header="요가요"/>
+    </>
+  )
 }

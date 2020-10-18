@@ -136,7 +136,7 @@ const InsertBoard = (props) => {
         </Button>
       </div>
     </form>
-    <ResultModal directTo="/board" message="정상적으로 게시되었습니다."/>
+    <ResultModal directTo="/board" message="정상적으로 게시되었습니다."  header="요가요 커뮤니티"/>
     </>
   );
 };

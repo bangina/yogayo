@@ -26,6 +26,7 @@ const { isResultModalOpen} = globalModal;
 const dispatch = useDispatch();
 const directTo = props.directTo;
 const message = props.message;
+const header = props.header;
 const handleClose = () => {
     dispatch(closeResultModal());
   };
@@ -37,7 +38,7 @@ const handleClose = () => {
       >
            <DialogTitle onClose={handleClose}>
           <Typography variant="h4" gutterBottom>
-            요가요 커뮤니티
+            {header}
           </Typography>
         </DialogTitle>
         <DialogContent >

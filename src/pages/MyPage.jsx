@@ -149,15 +149,15 @@ export default function SimpleCard(props) {
   let cookies = new Cookies();
   const userToken = cookies.get("usertoken");
   const voucherSubmit = () => {
-    const apiUrl = `http://127.0.0.1:8000/api/myvouchers/${code}`;
+    const apiUrl = `http://127.0.0.1:8000/api/myvouchers/${code}/`;
     axios({
       method: "post",
       url: apiUrl,
       data : {
-        // user, voucher가 안들어가면 bad request 라고 떠서 아무 값이나 넣어준거고
-        // 생성될때는 요청한 user와 인증번호 입력한 voucher로 생성됨
-        user : 1,
-        voucher : 1
+          "status": true,
+          "used": 0,
+          "user": userInfo.id,
+          "voucher": 1
       },
       headers: { "Authorization": `Token	 ${userToken}`},
     })
@@ -204,9 +204,6 @@ export default function SimpleCard(props) {
   useEffect(()=>{
     props.apiCall();
   },[userInfo])
-//첨부 이미지 파일명 보여주기
-
-const file = useRef();
 
 
 

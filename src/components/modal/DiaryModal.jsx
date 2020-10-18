@@ -18,7 +18,6 @@ import axios from "axios";
 import DialogTitle from "./DialogTitle";
 import DialogContent from "./DialogContent";
 import DialogActions from "./DialogActions";
-import ResultModal from "./ResultModal";
 import { openResultModal} from "../../redux/modal";
 
 const StyledButton = styled(Button)`
