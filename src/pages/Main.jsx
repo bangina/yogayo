@@ -100,7 +100,7 @@ const Main = (props) => {
     const diaryApiUrl = "http://localhost:8000/api/diaries/?page=1";
 
     axios
-      .get(diaryApiUrl, { headers: { Authorization: `Token ${userToken}` } })
+      .get(diaryApiUrl)
       .then((response) => {
         console.log("다이어리 데이터:", response.data);
         setDiaryContents(response.data.results);

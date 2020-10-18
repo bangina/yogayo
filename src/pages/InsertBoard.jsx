@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import ResultModal from "../components/modal/ResultModal";
 
 import Alert from "@material-ui/lab/Alert";
+import { useEffect } from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -77,6 +78,12 @@ const InsertBoard = (props) => {
   const onChangeFile = (e) => {
     setImgPath(e.target.files)
   };
+
+  useEffect(()=>{
+    if(props.modifyPost){
+      console.log("수정", props)
+    }
+  },[])
 
   return (
     <>
