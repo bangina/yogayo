@@ -33,11 +33,22 @@ const StyledDialog = styled(Dialog)`
 
 const useStyles = makeStyles((theme) => ({
   headingTxt:{
-    fontSize : "1.3rem",
-    color : "#555",
+    fontSize : "1.1rem",
     padding: "1rem !important",
-    borderBottom : "2px solid rgba(207, 85, 108, 0.5)",
-    display: "block !important"
+    display: "block !important",
+    background: "#e7e8ea",
+    position: "relative",
+    borderRadius: "2rem",
+  },
+  bubbleTail: {
+    display:"inline-block",
+    background: "#e7e8ea",
+    width:"10px",
+    height:"10px",
+    position:"absolute",
+    left:"5px",
+    bottom:"4px",
+    borderBottomRightRadius:"5px"
   },
   moodTxt:{
     fontSize: "11px",
@@ -112,7 +123,7 @@ const Diary = (props) => {
   const [imgPath, setImgPath] = useState(null);
 
   const handleClose = () => {
-    dispatch(openResultModal());
+    dispatch(closeDiaryModal());
   };
 
   useEffect(()=>{
@@ -212,9 +223,10 @@ const Diary = (props) => {
         {globalModal.isDiaryModalOpen && (
           <DialogContent style={{ overflowY: "initial"}}>
             <div>
-              <Typography className={classes.headingTxt} style={{ display: "inline-block", marginBottom: "10px" }}>
-        이번 "{diaryContents.userLesson.name}" 수업은 어떠셨나요?
-              </Typography> 
+              <Typography className={classes.headingTxt}>
+             이번 "{diaryContents.userLesson.name}" 수업은 어떠셨나요?
+             <div className={classes.bubbleTail}></div>
+              </Typography>
               <br/>
               <div style={{ float: "right" }}>
                 <IconButton value="2" color={color.best} onClick={onMoodChange}>

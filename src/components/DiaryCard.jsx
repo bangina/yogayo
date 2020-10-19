@@ -25,7 +25,6 @@ const useStyles = makeStyles(() => ({
     position: "relative",
     borderRadius: "10px",
     overflow: "hidden",
-    cursor: "pointer",
   },
   like:{
     fill : "rgb(212, 61, 89)"

@@ -56,51 +56,34 @@ const Diary = () => {
   const openModal = (id) => {
     dispatch(openDiaryModal(id));
   };
-  useEffect(() => {
-    lessonCall();
-  }, []);
 
   useEffect(()=>{
     apiCall(page)
-  },[page,globalModal]);
+  },[page]);
+  useEffect(()=>{
+    lessonCall();
+    apiCall(1);
+  },[globalModal]);
   return (
     <div>
-      <Typography variant="h4" gutterBottom color="primary" style={{paddingBottom:"2rem"}}>
+      <Typography variant="h4" gutterBottom color="primary" style={{paddingBottom:"1rem"}}>
         수련일기 작성하기
       </Typography>
-      <Typography variant="" gutterBottom color="">
-        {/* {new Date().getFullYear()}년 {new Date().getMonth() + 1}월{" "} */}
-        {/* {new Date().getDate()}일, {printDay(new Date().getDay())}요일 */}
-      </Typography>
-      <Typography variant="h6" gutterBottom style={{textIndent:"1rem"}}>
-      오늘 수련은 어떠셨나요?
-      </Typography>
-      <p
-        style={{
-          background: "rgba(0,0,0,0.03)",
-          borderRadius: "5px",
+      <p style={{
           color: "#666",
-          padding: "0.5rem 1rem",
-          lineHeight: "3rem",
           fontSize: "1rem",
-          textIndent: "0px",
-          display:"inline-block",
-          marginTop:"1rem"
-        }}
-      >
-        오늘 작성 가능한 일기
-        (수련일기는 수련 후 24시간 이내에만 작성가능합니다.)
+        }}>
+       수련일기는 <b>어제와 오늘 수강한 수업</b>만 작성가능합니다.
       </p>
-
       <br />
       <br />
+      <Grid container spacing={3}>
         {pendingContents.map((content) => (
-          <Grid item xs={12} md={6} lg={4} xl={3} key={content.id}>
-            <div >
+          <Grid item xs={12} md={6} key={content.id}>
               <LessonCard content={content} onClick={()=>openModal(content)} />
-            </div>
           </Grid>
         ))}
+        </Grid>
       <br />
       <br />
       <Typography variant="h4" gutterBottom color="primary">

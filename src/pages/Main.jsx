@@ -15,6 +15,7 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import EventAvailableIcon from "@material-ui/icons/EventAvailable";
 import { getUserToken } from "../utils/authUtils";
 import BookingCard from "../components/BookingCard";
+import { isUserAuthenticated } from "../utils/authUtils";
 
 SwiperCore.use([Navigation, Pagination, Scrollbar, A11y]);
 const useStyles = makeStyles((theme) => ({
@@ -135,9 +136,9 @@ const Main = (props) => {
       });
   }
   const bookingapiCall = () => {
-  const LessonapiUrl = `http://127.0.0.1:8000/api/mylessons/`;
+  const bookingApiUrl = `http://127.0.0.1:8000/api/mylessons/`;
     axios
-      .get(LessonapiUrl)
+      .get(bookingApiUrl,{ headers: { Authorization: `Token ${userToken}` }})
       .then((response) => {
         setbookedLessons(response.data);
         console.log("sessions 부킹 세션 리스트", response.data)
@@ -153,14 +154,19 @@ const Main = (props) => {
     // 게시판 불러오기
     boardCall()
   }, []);
+  useEffect(() => {
+    //예약한 수업 불러오기
+    bookingapiCall();
+  }, []);
 
   const [diaryContents, setDiaryContents] = useState([]);
   const [boardContents, setBoardContents] = useState([]);
 
   const classes = useStyles();
   const loginUserToken = getUserToken();
-
   const list = window.matchMedia("(min-width:960px)");
+  let cookies = new Cookies();
+  const userToken = cookies.get("usertoken");
   const initialSlideNum = function () {
     if (list.matches === true) {
       return 3;
@@ -173,8 +179,6 @@ const Main = (props) => {
     const myInfoApiUrl = `http://127.0.0.1:8000/api/myinfo/`;
     const myInfoApiCall = () => {
       // 로그인 유저 정보 불러오기
-      let cookies = new Cookies();
-      const userToken = cookies.get("usertoken");
       axios
         .get(myInfoApiUrl, { headers: { Authorization: `Token ${userToken}` } })
         .then((response) => {
@@ -222,16 +226,16 @@ const Main = (props) => {
       <br/>
       <main>
         <Typography
-          component="h2"
-          variant="h6"
+          variant="h5"
           align="center"
           color="textPrimary"
           gutterBottom
         >
           {loginUserToken
             ? `${userInfo.username}님! 안녕하세요 🧘‍♀️`
-            : "안녕하세요 요가요입니다. 🧘‍♀️"}
+            : "안녕하세요, 요가요입니다. 🧘‍♀️"}
         </Typography>
+        <br/>
         <div className={classes.heroContent}>
           <Container maxWidth="sm" className={classes.linkBox}>
             <EventAvailableIcon
@@ -255,16 +259,22 @@ const Main = (props) => {
             </Typography>
           </Container>
         </div>
-        <Typography variant="h5" gutterBottom fontWeight="fontWeightBold">
-          예약하신 <b>수업</b>
-        </Typography>
-        <br/>
-        {bookedLessons.map((bookedLesson, index) => ( 
-          <BookingCard session={bookedLesson} key={bookedLesson.id} type="cancel" timeline={false}/>
-          ))}
-          <br/><br/>
+        {/* 로그인회원에게만 보여짐 */}
+        {isUserAuthenticated() ? <>
+          <Typography variant="h5" gutterBottom fontWeight="fontWeightBold">
+            잊지마세요! 곧 다가오는 <b>수업</b>
+          </Typography>
+          <br/>
+          {/* 예약한 수업중 가장 이른 수업 1개 */}
+          {bookedLessons.slice(0,1).map((bookedLesson, index) => ( 
+            <BookingCard session={bookedLesson} key={bookedLesson.id} type="cancel"/>
+            ))}
+            <br/><br/>
+          </> : ""}
+        
+          
         <Typography variant="h5" color="" gutterBottom>
-          요가요 <b>커뮤니티</b>
+          함께해요 <b>요가요 커뮤니티</b>
         </Typography>
         <br />
         <div>
@@ -279,6 +289,7 @@ const Main = (props) => {
           spaceBetween={20}
           slidesPerView={slidesPerView}
           className={classes.swiper}
+          navigation
         >
           {boardContents.map((content, index) => (
             <SwiperSlide key={index}>
@@ -290,11 +301,11 @@ const Main = (props) => {
           오늘 올라온 <b>수련일기</b>
         </Typography>
         <br />
-        <br />
         <Swiper
           spaceBetween={20}
           slidesPerView={slidesPerView}
           className={classes.swiper}
+          navigation
         >
           {diaryContents.map((content, index) => (
             <SwiperSlide className={classes.swiperSlide} key={index}>

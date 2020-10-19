@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -14,6 +13,10 @@ import { Divider } from "@material-ui/core";
 const useStyles = makeStyles((theme) => ({
   root: {
     borderRadius: "10px",
+    transition:"0.2s",
+    "&:hover":{
+      transform:"translate(1px, -5px)"
+    }
   },
   media: {
     height: 0,
@@ -46,12 +49,13 @@ const useStyles = makeStyles((theme) => ({
     textOverflow: "ellipsis",
     minHeight: "60px",
   },
+  boardProfile:{
+    background:"rgba(0,0,0,0.02)"
+  }
 }));
 
 const BoardCard = (props) => {
   const classes = useStyles();
-  // const content = props.content;
-  const ellipsis = props.ellipsis;
   const {id, title, content,img_path1, username, img_profile, created} = props.content
   const [img, setImg] = useState()
   
@@ -115,13 +119,12 @@ const BoardCard = (props) => {
             {content}
           </Typography>
         </CardContent>
-        <Divider />
         <CardHeader
+          className={classes.boardProfile}
           avatar={<Avatar>{img_profile && <img src={img_profile} style={{ width: '100%'}}/>}</Avatar>}
           title={username}
           subheader={created.substring(0, 10)+ " " + username}
         />
-        <CardActions disableSpacing></CardActions>
       </Card>
     </RouterLink>
   );

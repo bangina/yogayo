@@ -35,14 +35,23 @@ const useStyles = makeStyles((theme) => ({
   tableHeadCell: {
     color: "inherit",
     "&, &$tableCell": {
-      fontSize: "1em",
+      fontSize: "1.1em",
+      fontWeight:"bold",
+      letterSpacing:"0.04em",
     },
   },
   tableCell: {
     lineHeight: "1.42857143",
     padding: "12px 8px",
     verticalAlign: "middle",
-    fontSize: "0.8125rem",
+    fontSize: "1em",
+  },
+  titleTxt:{
+    float:"left",
+  },
+  titleIcons:{
+    float:"right",
+    paddingRight:"1rem"
   },
   tableResponsive: {
     width: "100%",
@@ -187,8 +196,8 @@ export default function Board(props) {
           <colgroup>
             <col style={{ width: "20%" }} />
             <col style={{ width: "50%" }} />
-            <col style={{ width: "20%" }} />
-            <col style={{ width: "10%" }} />
+            <col style={{ width: "15%" }} />
+            <col style={{ width: "15%" }} />
           </colgroup>
           {tableHead !== undefined ? (
             <TableHead className={classes[tableHeaderColor + "TableHeader"]}>
@@ -219,8 +228,8 @@ export default function Board(props) {
                   </TableCell>
                   <TableCell className={classes.tableCell}>
                     <RouterLink to={`/board/detail/${dataItem.id}`}>
-                      <div>{dataItem.title} </div>
-                      <div style={{ color: "gray" }}>
+                      <div className={classes.titleTxt}>{dataItem.title} </div>
+                      <div className={classes.titleIcons} style={{ color: "gray" }}>
                         <VisibilityIcon style={{ fontSize: 15 }} /> {dataItem.views}{" "}
                         <ChatBubbleIcon style={{ fontSize: 15 }} /> {dataItem.comments}
                       </div>

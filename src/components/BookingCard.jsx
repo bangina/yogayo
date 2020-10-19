@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
@@ -8,8 +7,6 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Slider from "@material-ui/core/Slider";
 import cx from "clsx";
-import { selectSession } from "../redux/session";
-import { openCancelModal, openModal } from "../redux/modal";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import { useHistory } from "react-router-dom";
@@ -80,7 +77,7 @@ const useStyles = makeStyles(({ spacing, palette }) => {
     },
   }));
 
-const BookingCardTimeline = (props) => {
+const BookingCard = (props) => {
     const styles = useStyles();
     const sliderStyles = useSliderStyles();
     const session = props.session;
@@ -95,44 +92,10 @@ const BookingCardTimeline = (props) => {
         setLessonId(session.lesson);
       }
     };
-    const returnButtonMsg=()=>{
-      switch (type) {
-        case "cancel":
-          if(session.maxPeople === usersList.length){
-            return "대기하기"
-          }else{ return "취소하기" }
-        case "diary":
-          return "수련일기 쓰기"
-        case "booking":
-          return "수강신청"
-        default: 
-          return "수강신청"
-      }
-}
-    const dispatch = useDispatch();
     const [usersList, setUsersList]=useState([]);
     let history = useHistory();
-    //   예약하기 페이지에서 사용시(type:Booking)
-    const openBModal = () => {
-        dispatch(openModal());
-        dispatch(selectSession(session));
-      };
-    //   예약 취소 페이지에서 사용시(type:Cancel)
-    const openCModal = () => {
-        dispatch(selectSession(session));
-        dispatch(openCancelModal(true));
-      };
     const handleSubmit=()=>{
-        switch (type) {
-            case "booking":
-                return openBModal(); 
-            case "cancel":
-                return openCModal();
-            case "diary":
-              history.push("/diary/mydiary");
-            default:
-                break;
-        }
+      history.push("/mybookings")
     }
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");
@@ -190,23 +153,16 @@ const BookingCardTimeline = (props) => {
                           명 신청
                         </span>
                       </Box>
+                      <Box style={{display:"inline-block"}}>
                       <Button
-                        color={
-                          type==="cancel"
-                            ? ""
-                            : "primary"
-                        }
+                        color="primary"
                         onClick={handleSubmit}
                         value={session.id}
-                        variant={
-                          session.max_ppl === usersList.length
-                          ? "outlined"
-                            : type==="booking" ? "contained" : "outlined"
-                        }
+                        variant="outlined"
                       >
-                        {returnButtonMsg()}
-                          
+                        내 스케쥴 확인하기
                       </Button>
+                      </Box>
                     </Box>
                   </Card>
             </React.Fragment>
@@ -214,4 +170,4 @@ const BookingCardTimeline = (props) => {
     );
 };
 
-export default BookingCardTimeline;
+export default BookingCard;

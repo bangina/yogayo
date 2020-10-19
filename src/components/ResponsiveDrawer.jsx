@@ -196,7 +196,7 @@ function ResponsiveDrawer(props) {
       <List>
         <RouterLink to="/booking">
           <ListItem>
-            <SvgIcon style={{ margin: "0 10px" }} viewBox="0 0 32 32">
+            <SvgIcon style={{ margin: "0 10px", transform:"translateY(3px)" }} viewBox="0 0 32 32">
               <CalendarIcon />
             </SvgIcon>
             <ListItemText primary="수업 예약하기" />
@@ -204,7 +204,7 @@ function ResponsiveDrawer(props) {
         </RouterLink>
         <RouterLink to="/mybookings">
           <ListItem>
-            <SvgIcon style={{ margin: "0 10px" }} viewBox="0 0 32 32">
+            <SvgIcon style={{ margin: "0 10px", transform:"translateY(3px)" }} viewBox="0 0 32 32">
               <NotebookIcon />
             </SvgIcon>
             <ListItemText primary="내 스케쥴" />
@@ -212,7 +212,7 @@ function ResponsiveDrawer(props) {
         </RouterLink>
         <RouterLink to="/board">
           <ListItem>
-            <SvgIcon style={{ margin: "0 10px" }} viewBox="0 0 32 32">
+            <SvgIcon style={{ margin: "0 10px", transform:"translateY(3px)" }}viewBox="0 0 32 32">
               <TextBubbleIcon />
             </SvgIcon>
             <ListItemText primary="요가요 커뮤니티" />
@@ -220,7 +220,7 @@ function ResponsiveDrawer(props) {
         </RouterLink>
         <RouterLink to="/diary">
           <ListItem>
-            <SvgIcon style={{ margin: "0 10px" }} viewBox="0 0 32 32">
+            <SvgIcon style={{ margin: "0 10px", transform:"translateY(3px)" }} viewBox="0 0 32 32">
               <PencilIcon />
             </SvgIcon>
             <ListItemText primary="수련 일기" />

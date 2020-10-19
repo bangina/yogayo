@@ -11,9 +11,8 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     padding: "1rem",
-    border: "1px solid rgba(207, 85, 108, 0.5)",
-    boxShadow:"none",
-    borderRadius:"10px"
+    borderRadius:"10px",
+    background:"#fff"
   },
   bullet: {
     display: 'inline-block',
@@ -30,8 +29,8 @@ const useStyles = makeStyles({
     marginRight: 4,
     fontSize: 18,
   },
-  diaryBtn:{
-    marginLeft: "80%"
+  diaryBtnBox:{
+    float:"right"
   }
 });
 
@@ -43,18 +42,18 @@ export default function LessonCard(props) {
     <Card className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          {date.slice(5,7)}월 {date.slice(8,10)}일
+        <LocationOn className={classes.locationIcon} />
+          <span>{admin_name}</span>에서 &nbsp;
+          <b>{date.slice(5,7)}월 {date.slice(8,10)}일</b> 수강한
         </Typography>
         <Typography variant="h5" component="h2" gutterBottom>
-          {name}
+          {name} 수업은 어떠셨나요?
         </Typography>
         <Typography className={classes.pos} color="textSecondary" gutterBottom>
-        <LocationOn className={classes.locationIcon} />
-          <span>{admin_name}</span>
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button variant="outlined" size="small" onClick={props.onClick} className={classes.diaryBtn}>일기 작성</Button>
+      <CardActions className={classes.diaryBtnBox}>
+        <Button variant="contained" color="primary" size="large" onClick={props.onClick} className={classes.diaryBtn}>일기 작성하기</Button>
       </CardActions>
     </Card>
   );
