@@ -18,6 +18,11 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import ResultModal from "../components/modal/ResultModal";
 import { openResultModal} from "../redux/modal";
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+
 
 function Copyright() {
   return (
@@ -64,7 +69,7 @@ export default function Signup() {
     email: "",
     password: "",
     phone: "",
-    type:"ADMINUSER"
+    type: "GENUSER"
   });
 
   const dispatch = useDispatch();
@@ -73,6 +78,7 @@ export default function Signup() {
   });
 
   const onSubmit = () => {
+    console.log("type test", memberState)
     dispatch(insertMember(memberState));
     const apiUrl = "http://127.0.0.1:8000/api/register/ADMINUSER/";
     axios
@@ -255,9 +261,26 @@ export default function Signup() {
               )}
             </Grid>
             <Grid item xs={12}>
+              <FormControl variant="outlined" fullWidth required>
+                <InputLabel id="demo-simple-select-outlined-label">회원 유형</InputLabel>
+                <Select
+                  labelId="demo-simple-select-outlined-label"
+                  id="demo-simple-select-outlined"
+                  value={memberState.type}
+                  onChange={e => onInputChange(e)}
+                  label="회원 유형"
+                  name="type"
+                >
+                  
+                  <MenuItem value={"GENUSER"}>일반회원</MenuItem>
+                  <MenuItem value={"ADMINUSER"}>센터</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="동의 어쩌구"
+                label="개인정보 활용 동의"
               />
             </Grid>
           </Grid>
