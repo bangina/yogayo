@@ -197,6 +197,25 @@ const Main = (props) => {
     window.addEventListener("resize", handleResize);
   }, []);
 
+  const tagClick = (str) => {
+    if(str == '전체') {
+      boardCall()
+    } else {
+      const apiUrl = `http://localhost:8000/api/posts/${str}/`;
+
+    axios
+      .get(apiUrl)
+      .then((response) => {
+        console.log("카테고리 조회:", response.data);
+        setBoardContents(response.data)
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+    }
+    
+  }
+
   return (
     <React.Fragment>
       <CssBaseline />
@@ -249,10 +268,11 @@ const Main = (props) => {
         </Typography>
         <br />
         <div>
-          <span className={classes.tagIcon}> 요가</span>
-          <span className={classes.tagIcon}>필테</span>
-          <span className={classes.tagIcon}>중고장터</span>
-          <span className={classes.tagIcon}>같이 운동해요</span>
+          <span className={classes.tagIcon} onClick={()=>tagClick('전체')}> 전체</span>
+          <span className={classes.tagIcon} onClick={()=>tagClick('요가')}> 요가</span>
+          <span className={classes.tagIcon} onClick={()=>tagClick('필라테스')}>필라테스</span>
+          <span className={classes.tagIcon} onClick={()=>tagClick('중고장터')}>중고장터</span>
+          <span className={classes.tagIcon} onClick={()=>tagClick('같이_운동해요')}>같이_운동해요</span>
         </div>
         <br />
         <Swiper
