@@ -156,9 +156,22 @@ export default function SimpleCard(props) {
     voucherCode: 200011,
     user:""
   })
+  // 센터회원 수업 추가(api 전송용)
+  const [centerLessonInfo, setCenterLessonInfo] = useState({
+    room: "",
+    name: "",
+    date: "",
+    time:"",
+    max_ppl:"",
+  })
+  // 센터회원 수업 리스트
+  const [centerLessons, setCenterLessons] = useState([])
   const [code, setCode] = useState();
+
+  let cookies = new Cookies();
+  const userToken = cookies.get("usertoken");
   const onChangeFile = (e) => {
-    
+  
     const formData = new FormData();
     formData.append("img_profile", e.target.files[0]);
 
@@ -183,9 +196,11 @@ export default function SimpleCard(props) {
     setCenterVoucherInfo({...centerVoucherInfo,user:userInfo.id,[e.target.name]:e.target.value});
     console.log("centerVoucherInfo",centerVoucherInfo);
   }
+  const centerLessonChange= e =>{
+    setCenterLessonInfo({...centerLessonInfo,user:userInfo.id,[e.target.name]:e.target.value});
+    console.log("centerLessonInfo",centerLessonInfo);
+  }
 
-  let cookies = new Cookies();
-  const userToken = cookies.get("usertoken");
   const voucherSubmit = () => {
     const apiUrl = `http://127.0.0.1:8000/api/myvouchers/${code}/`;
     axios({
@@ -237,12 +252,25 @@ export default function SimpleCard(props) {
 
   //  수강권 불러오기
   const VoucherApiUrl = `http://127.0.0.1:8000/api/voucher/`;
-  const GetApiCall = () => {
+  const getVoucherApiCall = () => {
     axios
       .get(VoucherApiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
         setCenterVouchers(response.data);
         console.log("vouchers",response.data);
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+    }
+  //  수강권 불러오기
+  const LessonApiUrl = `http://127.0.0.1:8000/api/adminLesson/`;
+  const getLessonApiCall = () => {
+    axios
+      .get(LessonApiUrl, { headers: { Authorization: `Token ${userToken}` } })
+      .then((response) => {
+        setCenterLessons(response.data);
+        console.log("lessons",response.data);
       })
       .catch((response) => {
         console.error(response);
@@ -269,11 +297,33 @@ const createVoucher=()=>{
     }
     postApiCall();
   };
-useEffect(()=>{
-    userApiCall();
-    voucherApiCall();
-    GetApiCall();
-  },[])
+// 센터회원 수업 추가하기
+const createLesson=()=>{
+  const LessonPostApiUrl = `http://127.0.0.1:8000/api/adminLesson/`;
+  const postApiCall = () => {
+    axios({
+      method: "post",
+      url: LessonPostApiUrl,
+      data: centerLessonInfo,
+      headers: {
+        Authorization: `Token	${userToken}`,
+      },
+    })
+    .then(function (response) {
+      console.log(response)
+    })
+    .catch((response) => {
+        console.error(response);
+      });
+    }
+    postApiCall();
+  };
+  useEffect(()=>{
+      userApiCall();
+      voucherApiCall();
+      getVoucherApiCall();
+      getLessonApiCall();
+    },[])
 
   useEffect(()=>{
     props.apiCall();
@@ -440,28 +490,27 @@ useEffect(()=>{
               > 
               <table className={classes.table}>
                 <tr className={classes.tableRow}>
-                  <th className={classes.tableHeading}>수강권 이름</th><th className={classes.tableHeading}>수강권 횟수</th><th className={classes.tableHeading}>수강권 코드</th>
+                  <th className={classes.tableHeading}>수업 이름</th><th className={classes.tableHeading}>강의실</th><th className={classes.tableHeading}>수업 일자</th><th className={classes.tableHeading}>수업 시작 시간</th><th className={classes.tableHeading}>정원</th>
                 </tr>
                 <tr className={classes.tableRow}>
-                  <td><TextField required size="small" className={classes.codeInput}  placeholder="수강권 이름" variant="outlined" value={centerVoucherInfo.name} name="name" onChange={e => centerVoucherChange(e)}/></td>
-                  <td><TextField type="number" required size="small" className={classes.codeInput}  placeholder="수강권 횟수" variant="outlined" value={centerVoucherInfo.limit} name="limit" onChange={e => centerVoucherChange(e)}/></td>
-                  <td style={{color:"#999", textAlign:"center"}}>수강권 코드는 자동생성됩니다.</td>
-                  <td><Button color="primary" variant="contained" size="medium" onClick={createVoucher}>추가하기</Button></td>
+                  <td><TextField required size="small" className={classes.codeInput}  placeholder="수강권 이름" variant="outlined" value={centerLessonInfo.name} name="name" onChange={e => centerLessonChange(e)}/></td>
+                  <td><TextField required size="small" className={classes.codeInput}  placeholder="강의실" variant="outlined" value={centerLessonInfo.room} name="room" onChange={e => centerLessonChange(e)}/></td>
+                  <td><TextField type="date" required size="small" className={classes.codeInput}  placeholder="수업 일자" variant="outlined" value={centerLessonInfo.date} name="date" onChange={e => centerLessonChange(e)}/></td>
+                  <td><TextField type="time" step="1" required size="small" className={classes.codeInput}  placeholder="수업 시작 시간" variant="outlined" value={centerLessonInfo.time} name="time" onChange={e => centerLessonChange(e)}/></td>
+                  <td><TextField type="number" required size="small" className={classes.codeInput}  placeholder="정원" variant="outlined" value={centerLessonInfo.max_ppl} name="max_ppl" onChange={e => centerLessonChange(e)}/></td>
+                  <td><Button color="primary" variant="contained" size="medium" onClick={createLesson}>추가하기</Button></td>
                 </tr>
-                {centerVouchers.map((voucher)=>
+                {centerLessons.map((lesson)=>
                  (<tr className={classes.tableRow}>
-                    <td className={classes.tableDetail}>{voucher.name}</td>
-                    <td className={classes.tableDetail}>{voucher.limit}회</td>
-                    <td className={classes.tableDetail}>{voucher.voucherCode}</td>
+                    <td className={classes.tableDetail}>{lesson.name}</td>
+                    <td className={classes.tableDetail}>{lesson.room}</td>
+                    <td className={classes.tableDetail}>{lesson.date}</td>
+                    <td className={classes.tableDetail}>{lesson.time}</td>
+                    <td className={classes.tableDetail}>{lesson.max_ppl}</td>
                   </tr>)
                 )}
                 
               </table>
-              {/* 센터회원 수업 관리 */}
-              
-              
-              
-              
               </div>
             </CardContent>
           </Card>
