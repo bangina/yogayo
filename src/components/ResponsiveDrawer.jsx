@@ -111,12 +111,10 @@ function ResponsiveDrawer(props) {
     setMobileOpen(!mobileOpen);
   };
 
-  const onLogout = () => {
+  const openModal = () => {
     dispatch(openLogoutModal());
-    setUserInfo({});
-    setAdminname('');
   };
-  console.log(isUserAuthenticated());
+  // const handld
   
   const userApiCall = () => {
     const apiUrl = `http://127.0.0.1:8000/api/myinfo/`;
@@ -185,7 +183,7 @@ function ResponsiveDrawer(props) {
             variant="outlined"
             color="primary"
             name="logout"
-            onClick={onLogout}
+            onClick={openModal}
           >
             로그아웃
           </Button>
@@ -314,7 +312,7 @@ function ResponsiveDrawer(props) {
         {props.children}
       </main>
 
-      <LogoutModal></LogoutModal>
+      {/* <LogoutModal logout={logout}></LogoutModal> */}
     </div>
   );
 }

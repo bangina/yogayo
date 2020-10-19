@@ -90,6 +90,7 @@ const useStyles = makeStyles((theme) => ({
     background: "#cf556c",
     fontSize: "1rem",
     boxShadow: "2px 2px 4px rgba(0,0,0,0.15)",
+    cursor:"pointer"
   },
 }));
 
@@ -236,7 +237,7 @@ const Main = (props) => {
           </Container>
         </div>
         <Typography variant="h5" gutterBottom fontWeight="fontWeightBold">
-          예약하신 수업
+          예약하신 <b>수업</b>
         </Typography>
         <br/>
         {bookedLessons.map((bookedLesson, index) => ( 
@@ -244,15 +245,15 @@ const Main = (props) => {
           ))}
           <br/><br/>
         <Typography variant="h5" color="" gutterBottom>
-          요가요 피플 커뮤니티
+          요가요 <b>커뮤니티</b>
         </Typography>
         <br />
-        {/* <div>
+        <div>
           <span className={classes.tagIcon}> 요가</span>
           <span className={classes.tagIcon}>필테</span>
           <span className={classes.tagIcon}>중고장터</span>
           <span className={classes.tagIcon}>같이 운동해요</span>
-        </div> */}
+        </div>
         <br />
         <Swiper
           spaceBetween={20}
@@ -266,7 +267,7 @@ const Main = (props) => {
           ))}
         </Swiper>
         <Typography variant="h5" gutterBottom fontWeight="fontWeightBold">
-          오늘 올라온 수련일기
+          오늘 올라온 <b>수련일기</b>
         </Typography>
         <br />
         <br />
