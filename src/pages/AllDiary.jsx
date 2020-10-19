@@ -33,6 +33,26 @@ const AllDiary = (props) => {
   const loadMore = () => {
       setPage(page + 1)
   };
+  const printDay = (props) => {
+    switch (props) {
+      case 1:
+        return "월";
+      case 2:
+        return "화";
+      case 3:
+        return "수";
+      case 4:
+        return "목";
+      case 5:
+        return "금";
+      case 6:
+        return "토";
+      case 0:
+        return "일";
+      default:
+        return "";
+    }
+  };
 
   useEffect(() => {
     apiCall(page);
@@ -42,9 +62,18 @@ const AllDiary = (props) => {
   
   return (
     <div>
-      <Typography variant="h4" gutterBottom color="primary">
+      <Typography variant="h4" gutterBottom color="primary" style={{paddingBottom:"1rem"}}>
         오늘의 요기 피드
       </Typography>
+      <Typography
+        style={{
+          color: "#555",
+          fontSize: "1rem",
+          lineHeight:1.5
+        }}
+      >{new Date().getMonth() + 1}월{" "} {new Date().getDate()}일 {printDay(new Date().getDay())}요일,<br/>
+      오늘 올라온 다른 <b>요가요 회원들의 수련 후기</b>를 구경해보세요.</Typography>
+      <br/>
       <Button
           onClick={() => props.history.push('/diary/mydiary')}
           variant="contained"
@@ -57,7 +86,7 @@ const AllDiary = (props) => {
             marginTop: "1rem",
           }}
         >
-          일기 작성하러 가좌~!@
+          <b>수련일기</b>&nbsp;쓰러가기
         </Button>
       <br />
       <br />

@@ -307,7 +307,7 @@ const createLesson=()=>{
     })
     .then(function (response) {
       getLessonApiCall();
-      console.log(response)
+      console.log(response);
     })
     .catch((response) => {
         console.error(response);

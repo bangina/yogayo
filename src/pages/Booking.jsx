@@ -21,7 +21,7 @@ const Booking = () => {
               justifyContent: "center",
             }}
           >
-            <Typography gutterBottom color="primary" style={{ width: "100%" }}>
+            <Typography variant="h6" gutterBottom color="primary" style={{ width: "100%" }}>
               날짜를 선택하세요.
             </Typography>
             <BookingCalendar />

@@ -13,6 +13,7 @@ import BookingCardTimeline from "../components/BookingCardTimeline";
 const StyledTimeline = styled(Timeline)`
   color: red;
   padding: 0;
+  margin:0;
   .MuiTimeline-root {
     padding: 0;
   }
@@ -128,7 +129,7 @@ const MyBookings = () => {
   return (
     <>
     <StyledTimeline>
-      <Typography variant="h4" gutterBottom color="primary">
+      <Typography variant="h4" gutterBottom color="primary" style={{paddingBottom:"2rem"}}>
         내 스케쥴
       </Typography>
       <TabBar onChange={handleChage} menu="bookings">

@@ -37,7 +37,8 @@ const useStyles = makeStyles((theme) => ({
   imgBox:{
     textAlign:"center",
     margin:"auto",
-    padding:"1rem"
+    padding:"1rem",
+    flex:"0 0 45%"
   },
   img : {
     borderRadius:"10px",

@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     maxWidth: "1800px",
     margin: "0 auto",
+    paddingTop:"2rem",
     "&>*": {
       minWidth: 0,
     },

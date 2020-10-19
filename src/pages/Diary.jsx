@@ -65,33 +65,32 @@ const Diary = () => {
   },[page,globalModal]);
   return (
     <div>
-      <Typography variant="h4" gutterBottom color="primary">
-        오늘의 수련일기
+      <Typography variant="h4" gutterBottom color="primary" style={{paddingBottom:"2rem"}}>
+        수련일기 작성하기
       </Typography>
       <Typography variant="" gutterBottom color="">
         {/* {new Date().getFullYear()}년 {new Date().getMonth() + 1}월{" "} */}
         {/* {new Date().getDate()}일, {printDay(new Date().getDay())}요일 */}
       </Typography>
+      <Typography variant="h6" gutterBottom style={{textIndent:"1rem"}}>
+      오늘 수련은 어떠셨나요?
+      </Typography>
       <p
-        className="msg-box"
         style={{
-          background: "rgba(0,0,0,0.05)",
+          background: "rgba(0,0,0,0.03)",
           borderRadius: "5px",
-          color: "#333",
-          padding: "0 1rem",
+          color: "#666",
+          padding: "0.5rem 1rem",
           lineHeight: "3rem",
           fontSize: "1rem",
           textIndent: "0px",
+          display:"inline-block",
+          marginTop:"1rem"
         }}
       >
-        오늘 수련은 어떠셨나요?
-        <img src="./yogayo_logo.svg" style={{ width: "40px" }} alt="logo" />
-      </p>
-      <Typography variant="" gutterBottom color="">
         오늘 작성 가능한 일기
-        <br />
         (수련일기는 수련 후 24시간 이내에만 작성가능합니다.)
-      </Typography>
+      </p>
 
       <br />
       <br />

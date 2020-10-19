@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import styled from "styled-components";
+import Typography from "@material-ui/core/Typography";
 const StyledCalendar = styled(Calendar)`
   border: none;
   border-radius: 10px;
@@ -11,6 +12,7 @@ const StyledCalendar = styled(Calendar)`
   max-width: 500px;
   float: left;
   margin-right: 2rem;
+  margin-top:2rem;
   box-shadow: 1px 2px 10px rgba(0, 0, 0, 0.15);
   .react-calendar__navigation {
     button {
@@ -75,24 +77,22 @@ const BookingCalendar = () => {
   const maxDate = new Date(new Date().setMonth(new Date().getMonth() + 1));
   return (
     <div>
-      <h3>
+      <Typography>
         {new Date().getFullYear()}년 {new Date().getMonth() + 1}월{" "}
         {new Date().getDate()}일, {printDay(new Date().getDay())}요일
-      </h3>
+      </Typography>
       <StyledCalendar
         onChange={setValue}
         minDetail="month"
         defaultValue={new Date()}
         value={value}
         //오늘부터 선택가능
-        // minDate={new Date()}
+        minDate={new Date()}
         // 오늘로부터 한달까지만 선택 가능
         maxDate={maxDate}
         //next year 버튼 텍스트 없앰
         next2Label=""
         prev2Label=""
-        //수업 없는 날은 비활성화 시키는 기능 추가?
-        // tileDisabled={({ activeStartDate, date, view }) => date.getDay() === 0}
         locale="ko"
       />
     </div>

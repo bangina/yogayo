@@ -64,6 +64,7 @@ export default function Signup() {
     email: "",
     password: "",
     phone: "",
+    type:"ADMINUSER"
   });
 
   const dispatch = useDispatch();
@@ -73,7 +74,7 @@ export default function Signup() {
 
   const onSubmit = () => {
     dispatch(insertMember(memberState));
-    const apiUrl = "http://127.0.0.1:8000/api/register/";
+    const apiUrl = "http://127.0.0.1:8000/api/register/ADMINUSER/";
     axios
       .post(apiUrl, memberState)
       .then((response) => {
@@ -83,6 +84,7 @@ export default function Signup() {
         console.error(response, "오류발생");
       });
   };
+  
   const onInputChange = (e) => {
     setMemberState({ ...memberState, [e.target.name]: e.target.value });
     console.log(memberState);

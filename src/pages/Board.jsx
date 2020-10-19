@@ -155,6 +155,12 @@ export default function Board(props) {
       <Typography variant="h4" gutterBottom color="primary">
         요가요 커뮤니티
       </Typography>
+      <p
+        style={{
+          color: "#666",
+          fontSize: "1rem",
+        }}
+      >다른 요가요 회원들과 자유롭게 이야기를 나눠보세요.</p>
       <div className={classes.tableResponsive}>
         <div>
           <DropDown

@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import Timeline from "@material-ui/lab/Timeline";
-import styled from "styled-components";
 import TimelineItem from "@material-ui/lab/TimelineItem";
 import TimelineSeparator from "@material-ui/lab/TimelineSeparator";
 import TimelineConnector from "@material-ui/lab/TimelineConnector";
@@ -30,8 +28,9 @@ const useStyles = makeStyles(({ spacing, palette }) => {
         paddingLeft: 0,
         minWidth: 288,
         borderRadius: 12,
-        boxShadow: "0 2px 4px 0 rgba(138, 148, 159, 0.2)",
+        boxShadow: "0 2px 4px 2px rgba(138, 148, 159, 0.2)",
         marginBottom: "10px",
+        paddingBottom:"10px",
         "& > *": {
           padding: spacing(1),
         },
@@ -45,7 +44,7 @@ const useStyles = makeStyles(({ spacing, palette }) => {
       avatar: {},
       heading: {
         fontFamily: family,
-        fontSize: 16,
+        fontSize: 20,
         marginBottom: 0,
       },
       subheader: {
@@ -62,7 +61,7 @@ const useStyles = makeStyles(({ spacing, palette }) => {
       },
       color1: {
         color: "#fff",
-        backgroundColor: "#b12a5b",
+        backgroundColor: "rgb(207,85,108)",
       },
     };
   });
@@ -70,6 +69,8 @@ const useStyles = makeStyles(({ spacing, palette }) => {
     root: {
       height: 4,
       width: "70%",
+      marginBottom:"0.5rem",
+      boxSizing:"border-box",
     },
     rail: {
       borderRadius: 10,
@@ -79,7 +80,7 @@ const useStyles = makeStyles(({ spacing, palette }) => {
     track: {
       borderRadius: 10,
       height: 4,
-      backgroundColor: "#b12a5b",
+      backgroundColor: "rgb(207,85,108)",
     },
     thumb: {
       display: "none",
@@ -164,9 +165,9 @@ const BookingCardTimeline = (props) => {
         <>
             <React.Fragment key={session.id} session={session}>
               <TimelineItem>
-                <TimelineSeparator>
+                <TimelineSeparator style={{marginRight:"20px"}}>
                   <TimelineConnector />
-                  <TimelineDot>{session.time.slice(0, 5)}</TimelineDot>
+                  <TimelineDot style={{border:"none", fontSize:"13px"}}>{session.time.slice(0, 5)}</TimelineDot>
                   <TimelineConnector />
                 </TimelineSeparator>
                 <TimelineContent>
@@ -176,20 +177,18 @@ const BookingCardTimeline = (props) => {
                         image="/static/images/cards/live-from-space.jpg"
                         title="Live from space album cover"
                       >
-                        {/* <Avatar>{session.date}</Avatar> */}
                       </CardMedia>
                     </CardContent>
                     <Box>
                       <h3 className={styles.heading}>{session.name}</h3>
-                      <p variant="h5">
+                      <p>
+                        수업일시&nbsp; • &nbsp;
                         {session.date.slice(5, 7)}월 {session.date.slice(8, 10)}
                         일&nbsp;
-                        {/* {printDay(session.date)}
-                        요일 <br /> */}
                         {session.time.slice(0, 5)}
                       </p>
                       <p className={styles.subheader}>
-                        {session.username} • {session.room}
+                        {session.room}
                       </p>
                       <Box display={"flex"} alignItems={"center"}>
                         <Slider
@@ -216,7 +215,7 @@ const BookingCardTimeline = (props) => {
                         variant={
                           session.max_ppl === usersList.length
                             ? "outlined"
-                            : type==="cancel" ? "outlined" : "contained"
+                            : type==="booking" ? "contained" : "outlined"
                         }
                       >
                         {returnButtonMsg()}
