@@ -138,7 +138,24 @@ export default function SimpleCard(props) {
   const classes = useStyles();
   const sliderStyles = useSliderStyles();
   const [userInfo, setUserInfo] = useState({phone:""})
+  // 일반회원 보유 수강권(단일)
   const [voucherInfo, setVoucherInfo] = useState({})
+  // 센터회원 수강권 리스트
+  const [centerVouchers, setCenterVouchers] = useState([{
+    id: "",
+    limit: "",
+    name: "",
+    user: "",
+    voucherCode: ""
+  }
+  ]);
+  // 센터회원 수강권 추가(api 전송용)
+  const [centerVoucherInfo, setCenterVoucherInfo] = useState({
+    limit: "",
+    name: "",
+    voucherCode: 200011,
+    user:""
+  })
   const [code, setCode] = useState();
   const onChangeFile = (e) => {
     
@@ -153,15 +170,18 @@ export default function SimpleCard(props) {
     })
       .then(function (response) {
         setUserInfo(response.data);
-        console.log(response);
       })
       .catch(function (response) {
         console.log(response);
       });
   };
 
-  const voucherChage = e => {
+  const voucherCodeChange = e => {
     setCode(e.target.value)
+  }
+  const centerVoucherChange= e =>{
+    setCenterVoucherInfo({...centerVoucherInfo,user:userInfo.id,[e.target.name]:e.target.value});
+    console.log("centerVoucherInfo",centerVoucherInfo);
   }
 
   let cookies = new Cookies();
@@ -201,7 +221,7 @@ export default function SimpleCard(props) {
         console.error(response);
       });
   };
-
+// 회원 보유한 바우쳐 정보 가져오기
   const voucherApiCall = () => {
     const apiUrl = `http://127.0.0.1:8000/api/myvouchers/`;
     axios
@@ -214,9 +234,45 @@ export default function SimpleCard(props) {
         console.error(response);
       });
   }
-  useEffect(()=>{
+
+  //  수강권 불러오기
+  const VoucherApiUrl = `http://127.0.0.1:8000/api/voucher/`;
+  const GetApiCall = () => {
+    axios
+      .get(VoucherApiUrl, { headers: { Authorization: `Token ${userToken}` } })
+      .then((response) => {
+        setCenterVouchers(response.data);
+        console.log("vouchers",response.data);
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+    }
+// 센터회원 수강권 추가하기
+const createVoucher=()=>{
+  const VoucherPostApiUrl = `http://127.0.0.1:8000/api/voucher/`;
+  const postApiCall = () => {
+    axios({
+      method: "post",
+      url: VoucherPostApiUrl,
+      data: centerVoucherInfo,
+      headers: {
+        Authorization: `Token	${userToken}`,
+      },
+    })
+    .then(function (response) {
+      console.log(response.data);
+    })
+    .catch((response) => {
+        console.error(response);
+      });
+    }
+    postApiCall();
+  };
+useEffect(()=>{
     userApiCall();
-    voucherApiCall()
+    voucherApiCall();
+    GetApiCall();
   },[])
 
   useEffect(()=>{
@@ -281,7 +337,7 @@ export default function SimpleCard(props) {
             <hr/>
             <br/>
             <Typography  component="h5" variant="h5" className={classes.title} gutterBottom>
-                  회원권 정보
+                  <b>회원권</b> 정보
                 </Typography>
            {voucherInfo ? (  
                 <>
@@ -304,7 +360,7 @@ export default function SimpleCard(props) {
                 </Typography>
                   <br/>
                   회원권 코드 : 
-                <TextField size="small" className={classes.codeInput}  placeholder="인증번호" variant="outlined" value={code} onChange={e => voucherChage(e)}/>
+                <TextField size="small" className={classes.codeInput}  placeholder="인증번호" variant="outlined" value={code} onChange={e => voucherCodeChange(e)}/>
                 <Button
                       variant="contained"
                       color="primary"
@@ -328,7 +384,7 @@ export default function SimpleCard(props) {
                 className={classes.innerBox}
               >
                 <Typography component="h5" variant="h5" className={classes.title} gutterBottom>
-               수강권 관리
+               <b>수강권</b> 관리
                 </Typography>
               </div>
               <div
@@ -340,34 +396,68 @@ export default function SimpleCard(props) {
               > 
               <table className={classes.table}>
                 <tr className={classes.tableRow}>
-                  <th className={classes.tableHeading}>수강권 이름</th><th className={classes.tableHeading}>수강권 횟수</th><th className={classes.tableHeading}>강의실</th><th className={classes.tableHeading}>수강권 코드</th>
+                  <th className={classes.tableHeading}>수강권 이름</th><th className={classes.tableHeading}>수강권 횟수</th><th className={classes.tableHeading}>수강권 코드</th>
                 </tr>
                 <tr className={classes.tableRow}>
-                  <td><TextField required size="small" className={classes.codeInput}  placeholder="수강권 이름" variant="outlined" value={code} onChange={e => voucherChage(e)}/></td>
-                  <td><TextField type="number" required size="small" className={classes.codeInput}  placeholder="수강권 횟수" variant="outlined" value={code} onChange={e => voucherChage(e)}/></td>
-                  <td><TextField required size="small" className={classes.codeInput}  placeholder="강의실" variant="outlined" value={code} onChange={e => voucherChage(e)}/></td>
-                  <td><TextField  type="number" required size="small" className={classes.codeInput}  placeholder="수강권 코드" variant="outlined" value={code} onChange={e => voucherChage(e)}/></td>
-                  <td><Button color="primary" variant="contained" size="medium" >추가하기</Button></td>
+                  <td><TextField required size="small" className={classes.codeInput}  placeholder="수강권 이름" variant="outlined" value={centerVoucherInfo.name} name="name" onChange={e => centerVoucherChange(e)}/></td>
+                  <td><TextField type="number" required size="small" className={classes.codeInput}  placeholder="수강권 횟수" variant="outlined" value={centerVoucherInfo.limit} name="limit" onChange={e => centerVoucherChange(e)}/></td>
+                  <td style={{color:"#999", textAlign:"center"}}>수강권 코드는 자동생성됩니다.</td>
+                  <td><Button color="primary" variant="contained" size="medium" onClick={createVoucher}>추가하기</Button></td>
                 </tr>
-                <tr className={classes.tableRow}>
-                  <td className={classes.tableDetail}>(특가)10회 수강권</td>
-                  <td className={classes.tableDetail}>10 회</td>
-                  <td className={classes.tableDetail}>젠룸</td>
-                  <td className={classes.tableDetail}>10101</td>
-                </tr>
-                <tr className={classes.tableRow}>
-                  <td className={classes.tableDetail}>(특가)10회 수강권</td>
-                  <td className={classes.tableDetail}>10 회</td>
-                  <td className={classes.tableDetail}>젠룸</td>
-                  <td className={classes.tableDetail}>10101</td>
-                </tr>
-                <tr className={classes.tableRow}>
-                  <td className={classes.tableDetail}>(특가)10회 수강권</td>
-                  <td className={classes.tableDetail}>10 회</td>
-                  <td className={classes.tableDetail}>젠룸</td>
-                  <td className={classes.tableDetail}>10101</td>
-                </tr>
+                {centerVouchers.map((voucher)=>
+                 (<tr className={classes.tableRow}>
+                    <td className={classes.tableDetail}>{voucher.name}</td>
+                    <td className={classes.tableDetail}>{voucher.limit}회</td>
+                    <td className={classes.tableDetail}>{voucher.voucherCode}</td>
+                  </tr>)
+                )}
+                
               </table>
+              </div>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+
+              {/* 센터회원 수업 관리 */}
+      <Grid container spacing={3}>
+        <Grid item xs={12} >
+          <Card className={classes.root}>
+            <CardContent>
+              <div
+                className={classes.innerBox}
+              >
+                <Typography component="h5" variant="h5" className={classes.title} gutterBottom>
+               <b>수업</b> 관리
+                </Typography>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                }}
+              > 
+              <table className={classes.table}>
+                <tr className={classes.tableRow}>
+                  <th className={classes.tableHeading}>수강권 이름</th><th className={classes.tableHeading}>수강권 횟수</th><th className={classes.tableHeading}>수강권 코드</th>
+                </tr>
+                <tr className={classes.tableRow}>
+                  <td><TextField required size="small" className={classes.codeInput}  placeholder="수강권 이름" variant="outlined" value={centerVoucherInfo.name} name="name" onChange={e => centerVoucherChange(e)}/></td>
+                  <td><TextField type="number" required size="small" className={classes.codeInput}  placeholder="수강권 횟수" variant="outlined" value={centerVoucherInfo.limit} name="limit" onChange={e => centerVoucherChange(e)}/></td>
+                  <td style={{color:"#999", textAlign:"center"}}>수강권 코드는 자동생성됩니다.</td>
+                  <td><Button color="primary" variant="contained" size="medium" onClick={createVoucher}>추가하기</Button></td>
+                </tr>
+                {centerVouchers.map((voucher)=>
+                 (<tr className={classes.tableRow}>
+                    <td className={classes.tableDetail}>{voucher.name}</td>
+                    <td className={classes.tableDetail}>{voucher.limit}회</td>
+                    <td className={classes.tableDetail}>{voucher.voucherCode}</td>
+                  </tr>)
+                )}
+                
+              </table>
+              {/* 센터회원 수업 관리 */}
               
               
               

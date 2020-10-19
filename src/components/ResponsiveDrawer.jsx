@@ -312,7 +312,7 @@ function ResponsiveDrawer(props) {
         {props.children}
       </main>
 
-      {/* <LogoutModal logout={logout}></LogoutModal> */}
+      <LogoutModal logout={openLogoutModal}></LogoutModal>
     </div>
   );
 }
