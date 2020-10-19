@@ -69,7 +69,6 @@ const Edit = (props) => {
             name="address1"
             label="이름"
             fullWidth
-            autoComplete="shipping address-line1"
           />
         </Grid>
         <Grid item xs={12}>
@@ -78,7 +77,6 @@ const Edit = (props) => {
             name="address2"
             label="핸드폰번호"
             fullWidth
-            autoComplete="shipping address-line2"
           />
         </Grid>
         <Grid item xs={12}>
@@ -87,7 +85,6 @@ const Edit = (props) => {
             name="address2"
             label="비밀번호"
             fullWidth
-            autoComplete="shipping address-line2"
           />
         </Grid>
         <Grid item xs={12}>
@@ -96,7 +93,6 @@ const Edit = (props) => {
             name="address2"
             label="비밀번호 확인"
             fullWidth
-            autoComplete="shipping address-line2"
           />
         </Grid>
         

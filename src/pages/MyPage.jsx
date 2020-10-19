@@ -8,7 +8,7 @@ import Slider from "@material-ui/core/Slider";
 import PlaceIcon from "@material-ui/icons/Place";
 import ConfirmationNumberIcon from "@material-ui/icons/ConfirmationNumber";
 import Avatar from "@material-ui/core/Avatar";
-import { Button } from "@material-ui/core";
+import { Button, Divider } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import TextField from "@material-ui/core/TextField";
@@ -88,8 +88,26 @@ const useStyles = makeStyles({
   codeInput:{
     margin:"0 10px",
     "& > input[type='text']":{
-    padding:"10px 14px"
+    padding:"10px 14px",
     }
+  },
+  table:{
+    padding:"1rem",
+    width:"100%",
+  },
+  tableRow:{
+    padding:"1rem",
+  },
+  tableHeading:{
+    paddingBottom:"1rem",
+    fontSize:"1rem",
+  },
+  tableDetail:{
+    padding:"10.5px",
+    borderBottom:"1px solid rgba(0,0,0,0.1)",
+    color:"#555",
+    fontSize:"0.9rem",
+    textIndent:"1rem",
   }
 });
 
@@ -267,7 +285,6 @@ export default function SimpleCard(props) {
                 </Typography>
            {voucherInfo ? (  
                 <>
-                 
                 <Typography color="primary" className={classes.voucherStatBox}>이용권 {
                   voucherInfo.status ? "정상" : "사용불가"
                 } <br/>(잔여횟수 {voucherInfo.limit - voucherInfo.used}회)</Typography>
@@ -301,11 +318,62 @@ export default function SimpleCard(props) {
             </CardContent>
           </Card>
         </Grid>
-        <Grid item  xs={12}> 
+      </Grid>
+      {/* 센터회원 - 수강권 관리 */}
+      <Grid container spacing={3}>
+        <Grid item xs={12} >
           <Card className={classes.root}>
-            
+            <CardContent>
+              <div
+                className={classes.innerBox}
+              >
+                <Typography component="h5" variant="h5" className={classes.title} gutterBottom>
+               수강권 관리
+                </Typography>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-start",
+                  alignItems: "center",
+                }}
+              > 
+              <table className={classes.table}>
+                <tr className={classes.tableRow}>
+                  <th className={classes.tableHeading}>수강권 이름</th><th className={classes.tableHeading}>수강권 횟수</th><th className={classes.tableHeading}>강의실</th><th className={classes.tableHeading}>수강권 코드</th>
+                </tr>
+                <tr className={classes.tableRow}>
+                  <td><TextField required size="small" className={classes.codeInput}  placeholder="수강권 이름" variant="outlined" value={code} onChange={e => voucherChage(e)}/></td>
+                  <td><TextField type="number" required size="small" className={classes.codeInput}  placeholder="수강권 횟수" variant="outlined" value={code} onChange={e => voucherChage(e)}/></td>
+                  <td><TextField required size="small" className={classes.codeInput}  placeholder="강의실" variant="outlined" value={code} onChange={e => voucherChage(e)}/></td>
+                  <td><TextField  type="number" required size="small" className={classes.codeInput}  placeholder="수강권 코드" variant="outlined" value={code} onChange={e => voucherChage(e)}/></td>
+                  <td><Button color="primary" variant="contained" size="medium" >추가하기</Button></td>
+                </tr>
+                <tr className={classes.tableRow}>
+                  <td className={classes.tableDetail}>(특가)10회 수강권</td>
+                  <td className={classes.tableDetail}>10 회</td>
+                  <td className={classes.tableDetail}>젠룸</td>
+                  <td className={classes.tableDetail}>10101</td>
+                </tr>
+                <tr className={classes.tableRow}>
+                  <td className={classes.tableDetail}>(특가)10회 수강권</td>
+                  <td className={classes.tableDetail}>10 회</td>
+                  <td className={classes.tableDetail}>젠룸</td>
+                  <td className={classes.tableDetail}>10101</td>
+                </tr>
+                <tr className={classes.tableRow}>
+                  <td className={classes.tableDetail}>(특가)10회 수강권</td>
+                  <td className={classes.tableDetail}>10 회</td>
+                  <td className={classes.tableDetail}>젠룸</td>
+                  <td className={classes.tableDetail}>10101</td>
+                </tr>
+              </table>
               
-            
+              
+              
+              
+              </div>
+            </CardContent>
           </Card>
         </Grid>
       </Grid>
