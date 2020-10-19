@@ -12,7 +12,6 @@ import { Button, Divider } from "@material-ui/core";
 import { Link as RouterLink } from "react-router-dom";
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 
@@ -153,7 +152,6 @@ export default function SimpleCard(props) {
   const [centerVoucherInfo, setCenterVoucherInfo] = useState({
     limit: "",
     name: "",
-    voucherCode: 200011,
     user:""
   })
   // 센터회원 수업 추가(api 전송용)
@@ -200,7 +198,6 @@ export default function SimpleCard(props) {
     setCenterLessonInfo({...centerLessonInfo,user:userInfo.id,[e.target.name]:e.target.value});
     console.log("centerLessonInfo",centerLessonInfo);
   }
-
   const voucherSubmit = () => {
     const apiUrl = `http://127.0.0.1:8000/api/myvouchers/${code}/`;
     axios({
@@ -216,7 +213,6 @@ export default function SimpleCard(props) {
     })
       .then(function (response) {
         console.log(response);
-        voucherApiCall()
       })
       .catch(function (response) {
         console.error(response);
@@ -289,7 +285,7 @@ const createVoucher=()=>{
       },
     })
     .then(function (response) {
-      console.log(response.data);
+      getVoucherApiCall();
     })
     .catch((response) => {
         console.error(response);
@@ -310,6 +306,7 @@ const createLesson=()=>{
       },
     })
     .then(function (response) {
+      getLessonApiCall();
       console.log(response)
     })
     .catch((response) => {
@@ -321,14 +318,16 @@ const createLesson=()=>{
   useEffect(()=>{
       userApiCall();
       voucherApiCall();
-      getVoucherApiCall();
-      getLessonApiCall();
     },[])
 
   useEffect(()=>{
     props.apiCall();
   },[userInfo])
 
+  useEffect(()=>{
+    getVoucherApiCall();
+    getLessonApiCall();
+  },[])
 
 
 
@@ -383,9 +382,6 @@ const createLesson=()=>{
                 </div>
                 
               </div>
-           <br/>
-            <hr/>
-            <br/>
             <Typography  component="h5" variant="h5" className={classes.title} gutterBottom>
                   <b>회원권</b> 정보
                 </Typography>
