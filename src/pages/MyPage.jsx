@@ -343,7 +343,7 @@ const createLesson=()=>{
                 className={classes.innerBox}
               >
                 <Typography component="h5" variant="h5" className={classes.title} gutterBottom>
-                  나의 정보
+                  <b>나의 정보</b>
                 </Typography>
               </div>
               <div
@@ -379,12 +379,22 @@ const createLesson=()=>{
                     <Typography gutterBottom  className={classes.descText}> • &nbsp; 이메일 주소 : {userInfo.email}</Typography>
                     <Typography gutterBottom className={classes.descText}> • &nbsp; 휴대폰 번호 : {userInfo.phone.slice(0,3)}-{userInfo.phone.slice(3,7)}-{userInfo.phone.slice(7,11)}</Typography>
                 </div>
-                
               </div>
-            <Typography  component="h5" variant="h5" className={classes.title} gutterBottom>
+
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs={12} >
+          <Card className={classes.root}>
+            <CardContent>
+
+
+      <Typography  component="h5" variant="h5" className={classes.title} gutterBottom>
                   <b>회원권</b> 정보
                 </Typography>
-           {voucherInfo ? (  
+              {voucherInfo ? (  
                 <>
                 <Typography color="primary" className={classes.voucherStatBox}>이용권 {
                   voucherInfo.status ? "정상" : "사용불가"
@@ -415,11 +425,11 @@ const createLesson=()=>{
                     </Button>
                     </>
               )}
-
             </CardContent>
           </Card>
         </Grid>
       </Grid>
+
       {/* 센터회원 - 수강권 관리 */}
       <Grid container spacing={3}>
         <Grid item xs={12} >

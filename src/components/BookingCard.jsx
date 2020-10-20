@@ -112,9 +112,6 @@ const BookingCard = (props) => {
         });
     };
     useEffect(() => {
-      apiCall();
-    }, [lessonId]);
-    useEffect(() => {
       returnLessonId();
     }, [])
     return (

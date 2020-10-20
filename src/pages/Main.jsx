@@ -272,7 +272,7 @@ const Main = (props) => {
           </Typography>
           <br/>
           {/* 예약한 수업중 가장 이른 수업 1개 */}
-          {bookedLessons.slice(0,1).map((bookedLesson, index) => ( 
+          {futureLessons.slice(0,1).map((bookedLesson, index) => ( 
             <BookingCard session={bookedLesson} key={bookedLesson.id} type="cancel"/>
             ))}
             <br/><br/>
