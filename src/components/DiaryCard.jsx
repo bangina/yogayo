@@ -1,4 +1,4 @@
-import React, { useState , useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { Cookies } from "react-cookie";
 import cx from "clsx";
 import { makeStyles } from "@material-ui/core/styles";
@@ -26,11 +26,11 @@ const useStyles = makeStyles(() => ({
     borderRadius: "10px",
     overflow: "hidden",
   },
-  like:{
-    fill : "rgb(212, 61, 89)"
+  like: {
+    fill: "rgb(212, 61, 89)",
   },
-  unlike:{
-    fill : "rgba(0, 0, 0, 0.54)"
+  unlike: {
+    fill: "rgba(0, 0, 0, 0.54)",
   },
   imgBackground: {
     // background: "#ff8177",
@@ -65,7 +65,7 @@ const useStyles = makeStyles(() => ({
     WebkitBoxOrient: "vertical",
     overflow: "hidden",
     textOverflow: "ellipsis",
-    position : "relative"
+    position: "relative",
   },
   favorite: {
     position: "absolute",
@@ -85,7 +85,7 @@ export const DiaryCard = (props) => {
   const gutterStyles = usePushingGutterStyles({ firstExcluded: true });
   const content = props.content;
   const ellipsis = props.ellipsis;
-  const [diaryLiked,setDiaryLiked]=useState({id: content.id, liked:""});
+  const [diaryLiked, setDiaryLiked] = useState({ id: content.id, liked: "" });
   let cookies = new Cookies();
   const userToken = cookies.get("usertoken");
 
@@ -99,12 +99,12 @@ export const DiaryCard = (props) => {
         Authorization: `Token	${userToken}`,
       },
     })
-    .then((response) => {
-      setDiaryLiked({...diaryLiked, liked : response.data[0].id });
-    })
-    .catch((response) => {
-      console.error(response);
-    });
+      .then((response) => {
+        setDiaryLiked({ ...diaryLiked, liked: response.data[0].id });
+      })
+      .catch((response) => {
+        console.error(response);
+      });
   };
   //좋아요 생성/삭제
   const postLike = (e) => {
@@ -116,40 +116,39 @@ export const DiaryCard = (props) => {
         Authorization: `Token	${userToken}`,
       },
     })
-    .then((response) => {
-      setDiaryLiked({...diaryLiked, liked : response.data.id});
-      console.log("like 호출 결과 :", response);
-    })
-    .catch((response) => {
-      console.error(response);
-    });
+      .then((response) => {
+        setDiaryLiked({ ...diaryLiked, liked: response.data.id });
+        props.apiCall();
+        console.log("like 호출 결과 :", response);
+      })
+      .catch((response) => {
+        console.error(response);
+      });
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     getLiked();
-  },[])
-  useEffect(()=>{
-    props.apiCall();
-  },[diaryLiked]);
+  }, []);
+  // useEffect(()=>{
+  //   props.apiCall();
+  // },[diaryLiked]);
 
-  const paintMoodEmoji=(mood)=>{
+  const paintMoodEmoji = (mood) => {
     switch (mood) {
       case 0:
-        return <SentimentVerySatisfiedIcon  color="primary"/>
+        return <SentimentVerySatisfiedIcon color="primary" />;
       case 1:
-        return <SentimentSatisfiedIcon  color="primary"/>
+        return <SentimentSatisfiedIcon color="primary" />;
       case 2:
-        return <SentimentVeryDissatisfiedIcon  color="primary"/>
-      default: return <SentimentVerySatisfiedIcon  color="primary"/>
+        return <SentimentVeryDissatisfiedIcon color="primary" />;
+      default:
+        return <SentimentVerySatisfiedIcon color="primary" />;
     }
   };
   return (
     <Card className={styles.root}>
       <Typography variant="h6" className={styles.date}>
-          {content.created.substring(5,7)}
-        월{" "}
-          {content.created.substring(8,10)}
-        일
+        {content.created.substring(5, 7)}월 {content.created.substring(8, 10)}일
       </Typography>
       <div className={styles.imgBackground}>
         <CardMedia classes={mediaStyles} image={content.img_path} />
@@ -189,7 +188,7 @@ export const DiaryCard = (props) => {
               <FavoriteBorderIcon
                 onClick={postLike}
                 id={content.id}
-                className={diaryLiked.liked? styles.like : styles.unlike}
+                className={diaryLiked.liked ? styles.like : styles.unlike}
               />
               <span>{content.likes}</span>
             </IconButton>
