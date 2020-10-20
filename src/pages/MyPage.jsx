@@ -46,7 +46,8 @@ const useStyles = makeStyles({
     padding: "0",
     textAlign:"center", 
     position:"relative",
-    background:"rgb(212, 61, 89)"
+    background:"rgb(212, 61, 89)",
+    cursor:"pointer"
   },
   inputFileSvg:{
      position:"absolute",
@@ -85,7 +86,6 @@ const useStyles = makeStyles({
     textAlign:"center"
   },
   codeInput:{
-    margin:"0 10px",
     "& > input[type='text']":{
     padding:"10px 14px",
     }
@@ -95,7 +95,6 @@ const useStyles = makeStyles({
     width:"100%",
   },
   tableRow:{
-    padding:"1rem",
   },
   tableHeading:{
     paddingBottom:"1rem",
@@ -442,11 +441,14 @@ const createLesson=()=>{
               > 
               <table className={classes.table}>
                 <tr className={classes.tableRow}>
-                  <th className={classes.tableHeading}>수강권 이름</th><th className={classes.tableHeading}>수강권 횟수</th><th className={classes.tableHeading}>수강권 코드</th>
+                  <th className={classes.tableHeading}>수강권 이름</th>
+                  <th className={classes.tableHeading}>수강권 횟수</th>
+                  <th className={classes.tableHeading}>수강권 코드</th>
+                  <th className={classes.tableHeading}></th>
                 </tr>
                 <tr className={classes.tableRow}>
-                  <td><TextField required size="small" className={classes.codeInput}  placeholder="수강권 이름" variant="outlined" value={centerVoucherInfo.name} name="name" onChange={e => centerVoucherChange(e)}/></td>
-                  <td><TextField type="number" required size="small" className={classes.codeInput}  placeholder="수강권 횟수" variant="outlined" value={centerVoucherInfo.limit} name="limit" onChange={e => centerVoucherChange(e)}/></td>
+                  <td><TextField required size="small" fullWidth className={classes.codeInput}  placeholder="수강권 이름" variant="outlined" value={centerVoucherInfo.name} name="name" onChange={e => centerVoucherChange(e)}/></td>
+                  <td><TextField type="number" required size="small" fullWidth className={classes.codeInput}  placeholder="수강권 횟수" variant="outlined" value={centerVoucherInfo.limit} name="limit" onChange={e => centerVoucherChange(e)}/></td>
                   <td style={{color:"#999", textAlign:"center"}}>수강권 코드는 자동생성됩니다.</td>
                   <td><Button color="primary" variant="contained" size="medium" onClick={createVoucher}>추가하기</Button></td>
                 </tr>
@@ -455,6 +457,7 @@ const createLesson=()=>{
                     <td className={classes.tableDetail}>{voucher.name}</td>
                     <td className={classes.tableDetail}>{voucher.limit}회</td>
                     <td className={classes.tableDetail}>{voucher.voucherCode}</td>
+                    <td className={classes.tableDetail}></td>
                   </tr>)
                 )}
                 
@@ -489,7 +492,7 @@ const createLesson=()=>{
                   <th className={classes.tableHeading}>수업 이름</th><th className={classes.tableHeading}>강의실</th><th className={classes.tableHeading}>수업 일자</th><th className={classes.tableHeading}>수업 시작 시간</th><th className={classes.tableHeading}>정원</th>
                 </tr>
                 <tr className={classes.tableRow}>
-                  <td><TextField required size="small" className={classes.codeInput}  placeholder="수강권 이름" variant="outlined" value={centerLessonInfo.name} name="name" onChange={e => centerLessonChange(e)}/></td>
+                  <td><TextField required size="small" className={classes.codeInput}  placeholder="수업 이름" variant="outlined" value={centerLessonInfo.name} name="name" onChange={e => centerLessonChange(e)}/></td>
                   <td><TextField required size="small" className={classes.codeInput}  placeholder="강의실" variant="outlined" value={centerLessonInfo.room} name="room" onChange={e => centerLessonChange(e)}/></td>
                   <td><TextField type="date" required size="small" className={classes.codeInput}  placeholder="수업 일자" variant="outlined" value={centerLessonInfo.date} name="date" onChange={e => centerLessonChange(e)}/></td>
                   <td><TextField type="time" step="1" required size="small" className={classes.codeInput}  placeholder="수업 시작 시간" variant="outlined" value={centerLessonInfo.time} name="time" onChange={e => centerLessonChange(e)}/></td>

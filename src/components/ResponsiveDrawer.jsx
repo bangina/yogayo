@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { Link as RouterLink, withRouter } from "react-router-dom";
-import { openLogoutModal, closeLogoutModal } from "../redux/modal";
+import { openLogoutModal } from "../redux/modal";
 import LogoutModal from "./modal/LogoutModal";
 import { useDispatch } from "react-redux";
 import AppBar from "@material-ui/core/AppBar";
@@ -24,6 +24,7 @@ import { ReactComponent as CalendarIcon } from "../icons/CalendarIcon.svg";
 import { ReactComponent as UserIcon } from "../icons/UserIcon.svg";
 import { ReactComponent as Logo } from "../icons/Logo.svg";
 import { ReactComponent as Yogayo } from "../icons/Yogayo.svg";
+import { ReactComponent as HomeIcon } from "../icons/HomeIcon.svg";
 import { isUserAuthenticated } from "../utils/authUtils";
 import axios from "axios";
 import { Cookies } from "react-cookie";
@@ -194,6 +195,14 @@ function ResponsiveDrawer(props) {
         )}
       </List>
       <List>
+        <RouterLink to="/">
+          <ListItem>
+            <SvgIcon style={{ margin: "0 10px", transform:"translateY(3px)" }} viewBox="0 0 32 32">
+              <HomeIcon />
+            </SvgIcon>
+            <ListItemText primary="Home" />
+          </ListItem>
+        </RouterLink>
         <RouterLink to="/booking">
           <ListItem>
             <SvgIcon style={{ margin: "0 10px", transform:"translateY(3px)" }} viewBox="0 0 32 32">

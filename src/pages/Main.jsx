@@ -109,6 +109,12 @@ const Main = (props) => {
     voucher: ""
   }
   ]);
+  const today = new Date();
+  const year = `${today.getFullYear()}`;
+  const month = today.getMonth()+1>9? `${today.getMonth()+1}` : `0${today.getMonth()+1}`;
+  const date = today.getDate()>9? `${today.getDate()}` : `0${today.getDate()}`;
+  const todayDate = Number(year + month + date);
+  const futureLessons =bookedLessons.filter((lesson)=>Number(lesson.date.replace(/-/g,''))>=todayDate);
   const diaryCall = () => {
     const diaryApiUrl = "http://localhost:8000/api/diaries/?page=1";
     axios
@@ -260,7 +266,7 @@ const Main = (props) => {
           </Container>
         </div>
         {/* 로그인회원에게만 보여짐 */}
-        {isUserAuthenticated() ? <>
+        {isUserAuthenticated() && futureLessons.length>0 && <>
           <Typography variant="h5" gutterBottom fontWeight="fontWeightBold">
             잊지마세요! 곧 다가오는 <b>수업</b>
           </Typography>
@@ -270,7 +276,7 @@ const Main = (props) => {
             <BookingCard session={bookedLesson} key={bookedLesson.id} type="cancel"/>
             ))}
             <br/><br/>
-          </> : ""}
+          </>}
         
           
         <Typography variant="h5" color="" gutterBottom>

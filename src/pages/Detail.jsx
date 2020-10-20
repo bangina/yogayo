@@ -195,7 +195,7 @@ const Detail = (props) => {
                       color="primary"
                       onClick={() => commentSubmit()}
                     >
-                      Reply
+                      댓글 달기
                     </Button>
                   </InputAdornment>
                 }
