@@ -320,7 +320,6 @@ const Main = (props) => {
           ))}
         </Swiper>
         <br />
-        
       </main>
     </React.Fragment>
   );

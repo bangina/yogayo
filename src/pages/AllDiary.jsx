@@ -94,7 +94,7 @@ const AllDiary = (props) => {
       <Grid container spacing={3}>
         {contents.map((content, index) => (
           <Grid item xs={12} md={6} lg={4} xl={3} key={index}>
-            <DiaryCard content={content} apiCall={apiCall} />
+            <DiaryCard content={content} apiCall={apiCall}/>
           </Grid>
         ))}
       </Grid>

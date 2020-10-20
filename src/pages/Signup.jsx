@@ -69,7 +69,6 @@ export default function Signup() {
     email: "",
     password: "",
     phone: "",
-    type: "GENUSER"
   });
 
   const dispatch = useDispatch();
