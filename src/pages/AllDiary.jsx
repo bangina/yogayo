@@ -8,11 +8,10 @@ import axios from "axios";
 import { Cookies } from "react-cookie";
 
 const AllDiary = (props) => {
-
   const [contents, setContents] = useState([]);
-  const [page, setPage] = useState(1)
-  const [cnt , setCnt] = useState()
-  
+  const [page, setPage] = useState(1);
+  const [cnt, setCnt] = useState();
+
   const apiCall = (pageNum) => {
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");
@@ -20,9 +19,9 @@ const AllDiary = (props) => {
     axios
       .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
-        const tempArr = contents.concat(response.data.results)
-        setContents(tempArr)
-        setCnt(response.data.count)
+        const tempArr = contents.concat(response.data.results);
+        setContents(tempArr);
+        setCnt(response.data.count);
         console.log("다이어리 목록 : ", response.data);
       })
       .catch((response) => {
@@ -30,8 +29,25 @@ const AllDiary = (props) => {
       });
   };
 
+  const apiCall2 = () => {
+    let cookies = new Cookies();
+    const userToken = cookies.get("usertoken");
+    const apiUrl = `http://127.0.0.1:8000/api/diaries/?page=1`;
+    axios
+      .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
+      .then((response) => {
+        // const tempArr = contents.concat(response.data.results);
+        setContents(response.data.results);
+        setCnt(response.data.count);
+        console.log("apiCall2 목록 : ", response.data);
+      })
+      .catch((response) => {
+        console.error(response);
+      });
+  };
+
   const loadMore = () => {
-      setPage(page + 1)
+    setPage(page + 1);
   };
   const printDay = (props) => {
     switch (props) {
@@ -57,49 +73,56 @@ const AllDiary = (props) => {
   useEffect(() => {
     apiCall(page);
   }, [page]);
-  
-  
-  
+
   return (
     <div>
-      <Typography variant="h4" gutterBottom color="primary" style={{paddingBottom:"1rem"}}>
+      <Typography
+        variant="h4"
+        gutterBottom
+        color="primary"
+        style={{ paddingBottom: "1rem" }}
+      >
         오늘의 요기 피드
       </Typography>
       <Typography
         style={{
           color: "#555",
           fontSize: "1rem",
-          lineHeight:1.5
+          lineHeight: 1.5,
         }}
-      >{new Date().getMonth() + 1}월{" "} {new Date().getDate()}일 {printDay(new Date().getDay())}요일,<br/>
-      오늘 올라온 다른 <b>요가요 회원들의 수련 후기</b>를 구경해보세요.</Typography>
-      <br/>
+      >
+        {new Date().getMonth() + 1}월 {new Date().getDate()}일{" "}
+        {printDay(new Date().getDay())}요일,
+        <br />
+        오늘 올라온 다른 <b>요가요 회원들의 수련 후기</b>를 구경해보세요.
+      </Typography>
+      <br />
       <Button
-          onClick={() => props.history.push('/diary/mydiary')}
-          variant="contained"
-          color="primary"
-          size="large"
-          style={{
-            position: "relative",
-            // left: "50%",
-            // transform: "translateX(-50%)",
-            marginTop: "1rem",
-          }}
-        >
-          <b>수련일기</b>&nbsp;쓰러가기
-        </Button>
+        onClick={() => props.history.push("/diary/mydiary")}
+        variant="contained"
+        color="primary"
+        size="large"
+        style={{
+          position: "relative",
+          // left: "50%",
+          // transform: "translateX(-50%)",
+          marginTop: "1rem",
+        }}
+      >
+        <b>수련일기</b>&nbsp;쓰러가기
+      </Button>
       <br />
       <br />
       <br />
       <Grid container spacing={3}>
         {contents.map((content, index) => (
           <Grid item xs={12} md={6} lg={4} xl={3} key={index}>
-            <DiaryCard content={content} apiCall={apiCall}/>
+            <DiaryCard content={content} apiCall={apiCall2} />
           </Grid>
         ))}
       </Grid>
       {contents.length !== cnt ? (
-          <Button
+        <Button
           onClick={loadMore}
           variant="outlined"
           color="primary"
@@ -114,7 +137,7 @@ const AllDiary = (props) => {
           더 보기
         </Button>
       ) : null}
-      
+
       <DiaryModal></DiaryModal>
     </div>
   );
