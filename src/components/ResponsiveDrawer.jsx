@@ -127,6 +127,7 @@ function ResponsiveDrawer(props) {
       .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
         setUserInfo(response.data[0]);
+        console.log("유저정보 가져오기", response.data[0]);
       })
       .catch((response) => {
         console.error(response);
@@ -277,7 +278,7 @@ function ResponsiveDrawer(props) {
           </RouterLink>
           {!isUserAuthenticated() ? (
             <RouterLink to="/login" className={classes.login}>
-              <span>Login</span>
+              <span>로그인</span>
             </RouterLink>
           ) : (
             <RouterLink to="/mypage" className={classes.login}>
@@ -322,7 +323,7 @@ function ResponsiveDrawer(props) {
         {props.children}
       </main>
 
-      <LogoutModal logout={openLogoutModal}></LogoutModal>
+      <LogoutModal logout={openLogoutModal} apiCall={userApiCall}></LogoutModal>
     </div>
   );
 }

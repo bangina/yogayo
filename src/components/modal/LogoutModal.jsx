@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { closeLogoutModal } from "../../redux/modal";
 import styled from "styled-components";
@@ -17,16 +17,18 @@ const StyledDialog = styled(Dialog)`
     width: 100%;
   }
 `;
-const LogoutModal = () => {
+const LogoutModal = (props) => {
   const globalModal = useSelector((state) => state.modal);
   const isLogoutModalOpen = globalModal.isLogoutModalOpen;
   const dispatch = useDispatch();
-  let history = useHistory();
+
+  //로그아웃 처리하기
+  const cookies = new Cookies();
   const handleClose = () => {
     dispatch(closeLogoutModal());
-    const cookies = new Cookies();
     cookies.remove("usertoken");
-    history.push("/main");
+    //부모컴포넌트 리렌더링(유저정보 다시 가져오기)
+    window.location = "/";
   };
   return (
     <>

@@ -118,7 +118,7 @@ const Diary = (props) => {
   const [diaryContents, setDiarycontents] = useState({
     userLesson: {},
     content: '',
-    mood: "1",
+    mood: "",
   });
   const [imgPath, setImgPath] = useState(null);
 
