@@ -160,7 +160,8 @@ const BookingModal = (props) => {
           <Typography component={"div"} variant="h4" gutterBottom>
             {globalSelectedLesson.name}
           </Typography>
-          {globalSelectedLesson.date} {globalSelectedLesson.time}
+          {globalSelectedLesson.date.slice(5, 7)}월 {globalSelectedLesson.date.slice(8, 10)}일 {globalSelectedLesson.time.slice(0, 5)}
+          {/* {session.date.slice(5, 7)}월 {session.date.slice(8, 10)} */}
         </DialogTitle>
 
         {isBookingModalOpen && !isBookingConfirmOpen && !isBookingResultOpen && (
