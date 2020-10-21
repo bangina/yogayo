@@ -61,9 +61,9 @@ const CancelBookingModal = (props) => {
       >
         <DialogTitle onClose={handleClose}>
           <Typography variant="h4" gutterBottom>
-            {selectedLesson.name}
+            {selectedLesson.name} 수업
           </Typography>
-          {selectedLesson.date} {selectedLesson.time}
+          {selectedLesson.date.slice(5,7)}월 {selectedLesson.date.slice(8,10)}일 • {selectedLesson.time.slice(0,5)}
         </DialogTitle>
         <DialogContent>
           {isCancelModalOpen && !isCancelResultOpen && (
@@ -76,7 +76,7 @@ const CancelBookingModal = (props) => {
           )}
 
           {isCancelModalOpen && isCancelResultOpen && (
-            <SuccessMsg message="수강신청 취소가 완료되었습니다." />
+            <SuccessMsg message="수강신청 취소가 완료되었습니다." status={true}/>
           )}
         </DialogContent>
         <DialogActions>

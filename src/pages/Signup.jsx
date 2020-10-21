@@ -78,7 +78,7 @@ export default function Signup() {
   const onSubmit = () => {
     console.log("type test", memberState);
     dispatch(insertMember(memberState));
-    const apiUrl = "http://api.yogayo.kr/api/register/ADMINUSER/";
+    const apiUrl = "http://api.yogayo.kr/api/register/";
     axios
       .post(apiUrl, memberState)
       .then((response) => {

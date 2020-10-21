@@ -41,7 +41,6 @@ const LogoutModal = (props) => {
           <Typography component={"div"} variant="h4" gutterBottom>
             로그아웃
           </Typography>
-          로그아웃
         </DialogTitle>
         <DialogContent>
           <Typography
