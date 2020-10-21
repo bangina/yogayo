@@ -79,7 +79,7 @@ export default function Signup() {
   const onSubmit = () => {
     console.log("type test", memberState)
     dispatch(insertMember(memberState));
-    const apiUrl = "http://127.0.0.1:8000/api/register/ADMINUSER/";
+    const apiUrl = "http://127.0.0.1:8000/api/register/   ";
     axios
       .post(apiUrl, memberState)
       .then((response) => {

@@ -221,7 +221,7 @@ const BookingModal = (props) => {
               <>
                 <Typography component={"div"} gutterBottom>
                   <PlaceIcon fontSize="small"></PlaceIcon>
-                  현재 회원권 잔여횟수 : {activeVoucher[0].used}회
+                  현재 회원권 잔여횟수 : {activeVoucher[0].limit - activeVoucher[0].used}회
                 </Typography>
                 <Typography component={"div"} gutterBottom>
                   수업 예약 취소/변경 기한 : 수업 1일전까지

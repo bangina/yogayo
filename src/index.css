@@ -37,6 +37,7 @@ span.error {
   box-sizing: border-box;
   display: block;
   z-index: 999;
+  text-align: center;
 }
 
 .swiper-button-prev {
