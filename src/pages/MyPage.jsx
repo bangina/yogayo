@@ -172,7 +172,7 @@ export default function SimpleCard(props) {
 
     axios({
       method: "patch",
-      url: `http://localhost:8000/api/myinfo/${userInfo.id}/`,
+      url: `http://api.yogayo.kr/api/myinfo/${userInfo.id}/`,
       data: formData,
       headers: {
         Authorization: `Token	 ${userToken}`,
@@ -207,7 +207,7 @@ export default function SimpleCard(props) {
     console.log("centerLessonInfo", centerLessonInfo);
   };
   const voucherSubmit = () => {
-    const apiUrl = `http://127.0.0.1:8000/api/myvouchers/${code}/`;
+    const apiUrl = `http://api.yogayo.kr/api/myvouchers/${code}/`;
     axios({
       method: "post",
       url: apiUrl,
@@ -229,7 +229,7 @@ export default function SimpleCard(props) {
 
   const userApiCall = () => {
     // 로그인 유저 정보 불러오기
-    const apiUrl = `http://127.0.0.1:8000/api/myinfo/`;
+    const apiUrl = `http://api.yogayo.kr/api/myinfo/`;
     axios
       .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
@@ -242,7 +242,7 @@ export default function SimpleCard(props) {
   };
   // 회원 보유한 바우쳐 정보 가져오기
   const voucherApiCall = () => {
-    const apiUrl = `http://127.0.0.1:8000/api/myvouchers/`;
+    const apiUrl = `http://api.yogayo.kr/api/myvouchers/`;
     axios
       .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
@@ -255,7 +255,7 @@ export default function SimpleCard(props) {
   };
 
   //  수강권 불러오기
-  const VoucherApiUrl = `http://127.0.0.1:8000/api/voucher/`;
+  const VoucherApiUrl = `http://api.yogayo.kr/api/voucher/`;
   const getVoucherApiCall = () => {
     axios
       .get(VoucherApiUrl, { headers: { Authorization: `Token ${userToken}` } })
@@ -268,7 +268,7 @@ export default function SimpleCard(props) {
       });
   };
   //  수강권 불러오기
-  const LessonApiUrl = `http://127.0.0.1:8000/api/adminLesson/`;
+  const LessonApiUrl = `http://api.yogayo.kr/api/adminLesson/`;
   const getLessonApiCall = () => {
     axios
       .get(LessonApiUrl, { headers: { Authorization: `Token ${userToken}` } })
@@ -282,7 +282,7 @@ export default function SimpleCard(props) {
   };
   // 센터회원 수강권 추가하기
   const createVoucher = () => {
-    const VoucherPostApiUrl = `http://127.0.0.1:8000/api/voucher/`;
+    const VoucherPostApiUrl = `http://api.yogayo.kr/api/voucher/`;
     const postApiCall = () => {
       axios({
         method: "post",
@@ -303,7 +303,7 @@ export default function SimpleCard(props) {
   };
   // 센터회원 수업 추가하기
   const createLesson = () => {
-    const LessonPostApiUrl = `http://127.0.0.1:8000/api/adminLesson/`;
+    const LessonPostApiUrl = `http://api.yogayo.kr/api/adminLesson/`;
     const postApiCall = () => {
       axios({
         method: "post",

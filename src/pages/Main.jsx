@@ -91,32 +91,39 @@ const useStyles = makeStyles((theme) => ({
     background: "#cf556c",
     fontSize: "1rem",
     boxShadow: "2px 2px 4px rgba(0,0,0,0.15)",
-    cursor:"pointer"
+    cursor: "pointer",
   },
 }));
 
 const Main = (props) => {
   const [userInfo, setUserInfo] = useState("");
-  const [bookedLessons, setbookedLessons] = useState([{
-    date: "",
-    id: "",
-    lesson: "",
-    max_ppl: "",
-    name: "",
-    room: "",
-    time: "",
-    user: "",
-    voucher: ""
-  }
+  const [bookedLessons, setbookedLessons] = useState([
+    {
+      date: "",
+      id: "",
+      lesson: "",
+      max_ppl: "",
+      name: "",
+      room: "",
+      time: "",
+      user: "",
+      voucher: "",
+    },
   ]);
   const today = new Date();
   const year = `${today.getFullYear()}`;
-  const month = today.getMonth()+1>9? `${today.getMonth()+1}` : `0${today.getMonth()+1}`;
-  const date = today.getDate()>9? `${today.getDate()}` : `0${today.getDate()}`;
+  const month =
+    today.getMonth() + 1 > 9
+      ? `${today.getMonth() + 1}`
+      : `0${today.getMonth() + 1}`;
+  const date =
+    today.getDate() > 9 ? `${today.getDate()}` : `0${today.getDate()}`;
   const todayDate = Number(year + month + date);
-  const futureLessons =bookedLessons.filter((lesson)=>Number(lesson.date.replace(/-/g,''))>=todayDate);
+  const futureLessons = bookedLessons.filter(
+    (lesson) => Number(lesson.date.replace(/-/g, "")) >= todayDate
+  );
   const diaryCall = () => {
-    const diaryApiUrl = "http://localhost:8000/api/diaries/?page=1";
+    const diaryApiUrl = "http://api.yogayo.kr/api/diaries/?page=1";
     axios
       .get(diaryApiUrl)
       .then((response) => {
@@ -126,10 +133,10 @@ const Main = (props) => {
       .catch((response) => {
         console.error(response);
       });
-    }
+  };
 
   const boardCall = () => {
-    const boardApiUrl = "http://localhost:8000/api/posts/";
+    const boardApiUrl = "http://api.yogayo.kr/api/posts/";
 
     axios
       .get(boardApiUrl)
@@ -140,14 +147,14 @@ const Main = (props) => {
       .catch((response) => {
         console.error(response);
       });
-  }
+  };
   const bookingapiCall = () => {
-  const bookingApiUrl = `http://127.0.0.1:8000/api/mylessons/`;
+    const bookingApiUrl = `http://api.yogayo.kr/api/mylessons/`;
     axios
-      .get(bookingApiUrl,{ headers: { Authorization: `Token ${userToken}` }})
+      .get(bookingApiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
         setbookedLessons(response.data);
-        console.log("sessions 부킹 세션 리스트", response.data)
+        console.log("sessions 부킹 세션 리스트", response.data);
       })
       .catch((response) => {
         console.error(response);
@@ -155,10 +162,10 @@ const Main = (props) => {
   };
   useEffect(() => {
     // 다이어리 불러오기
-    diaryCall()
+    diaryCall();
 
     // 게시판 불러오기
-    boardCall()
+    boardCall();
   }, []);
   useEffect(() => {
     //예약한 수업 불러오기
@@ -182,7 +189,7 @@ const Main = (props) => {
   };
   const [slidesPerView, setSlidesPerView] = useState(initialSlideNum);
   useEffect(() => {
-    const myInfoApiUrl = `http://127.0.0.1:8000/api/myinfo/`;
+    const myInfoApiUrl = `http://api.yogayo.kr/api/myinfo/`;
     const myInfoApiCall = () => {
       // 로그인 유저 정보 불러오기
       axios
@@ -208,28 +215,27 @@ const Main = (props) => {
   }, []);
 
   const tagClick = (str) => {
-    if(str == '전체') {
-      boardCall()
+    if (str == "전체") {
+      boardCall();
     } else {
-      const apiUrl = `http://localhost:8000/api/posts/${str}/`;
+      const apiUrl = `http://api.yogayo.kr/api/posts/${str}/`;
 
-    axios
-      .get(apiUrl)
-      .then((response) => {
-        console.log("카테고리 조회:", response.data);
-        setBoardContents(response.data)
-      })
-      .catch((response) => {
-        console.error(response);
-      });
+      axios
+        .get(apiUrl)
+        .then((response) => {
+          console.log("카테고리 조회:", response.data);
+          setBoardContents(response.data);
+        })
+        .catch((response) => {
+          console.error(response);
+        });
     }
-    
-  }
+  };
 
   return (
     <React.Fragment>
       <CssBaseline />
-      <br/>
+      <br />
       <main>
         <Typography
           variant="h5"
@@ -241,7 +247,7 @@ const Main = (props) => {
             ? `${userInfo.username}님! 안녕하세요 🧘‍♀️`
             : "안녕하세요, 요가요입니다. 🧘‍♀️"}
         </Typography>
-        <br/>
+        <br />
         <div className={classes.heroContent}>
           <Container maxWidth="sm" className={classes.linkBox}>
             <EventAvailableIcon
@@ -266,29 +272,56 @@ const Main = (props) => {
           </Container>
         </div>
         {/* 로그인회원에게만 보여짐 */}
-        {isUserAuthenticated() && futureLessons.length>0 && <>
-          <Typography variant="h5" gutterBottom fontWeight="fontWeightBold">
-            잊지마세요! 곧 다가오는 <b>수업</b>
-          </Typography>
-          <br/>
-          {/* 예약한 수업중 가장 이른 수업 1개 */}
-          {futureLessons.slice(0,1).map((bookedLesson, index) => ( 
-            <BookingCard session={bookedLesson} key={bookedLesson.id} type="cancel"/>
+        {isUserAuthenticated() && futureLessons.length > 0 && (
+          <>
+            <Typography variant="h5" gutterBottom fontWeight="fontWeightBold">
+              잊지마세요! 곧 다가오는 <b>수업</b>
+            </Typography>
+            <br />
+            {/* 예약한 수업중 가장 이른 수업 1개 */}
+            {futureLessons.slice(0, 1).map((bookedLesson, index) => (
+              <BookingCard
+                session={bookedLesson}
+                key={bookedLesson.id}
+                type="cancel"
+              />
             ))}
-            <br/><br/>
-          </>}
-        
-          
+            <br />
+            <br />
+          </>
+        )}
+
         <Typography variant="h5" color="" gutterBottom>
           함께해요 <b>요가요 커뮤니티</b>
         </Typography>
         <br />
         <div>
-          <span className={classes.tagIcon} onClick={()=>tagClick('전체')}> 전체</span>
-          <span className={classes.tagIcon} onClick={()=>tagClick('요가')}> 요가</span>
-          <span className={classes.tagIcon} onClick={()=>tagClick('필라테스')}>필라테스</span>
-          <span className={classes.tagIcon} onClick={()=>tagClick('중고장터')}>중고장터</span>
-          <span className={classes.tagIcon} onClick={()=>tagClick('같이_운동해요')}>같이_운동해요</span>
+          <span className={classes.tagIcon} onClick={() => tagClick("전체")}>
+            {" "}
+            전체
+          </span>
+          <span className={classes.tagIcon} onClick={() => tagClick("요가")}>
+            {" "}
+            요가
+          </span>
+          <span
+            className={classes.tagIcon}
+            onClick={() => tagClick("필라테스")}
+          >
+            필라테스
+          </span>
+          <span
+            className={classes.tagIcon}
+            onClick={() => tagClick("중고장터")}
+          >
+            중고장터
+          </span>
+          <span
+            className={classes.tagIcon}
+            onClick={() => tagClick("같이_운동해요")}
+          >
+            같이_운동해요
+          </span>
         </div>
         <br />
         <Swiper
@@ -315,7 +348,11 @@ const Main = (props) => {
         >
           {diaryContents.map((content, index) => (
             <SwiperSlide className={classes.swiperSlide} key={index}>
-              <DiaryCard content={content} ellipsis={true} apiCall={diaryCall}  />
+              <DiaryCard
+                content={content}
+                ellipsis={true}
+                apiCall={diaryCall}
+              />
             </SwiperSlide>
           ))}
         </Swiper>

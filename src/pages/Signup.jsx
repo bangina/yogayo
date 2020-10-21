@@ -17,12 +17,11 @@ import Container from "@material-ui/core/Container";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import ResultModal from "../components/modal/ResultModal";
-import { openResultModal} from "../redux/modal";
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-
+import { openResultModal } from "../redux/modal";
+import Select from "@material-ui/core/Select";
+import MenuItem from "@material-ui/core/MenuItem";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
 
 function Copyright() {
   return (
@@ -49,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", 
+    width: "100%",
     marginTop: theme.spacing(3),
   },
   submit: {
@@ -77,9 +76,9 @@ export default function Signup() {
   });
 
   const onSubmit = () => {
-    console.log("type test", memberState)
+    console.log("type test", memberState);
     dispatch(insertMember(memberState));
-    const apiUrl = "http://127.0.0.1:8000/api/register/ADMINUSER/";
+    const apiUrl = "http://api.yogayo.kr/api/register/ADMINUSER/";
     axios
       .post(apiUrl, memberState)
       .then((response) => {
@@ -89,7 +88,7 @@ export default function Signup() {
         console.error(response, "오류발생");
       });
   };
-  
+
   const onInputChange = (e) => {
     setMemberState({ ...memberState, [e.target.name]: e.target.value });
     console.log(memberState);
@@ -134,182 +133,191 @@ export default function Signup() {
 
   return (
     <>
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          회원가입
-        </Typography>
-        <form
-          className={classes.form}
-          noValidate
-          onSubmit={handleSubmit(onSubmit)}
-        >
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="name"
-                label="이름"
-                name="username"
-                autoFocus
-                inputRef={register({
-                  minLength: 2,
-                  required: "error message",
-                })}
-                onChange={(e) => onInputChange(e)}
-              />
-              {errors.username && (
-                <span className="error">이름을 입력해주세요.</span>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="이메일 주소"
-                name="email"
-                onChange={(e) => onInputChange(e)}
-                inputRef={register({
-                  pattern: /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i,
-                })}
-                onFocus={() => {
-                  trigger("name");
-                }}
-                ref={inputRef}
-              />
-              {errors.email && (
-                <span className="error">이메일 형식에 맞게 작성해주세요.</span>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="mobile"
-                label="휴대폰 번호"
-                name="phone"
-                ref={mobileRef}
-                onKeyUp={(e) => autoHypenPhone(e)}
-                inputRef={register({
-                  pattern: /^\d{3}\d{3,4}\d{4}$/,
-                })}
-                onChange={(e) => onInputChange(e)}
-                onFocus={() => {
-                  trigger("email");
-                }}
-              />
-              {errors.mobile && (
-                <span className="error">
-                  핸드폰 번호를 정확히 입력해주세요.
-                </span>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="비밀번호"
-                type="password"
-                id="password"
-                inputRef={register({
-                  pattern: /^[A-Za-z0-9]{6,12}$/,
-                })}
-                onChange={(e) => onInputChange(e)}
-                onFocus={() => {
-                  trigger("mobile");
-                }}
-              />
-              {errors.password && (
-                <span className="error">
-                  비밀번호는 영문과 숫자의 조합으로 6자-12자리로 입력해주세요.
-                </span>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="passwordCheck"
-                label="비밀번호 확인"
-                type="password"
-                id="passwordCheck"
-                inputRef={register({
-                  pattern: /^[A-Za-z0-9]{6,12}$/,
-                })}
-                onChange={(e) => onInputChange(e)}
-                onFocus={() => {
-                  trigger("password");
-                }}
-              />
-              {memberState.password === memberState.passwordCheck ? (
-                ""
-              ) : (
-                <span className="error">비밀번호가 일치하지 않습니다.</span>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <FormControl variant="outlined" fullWidth required>
-                <InputLabel id="demo-simple-select-outlined-label">회원 유형</InputLabel>
-                <Select
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  value={memberState.type}
-                  onChange={e => onInputChange(e)}
-                  label="회원 유형"
-                  name="type"
-                >
-                  
-                  <MenuItem value={"GENUSER"}>일반회원</MenuItem>
-                  <MenuItem value={"ADMINUSER"}>센터</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="개인정보 활용 동의"
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-            // disabled={(e) => {
-            //   checkFormValidity(e);
-            // }}
-            disabled={false}
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockOutlinedIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            회원가입
+          </Typography>
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={handleSubmit(onSubmit)}
           >
-            가입 하기
-          </Button>
-          <Grid container justify="flex-end">
-            <Grid item>
-              <Link to="/login" variant="body2">
-                이미 회원이신가요? 로그인하기
-              </Link>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="name"
+                  label="이름"
+                  name="username"
+                  autoFocus
+                  inputRef={register({
+                    minLength: 2,
+                    required: "error message",
+                  })}
+                  onChange={(e) => onInputChange(e)}
+                />
+                {errors.username && (
+                  <span className="error">이름을 입력해주세요.</span>
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="이메일 주소"
+                  name="email"
+                  onChange={(e) => onInputChange(e)}
+                  inputRef={register({
+                    pattern: /^(([^<>()\[\].,;:\s@"]+(\.[^<>()\[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i,
+                  })}
+                  onFocus={() => {
+                    trigger("name");
+                  }}
+                  ref={inputRef}
+                />
+                {errors.email && (
+                  <span className="error">
+                    이메일 형식에 맞게 작성해주세요.
+                  </span>
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="mobile"
+                  label="휴대폰 번호"
+                  name="phone"
+                  ref={mobileRef}
+                  onKeyUp={(e) => autoHypenPhone(e)}
+                  inputRef={register({
+                    pattern: /^\d{3}\d{3,4}\d{4}$/,
+                  })}
+                  onChange={(e) => onInputChange(e)}
+                  onFocus={() => {
+                    trigger("email");
+                  }}
+                />
+                {errors.mobile && (
+                  <span className="error">
+                    핸드폰 번호를 정확히 입력해주세요.
+                  </span>
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="비밀번호"
+                  type="password"
+                  id="password"
+                  inputRef={register({
+                    pattern: /^[A-Za-z0-9]{6,12}$/,
+                  })}
+                  onChange={(e) => onInputChange(e)}
+                  onFocus={() => {
+                    trigger("mobile");
+                  }}
+                />
+                {errors.password && (
+                  <span className="error">
+                    비밀번호는 영문과 숫자의 조합으로 6자-12자리로 입력해주세요.
+                  </span>
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="passwordCheck"
+                  label="비밀번호 확인"
+                  type="password"
+                  id="passwordCheck"
+                  inputRef={register({
+                    pattern: /^[A-Za-z0-9]{6,12}$/,
+                  })}
+                  onChange={(e) => onInputChange(e)}
+                  onFocus={() => {
+                    trigger("password");
+                  }}
+                />
+                {memberState.password === memberState.passwordCheck ? (
+                  ""
+                ) : (
+                  <span className="error">비밀번호가 일치하지 않습니다.</span>
+                )}
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl variant="outlined" fullWidth required>
+                  <InputLabel id="demo-simple-select-outlined-label">
+                    회원 유형
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    value={memberState.type}
+                    onChange={(e) => onInputChange(e)}
+                    label="회원 유형"
+                    name="type"
+                  >
+                    <MenuItem value={"GENUSER"}>일반회원</MenuItem>
+                    <MenuItem value={"ADMINUSER"}>센터</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControlLabel
+                  control={
+                    <Checkbox value="allowExtraEmails" color="primary" />
+                  }
+                  label="개인정보 활용 동의"
+                />
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
-    </Container>
-    <ResultModal directTo="/login" message="회원가입이 완료되었습니다."  header="요가요"/>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              // disabled={(e) => {
+              //   checkFormValidity(e);
+              // }}
+              disabled={false}
+            >
+              가입 하기
+            </Button>
+            <Grid container justify="flex-end">
+              <Grid item>
+                <Link to="/login" variant="body2">
+                  이미 회원이신가요? 로그인하기
+                </Link>
+              </Grid>
+            </Grid>
+          </form>
+        </div>
+        <Box mt={5}>
+          <Copyright />
+        </Box>
+      </Container>
+      <ResultModal
+        directTo="/login"
+        message="회원가입이 완료되었습니다."
+        header="요가요"
+      />
     </>
-  )
+  );
 }

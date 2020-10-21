@@ -12,7 +12,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardContent from "@material-ui/core/CardContent";
 import Slider from "@material-ui/core/Slider";
 import cx from "clsx";
-import BookingCardTimeline from "./BookingCardTimeline"
+import BookingCardTimeline from "./BookingCardTimeline";
 import { selectSession } from "../redux/session";
 import { openModal } from "../redux/modal";
 import axios from "axios";
@@ -123,7 +123,7 @@ const BookingSessionList = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [sessions, setSessions] = useState([]);
   const selectedDate = globalLesson.selectedDate;
-  const apiUrl = `http://127.0.0.1:8000/api/lessons/${selectedDate.getFullYear()}-${
+  const apiUrl = `http://api.yogayo.kr/api/lessons/${selectedDate.getFullYear()}-${
     selectedDate.getMonth() + 1
   }-${selectedDate.getDate()}`;
   const apiCall = () => {
@@ -131,7 +131,7 @@ const BookingSessionList = () => {
       .get(apiUrl)
       .then((response) => {
         setSessions(response.data);
-        console.log("sessions 부킹 세션 리스트", response.data)
+        console.log("sessions 부킹 세션 리스트", response.data);
       })
       .catch((response) => {
         console.error(response);
@@ -140,13 +140,17 @@ const BookingSessionList = () => {
   useEffect(() => {
     apiCall();
   }, [selectedDate]);
-  
+
   return (
     <>
       <StyledTimeline>
-          {sessions.map((session) => (
-            <BookingCardTimeline session={session} key={session.id} type="booking"/>
-          ))}
+        {sessions.map((session) => (
+          <BookingCardTimeline
+            session={session}
+            key={session.id}
+            type="booking"
+          />
+        ))}
       </StyledTimeline>
       <BookingModal isOpen={isOpen} selectedSession={selectedSession} />
     </>

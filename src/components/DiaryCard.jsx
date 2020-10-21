@@ -91,7 +91,7 @@ export const DiaryCard = (props) => {
 
   //좋아요 여부 체크
   const getLiked = (e) => {
-    const apiUrl = `http://127.0.0.1:8000/api/diaries/${diaryLiked.id}/like/`;
+    const apiUrl = `http://api.yogayo.kr/api/diaries/${diaryLiked.id}/like/`;
     axios({
       method: "get",
       url: apiUrl,
@@ -108,7 +108,7 @@ export const DiaryCard = (props) => {
   };
   //좋아요 생성/삭제
   const postLike = (e) => {
-    const apiUrl = `http://127.0.0.1:8000/api/diaries/${e.target.id}/like/`;
+    const apiUrl = `http://api.yogayo.kr/api/diaries/${e.target.id}/like/`;
     axios({
       method: "post",
       url: apiUrl,

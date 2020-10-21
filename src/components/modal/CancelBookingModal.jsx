@@ -29,7 +29,7 @@ const CancelBookingModal = (props) => {
     dispatch(closeCancelModal());
   };
   const cancelLesson = () => {
-    const CancleApiUrl = `http://127.0.0.1:8000/api/mylessons/${selectedLesson.lesson}/`;
+    const CancleApiUrl = `http://api.yogayo.kr/api/mylessons/${selectedLesson.lesson}/`;
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");
     const apiCall = () => {

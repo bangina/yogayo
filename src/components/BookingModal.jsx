@@ -66,8 +66,8 @@ const BookingModal = (props) => {
   const userToken = cookies.get("usertoken");
 
   useEffect(() => {
-    const UserApiUrl = `http://127.0.0.1:8000/api/myinfo/`;
-    const VoucherApiUrl = `http://127.0.0.1:8000/api/myvouchers/`;
+    const UserApiUrl = `http://api.yogayo.kr/api/myinfo/`;
+    const VoucherApiUrl = `http://api.yogayo.kr/api/myvouchers/`;
     const GetApiCall = () => {
       axios
         .get(UserApiUrl, { headers: { Authorization: `Token ${userToken}` } })

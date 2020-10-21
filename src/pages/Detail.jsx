@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { openDeleteModal } from "../redux/modal";
 import Paper from "@material-ui/core/Paper";
 import Divider from "@material-ui/core/Divider";
@@ -27,27 +27,27 @@ const useStyles = makeStyles((theme) => ({
   replyInput: {
     height: 50,
   },
-  imgsContainer:{
-    display:"flex",
-    justifyContent:"space-between",
-    verticalAlign:"middle",
-    flexWrap:"wrap",
-    marginTop:"2rem"
+  imgsContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    verticalAlign: "middle",
+    flexWrap: "wrap",
+    marginTop: "2rem",
   },
-  imgBox:{
-    textAlign:"center",
-    margin:"auto",
-    padding:"1rem",
-    flex:"0 0 45%"
+  imgBox: {
+    textAlign: "center",
+    margin: "auto",
+    padding: "1rem",
+    flex: "0 0 45%",
   },
-  img : {
-    borderRadius:"10px",
-    width:"100%"
+  img: {
+    borderRadius: "10px",
+    width: "100%",
   },
 
-  btn : {
+  btn: {
     marginRight: theme.spacing(1),
-  }
+  },
 }));
 
 const Detail = (props) => {
@@ -60,10 +60,10 @@ const Detail = (props) => {
     post: postId,
     content: "",
   });
-  const [myInfo, setMyInfo] = useState({})
+  const [myInfo, setMyInfo] = useState({});
 
   const commentCall = () => {
-    const commentApiUrl = `http://localhost:8000/api/posts/${postId}/comment`;
+    const commentApiUrl = `http://api.yogayo.kr/api/posts/${postId}/comment`;
     axios
       .get(commentApiUrl)
       .then((response) => {
@@ -76,7 +76,7 @@ const Detail = (props) => {
   };
 
   const postCall = () => {
-    const postApiUrl = `http://localhost:8000/api/posts/${postId}`;
+    const postApiUrl = `http://api.yogayo.kr/api/posts/${postId}`;
     axios
       .get(postApiUrl)
       .then((response) => {
@@ -86,13 +86,13 @@ const Detail = (props) => {
       .catch((response) => {
         console.error(response);
       });
-  }
+  };
 
   const myInfoCall = () => {
     // 로그인 유저 정보 불러오기
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");
-    const myInfoApiUrl = `http://127.0.0.1:8000/api/myinfo/`;
+    const myInfoApiUrl = `http://api.yogayo.kr/api/myinfo/`;
     axios
       .get(myInfoApiUrl, { headers: { Authorization: `Token ${userToken}` } })
       .then((response) => {
@@ -104,8 +104,7 @@ const Detail = (props) => {
       });
   };
 
-
-  useEffect(() => {    
+  useEffect(() => {
     postCall();
     commentCall();
     myInfoCall();
@@ -123,7 +122,7 @@ const Detail = (props) => {
 
     axios({
       method: "post",
-      url: `http://localhost:8000/api/posts/${postId}/comment/`,
+      url: `http://api.yogayo.kr/api/posts/${postId}/comment/`,
       data: newComment,
       headers: {
         Authorization: `Token 	${userToken}`,
@@ -139,25 +138,35 @@ const Detail = (props) => {
         console.error(response);
       });
   };
-  const openModal=()=>{
+  const openModal = () => {
     dispatch(openDeleteModal());
-  }
+  };
   return (
     <div>
       <Paper>
         <CardContent>
           <TextInfoContent
             useStyles={useN01TextInfoContentStyles}
-            overline={String(post.created).substring(0,10) + " " + post.username}
+            overline={
+              String(post.created).substring(0, 10) + " " + post.username
+            }
             heading={`[${post.category}] ${post.title}`}
             body={post.content}
           />
 
-          <div className={classes.imgsContainer} >
-            <div className={classes.imgBox}><img src={post.img_path1} className={classes.img} /></div>
-            <div className={classes.imgBox}><img src={post.img_path2} className={classes.img} /></div>
-            <div className={classes.imgBox}><img src={post.img_path3} className={classes.img} /></div>
-            <div className={classes.imgBox}><img src={post.img_path4} className={classes.img} /></div>
+          <div className={classes.imgsContainer}>
+            <div className={classes.imgBox}>
+              <img src={post.img_path1} className={classes.img} />
+            </div>
+            <div className={classes.imgBox}>
+              <img src={post.img_path2} className={classes.img} />
+            </div>
+            <div className={classes.imgBox}>
+              <img src={post.img_path3} className={classes.img} />
+            </div>
+            <div className={classes.imgBox}>
+              <img src={post.img_path4} className={classes.img} />
+            </div>
           </div>
         </CardContent>
         <Divider />
@@ -168,9 +177,11 @@ const Detail = (props) => {
                 <Item position={"middle"}>
                   <Avatar>
                     {comment.img_profile ? (
-                      <img src={`http://127.0.0.1:8000/media/${comment.img_profile}`} style={{ width: '100%' }} />
+                      <img
+                        src={`http://api.yogayo.kr/media/${comment.img_profile}`}
+                        style={{ width: "100%" }}
+                      />
                     ) : null}
-                    
                   </Avatar>
                 </Item>
                 <Info useStyles={useChatzInfoStyles}>
@@ -213,8 +224,7 @@ const Detail = (props) => {
             >
               뒤로가기
             </Button>
-            {post.username == myInfo.username && 
-              (
+            {post.username == myInfo.username && (
               <>
                 {/* <Button
                   className={classes.btn}
@@ -233,12 +243,12 @@ const Detail = (props) => {
                 >
                   삭제
                 </Button>
-            </>
+              </>
             )}
           </Row>
         </Column>
       </Paper>
-      <DeleteBookingModal postId={postId}/>
+      <DeleteBookingModal postId={postId} />
     </div>
   );
 };

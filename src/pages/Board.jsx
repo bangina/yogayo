@@ -24,20 +24,20 @@ const useStyles = makeStyles((theme) => ({
     color: "#cf556c",
   },
   table: {
-    margin:"3rem 0 0",
+    margin: "3rem 0 0",
     width: "100%",
     maxWidth: "100%",
     backgroundColor: "#fff",
     borderSpacing: "0",
     borderCollapse: "collapse",
-    borderRadius:"1rem",
+    borderRadius: "1rem",
   },
   tableHeadCell: {
     color: "inherit",
     "&, &$tableCell": {
       fontSize: "1.1em",
-      fontWeight:"bold",
-      letterSpacing:"0.04em",
+      fontWeight: "bold",
+      letterSpacing: "0.04em",
     },
   },
   tableCell: {
@@ -46,12 +46,12 @@ const useStyles = makeStyles((theme) => ({
     verticalAlign: "middle",
     fontSize: "1em",
   },
-  titleTxt:{
-    float:"left",
+  titleTxt: {
+    float: "left",
   },
-  titleIcons:{
-    float:"right",
-    paddingRight:"1rem"
+  titleIcons: {
+    float: "right",
+    paddingRight: "1rem",
   },
   tableResponsive: {
     width: "100%",
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
     display: "table-row",
     outline: "none",
     verticalAlign: "middle",
-    marginTop:"1rem"
+    marginTop: "1rem",
   },
   tableBodyRow: {
     height: "48px",
@@ -90,74 +90,74 @@ export default function Board(props) {
   const tableHead = ["말머리", "글제목", "작성자", "등록일"];
   const [tableData, setTableData] = useState([]);
   const [globalPosts, setGlobalPosts] = useState([]);
-  const [myPostBtn, setMyPostBtn] = useState(false)
+  const [myPostBtn, setMyPostBtn] = useState(false);
 
   const allPosts = () => {
-    const apiUrl = "http://localhost:8000/api/posts/";
+    const apiUrl = "http://api.yogayo.kr/api/posts/";
 
     axios
       .get(apiUrl)
       .then((response) => {
         console.log("조회목록데이터:", response.data);
         setGlobalPosts(response.data);
-        setTableData(response.data.slice(0, 10))
+        setTableData(response.data.slice(0, 10));
       })
       .catch((response) => {
         console.error(response);
       });
-  }
+  };
 
   useEffect(() => {
-    allPosts()
+    allPosts();
   }, []);
 
   const handlePage = (event, value) => {
-    const startNum = (value - 1) * 10 ;
+    const startNum = (value - 1) * 10;
     const endNum = value * 10;
     setTableData(globalPosts.slice(startNum, endNum));
   };
 
-  const categoryChange = value => {
-    if(value === "전체") {
-      allPosts()
+  const categoryChange = (value) => {
+    if (value === "전체") {
+      allPosts();
     } else {
-      const apiUrl = `http://localhost:8000/api/posts/${value}/`;
-
-    axios
-      .get(apiUrl)
-      .then((response) => {
-        console.log("카테고리 조회:", response.data);
-        setGlobalPosts(response.data);
-        setTableData(response.data.slice(0, 10))
-      })
-      .catch((response) => {
-        console.error(response);
-      });
-    }
-  }
-
-  const myPostBtnClick = () => {
-    if(!myPostBtn) {
-      setMyPostBtn(true)
-      let cookies = new Cookies();
-      const userToken = cookies.get("usertoken");
-      const apiUrl = `http://localhost:8000/api/posts/mypost/list/`;
+      const apiUrl = `http://api.yogayo.kr/api/posts/${value}/`;
 
       axios
-      .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
+        .get(apiUrl)
+        .then((response) => {
+          console.log("카테고리 조회:", response.data);
+          setGlobalPosts(response.data);
+          setTableData(response.data.slice(0, 10));
+        })
+        .catch((response) => {
+          console.error(response);
+        });
+    }
+  };
+
+  const myPostBtnClick = () => {
+    if (!myPostBtn) {
+      setMyPostBtn(true);
+      let cookies = new Cookies();
+      const userToken = cookies.get("usertoken");
+      const apiUrl = `http://api.yogayo.kr/api/posts/mypost/list/`;
+
+      axios
+        .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
         .then((response) => {
           console.log("내글 조회:", response.data);
           setGlobalPosts(response.data);
-          setTableData(response.data.slice(0, 10))
+          setTableData(response.data.slice(0, 10));
         })
         .catch((response) => {
           console.error(response);
         });
     } else {
-      setMyPostBtn(false)
-      allPosts()
+      setMyPostBtn(false);
+      allPosts();
     }
-  }
+  };
 
   return (
     <div>
@@ -169,12 +169,21 @@ export default function Board(props) {
           color: "#666",
           fontSize: "1rem",
         }}
-      >다른 요가요 회원들과 자유롭게 이야기를 나눠보세요.</p>
+      >
+        다른 요가요 회원들과 자유롭게 이야기를 나눠보세요.
+      </p>
       <div className={classes.tableResponsive}>
         <div>
           <DropDown
             title="말머리"
-            value={["전체","중고장터", "요가", "필라테스", "같이_운동해요", "기타"]}
+            value={[
+              "전체",
+              "중고장터",
+              "요가",
+              "필라테스",
+              "같이_운동해요",
+              "기타",
+            ]}
             onChange={categoryChange}
             disabled={myPostBtn}
           />
@@ -188,9 +197,13 @@ export default function Board(props) {
           >
             글쓰기
           </Button>
-            <Button variant="outlined" color="primary" onClick={() => myPostBtnClick()}>
-              {myPostBtn ? "전체보기" : "내글보기"}
-            </Button>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => myPostBtnClick()}
+          >
+            {myPostBtn ? "전체보기" : "내글보기"}
+          </Button>
         </div>
         <Table className={classes.table}>
           <colgroup>
@@ -229,9 +242,14 @@ export default function Board(props) {
                   <TableCell className={classes.tableCell}>
                     <RouterLink to={`/board/detail/${dataItem.id}`}>
                       <div className={classes.titleTxt}>{dataItem.title} </div>
-                      <div className={classes.titleIcons} style={{ color: "gray" }}>
-                        <VisibilityIcon style={{ fontSize: 15 }} /> {dataItem.views}{" "}
-                        <ChatBubbleIcon style={{ fontSize: 15 }} /> {dataItem.comments}
+                      <div
+                        className={classes.titleIcons}
+                        style={{ color: "gray" }}
+                      >
+                        <VisibilityIcon style={{ fontSize: 15 }} />{" "}
+                        {dataItem.views}{" "}
+                        <ChatBubbleIcon style={{ fontSize: 15 }} />{" "}
+                        {dataItem.comments}
                       </div>
                     </RouterLink>
                   </TableCell>
@@ -258,9 +276,7 @@ export default function Board(props) {
           onChange={handlePage}
         />
       </div>
-      <div style={{ textAlign: "center" }}>
-        {/* <SearchBar /> */}
-      </div>
+      <div style={{ textAlign: "center" }}>{/* <SearchBar /> */}</div>
     </div>
   );
 }

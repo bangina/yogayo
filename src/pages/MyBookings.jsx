@@ -13,7 +13,7 @@ import BookingCardTimeline from "../components/BookingCardTimeline";
 const StyledTimeline = styled(Timeline)`
   color: red;
   padding: 0;
-  margin:0;
+  margin: 0;
   .MuiTimeline-root {
     padding: 0;
   }
@@ -52,28 +52,37 @@ const MyBookings = () => {
   const globalLesson = useSelector((state) => state.session);
   const globalModal = useSelector((state) => state.modal);
   const globalSelectedLesson = globalLesson.bookingLesson;
-  const [bookedLessons, setbookedLessons] = useState([{
-    date: "",
-    id: "",
-    lesson: "",
-    max_ppl: "",
-    name: "",
-    room: "",
-    time: "",
-    user: "",
-    voucher: ""
-  }
+  const [bookedLessons, setbookedLessons] = useState([
+    {
+      date: "",
+      id: "",
+      lesson: "",
+      max_ppl: "",
+      name: "",
+      room: "",
+      time: "",
+      user: "",
+      voucher: "",
+    },
   ]);
   const today = new Date();
   const year = `${today.getFullYear()}`;
-  const month = today.getMonth()+1>9? `${today.getMonth()+1}` : `0${today.getMonth()+1}`;
-  const date = today.getDate()>9? `${today.getDate()}` : `0${today.getDate()}`;
+  const month =
+    today.getMonth() + 1 > 9
+      ? `${today.getMonth() + 1}`
+      : `0${today.getMonth() + 1}`;
+  const date =
+    today.getDate() > 9 ? `${today.getDate()}` : `0${today.getDate()}`;
   const todayDate = Number(year + month + date); //20201016
-  console.log(todayDate)
+  console.log(todayDate);
   //지난 수업
-  const pastLessons =bookedLessons.filter((lesson)=>Number(lesson.date.replace(/-/g,''))<todayDate);
+  const pastLessons = bookedLessons.filter(
+    (lesson) => Number(lesson.date.replace(/-/g, "")) < todayDate
+  );
   //예정 수업
-  const futureLessons =bookedLessons.filter((lesson)=>Number(lesson.date.replace(/-/g,''))>=todayDate);
+  const futureLessons = bookedLessons.filter(
+    (lesson) => Number(lesson.date.replace(/-/g, "")) >= todayDate
+  );
   const [booking, setBooking] = useState({
     name: "호호수업",
     room: "101호",
@@ -88,8 +97,8 @@ const MyBookings = () => {
   const handleChage = (newValue) => {
     setValue(newValue);
   };
-  const UserApiUrl = `http://127.0.0.1:8000/api/myinfo/`;
-  const LessonapiUrl = `http://127.0.0.1:8000/api/mylessons/`;
+  const UserApiUrl = `http://api.yogayo.kr/api/myinfo/`;
+  const LessonapiUrl = `http://api.yogayo.kr/api/mylessons/`;
   let cookies = new Cookies();
   const userToken = cookies.get("usertoken");
   const apiCall = () => {
@@ -128,25 +137,38 @@ const MyBookings = () => {
   }, [globalSelectedLesson]);
   return (
     <>
-    <StyledTimeline>
-      <Typography variant="h4" gutterBottom color="primary" style={{paddingBottom:"2rem"}}>
-        내 스케쥴
-      </Typography>
-      <TabBar onChange={handleChage} menu="bookings">
-        <TabPanel value={value} index={0}>
-          {/* 아직 시작되지 않은 수업 */}
-          {futureLessons.map((bookedLesson, index) => ( 
-          <BookingCardTimeline session={bookedLesson} key={bookedLesson.id} type="cancel" />
-          ))}
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          {/* 이미 시작한 수업(지난 수업) */}
-          {pastLessons.map((bookedLesson, index) => ( 
-          <BookingCardTimeline session={bookedLesson} key={bookedLesson.id} type="diary" />
-          ))}
-        </TabPanel>
-        <CancelBookingModal selectedLesson={globalSelectedLesson} />
-      </TabBar>
+      <StyledTimeline>
+        <Typography
+          variant="h4"
+          gutterBottom
+          color="primary"
+          style={{ paddingBottom: "2rem" }}
+        >
+          내 스케쥴
+        </Typography>
+        <TabBar onChange={handleChage} menu="bookings">
+          <TabPanel value={value} index={0}>
+            {/* 아직 시작되지 않은 수업 */}
+            {futureLessons.map((bookedLesson, index) => (
+              <BookingCardTimeline
+                session={bookedLesson}
+                key={bookedLesson.id}
+                type="cancel"
+              />
+            ))}
+          </TabPanel>
+          <TabPanel value={value} index={1}>
+            {/* 이미 시작한 수업(지난 수업) */}
+            {pastLessons.map((bookedLesson, index) => (
+              <BookingCardTimeline
+                session={bookedLesson}
+                key={bookedLesson.id}
+                type="diary"
+              />
+            ))}
+          </TabPanel>
+          <CancelBookingModal selectedLesson={globalSelectedLesson} />
+        </TabBar>
       </StyledTimeline>
     </>
   );

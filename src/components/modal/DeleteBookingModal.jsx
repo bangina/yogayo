@@ -30,14 +30,16 @@ const DeleteBookingModal = (props) => {
   const handleClose = () => {
     dispatch(closeDeleteModal());
     history.push("/board");
-  }
+  };
 
   const onDelete = () => {
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");
-    const deleteApiUrl = `http://localhost:8000/api/posts/${postId}`;
+    const deleteApiUrl = `http://api.yogayo.kr/api/posts/${postId}`;
     axios
-      .delete(deleteApiUrl, { headers: { Authorization: `Token ${userToken}` } })
+      .delete(deleteApiUrl, {
+        headers: { Authorization: `Token ${userToken}` },
+      })
       .then((response) => {
         console.log(response);
         dispatch(nextDeleteModal());
@@ -55,7 +57,7 @@ const DeleteBookingModal = (props) => {
       >
         <DialogTitle onClose={handleClose}>
           <Typography variant="h4" gutterBottom>
-              요가요 커뮤니티
+            요가요 커뮤니티
           </Typography>
         </DialogTitle>
         <DialogContent>

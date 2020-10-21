@@ -23,7 +23,7 @@ import Modify from "./pages/Modify";
 function App() {
   const [userInfo, setUserInfo] = useState({});
   const userApiCall = () => {
-    const apiUrl = `http://127.0.0.1:8000/api/myinfo/`;
+    const apiUrl = `http://api.yogayo.kr/api/myinfo/`;
     // 로그인 유저 정보 불러오기
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");

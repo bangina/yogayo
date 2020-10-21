@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { Link as RouterLink, withRouter } from "react-router-dom";
 import { openLogoutModal } from "../redux/modal";
 import LogoutModal from "./modal/LogoutModal";
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     maxWidth: "1800px",
     margin: "0 auto",
-    paddingTop:"2rem",
+    paddingTop: "2rem",
     "&>*": {
       minWidth: 0,
     },
@@ -61,8 +61,8 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: "flex-end",
     position: "absolute",
     right: "32px",
-    top:"50%",
-    transform:"translateY(-50%)",
+    top: "50%",
+    transform: "translateY(-50%)",
     fontWeight: "bold",
   },
   appBar: {
@@ -85,8 +85,8 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(1.5),
-    maxWidth:"1300px",
-    margin: "auto"
+    maxWidth: "1300px",
+    margin: "auto",
   },
   nested: {
     paddingLeft: theme.spacing(2),
@@ -117,9 +117,9 @@ function ResponsiveDrawer(props) {
     dispatch(openLogoutModal());
   };
   // const handld
-  
+
   const userApiCall = () => {
-    const apiUrl = `http://127.0.0.1:8000/api/myinfo/`;
+    const apiUrl = `http://api.yogayo.kr/api/myinfo/`;
     // 로그인 유저 정보 불러오기
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");
@@ -135,7 +135,7 @@ function ResponsiveDrawer(props) {
   };
 
   const voucherApiCall = () => {
-    const apiUrl = `http://127.0.0.1:8000/api/myvouchers/`;
+    const apiUrl = `http://api.yogayo.kr/api/myvouchers/`;
     // 로그인 유저 정보 불러오기
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");
@@ -150,17 +150,17 @@ function ResponsiveDrawer(props) {
       });
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     voucherApiCall();
-  },[])
+  }, []);
 
-  useEffect(()=>{
+  useEffect(() => {
     userApiCall();
-  },[propUserInfo])
+  }, [propUserInfo]);
 
-  const imgChange =() => {
-    console.log("imgChange!")
-  }
+  const imgChange = () => {
+    console.log("imgChange!");
+  };
 
   const drawer = (
     <div>
@@ -169,27 +169,29 @@ function ResponsiveDrawer(props) {
         <Avatar className={classes.avatar}>
           {userInfo.img_profile ? (
             <img
-            src={userInfo.img_profile}
-            alt="user"
-            style={{ width: "100%", opacity: "0.8" }}
-          />
+              src={userInfo.img_profile}
+              alt="user"
+              style={{ width: "100%", opacity: "0.8" }}
+            />
           ) : null}
-          
         </Avatar>
-        
+
         {isUserAuthenticated() ? (
           <>
-          <RouterLink to="/mypage">
-            <ListItemText primary={`${userInfo.username} 님 >`} secondary={adminname} />
-          </RouterLink>
-          <Button
-            variant="outlined"
-            color="primary"
-            name="logout"
-            onClick={openModal}
-          >
-            로그아웃
-          </Button>
+            <RouterLink to="/mypage">
+              <ListItemText
+                primary={`${userInfo.username} 님 >`}
+                secondary={adminname}
+              />
+            </RouterLink>
+            <Button
+              variant="outlined"
+              color="primary"
+              name="logout"
+              onClick={openModal}
+            >
+              로그아웃
+            </Button>
           </>
         ) : (
           <ListItemText primary="로그인 해주세요!" secondary={adminname} />
@@ -198,7 +200,10 @@ function ResponsiveDrawer(props) {
       <List>
         <RouterLink to="/">
           <ListItem>
-            <SvgIcon style={{ margin: "0 10px", transform:"translateY(3px)" }} viewBox="0 0 32 32">
+            <SvgIcon
+              style={{ margin: "0 10px", transform: "translateY(3px)" }}
+              viewBox="0 0 32 32"
+            >
               <HomeIcon />
             </SvgIcon>
             <ListItemText primary="Home" />
@@ -206,7 +211,10 @@ function ResponsiveDrawer(props) {
         </RouterLink>
         <RouterLink to="/booking">
           <ListItem>
-            <SvgIcon style={{ margin: "0 10px", transform:"translateY(3px)" }} viewBox="0 0 32 32">
+            <SvgIcon
+              style={{ margin: "0 10px", transform: "translateY(3px)" }}
+              viewBox="0 0 32 32"
+            >
               <CalendarIcon />
             </SvgIcon>
             <ListItemText primary="수업 예약하기" />
@@ -214,7 +222,10 @@ function ResponsiveDrawer(props) {
         </RouterLink>
         <RouterLink to="/mybookings">
           <ListItem>
-            <SvgIcon style={{ margin: "0 10px", transform:"translateY(3px)" }} viewBox="0 0 32 32">
+            <SvgIcon
+              style={{ margin: "0 10px", transform: "translateY(3px)" }}
+              viewBox="0 0 32 32"
+            >
               <NotebookIcon />
             </SvgIcon>
             <ListItemText primary="내 스케쥴" />
@@ -222,7 +233,10 @@ function ResponsiveDrawer(props) {
         </RouterLink>
         <RouterLink to="/board">
           <ListItem>
-            <SvgIcon style={{ margin: "0 10px", transform:"translateY(3px)" }}viewBox="0 0 32 32">
+            <SvgIcon
+              style={{ margin: "0 10px", transform: "translateY(3px)" }}
+              viewBox="0 0 32 32"
+            >
               <TextBubbleIcon />
             </SvgIcon>
             <ListItemText primary="요가요 커뮤니티" />
@@ -230,7 +244,10 @@ function ResponsiveDrawer(props) {
         </RouterLink>
         <RouterLink to="/diary">
           <ListItem>
-            <SvgIcon style={{ margin: "0 10px", transform:"translateY(3px)" }} viewBox="0 0 32 32">
+            <SvgIcon
+              style={{ margin: "0 10px", transform: "translateY(3px)" }}
+              viewBox="0 0 32 32"
+            >
               <PencilIcon />
             </SvgIcon>
             <ListItemText primary="수련 일기" />
@@ -262,7 +279,9 @@ function ResponsiveDrawer(props) {
         className={classes.appBar}
         style={{ background: theme.palette.primary.mainGradient }}
       >
-        <Toolbar style={{maxWidth:"1300px", margin:"0 auto", width:"100%"}}>
+        <Toolbar
+          style={{ maxWidth: "1300px", margin: "0 auto", width: "100%" }}
+        >
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -282,8 +301,8 @@ function ResponsiveDrawer(props) {
             </RouterLink>
           ) : (
             <RouterLink to="/mypage" className={classes.login}>
-            <SvgIcon>
-               <UserIcon/>
+              <SvgIcon>
+                <UserIcon />
               </SvgIcon>
             </RouterLink>
           )}
@@ -318,7 +337,7 @@ function ResponsiveDrawer(props) {
           </Drawer>
         </Hidden>
       </nav>
-      <main className={classes.content} >
+      <main className={classes.content}>
         <div className={classes.toolbar} />
         {props.children}
       </main>

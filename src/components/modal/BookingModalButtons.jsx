@@ -16,7 +16,7 @@ const BookingModalButtons = (props) => {
   const disabled = props.disabled;
   const dispatch = useDispatch();
   const onSubmit = () => {
-    const BookingApiUrl = `http://127.0.0.1:8000/api/mylessons/${booking.lesson}/`;
+    const BookingApiUrl = `http://api.yogayo.kr/api/mylessons/${booking.lesson}/`;
     console.log("booking", booking);
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");

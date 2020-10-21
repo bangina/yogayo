@@ -59,7 +59,7 @@ export default function SignIn(props) {
   });
   const onInputChange = (e) => {
     setMemberState({ ...memberState, [e.target.name]: e.target.value });
-    console.log(memberState)
+    console.log(memberState);
   };
   const dispatch = useDispatch();
   const onLogin = (e) => {
@@ -67,7 +67,7 @@ export default function SignIn(props) {
     // dispatch(login(memberState.username, memberState.password));
     // props.history.push("/");
 
-    const apiUrl = "http://127.0.0.1:8000/api/get_token/";
+    const apiUrl = "http://api.yogayo.kr/api/get_token/";
 
     axios
       .post(apiUrl, memberState)
