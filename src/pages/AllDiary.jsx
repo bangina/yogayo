@@ -17,7 +17,7 @@ const AllDiary = (props) => {
     const userToken = cookies.get("usertoken");
     const apiUrl = `http://api.yogayo.kr/api/diaries/?page=${pageNum}`;
     axios
-      .get(apiUrl, { headers: { Authorization: `Token ${userToken}` } })
+      .get(apiUrl)
       .then((response) => {
         const tempArr = contents.concat(response.data.results);
         setContents(tempArr);
@@ -28,7 +28,7 @@ const AllDiary = (props) => {
         console.error(response);
       });
   };
-
+  apiCall(1);
   const apiCall2 = () => {
     let cookies = new Cookies();
     const userToken = cookies.get("usertoken");

@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     margin: "auto",
     padding: "1rem",
-    flex: "0 0 45%",
   },
   img: {
     borderRadius: "10px",

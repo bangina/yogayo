@@ -194,7 +194,9 @@ function ResponsiveDrawer(props) {
             </Button>
           </>
         ) : (
-          <ListItemText primary="로그인 해주세요!" secondary={adminname} />
+          <RouterLink to="/login">
+          <ListItemText primary="로그인 해주세요!" style={{cursor:"pointer"}}/>
+          </RouterLink>
         )}
       </List>
       <List>

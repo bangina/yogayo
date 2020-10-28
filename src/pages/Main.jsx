@@ -83,7 +83,8 @@ const useStyles = makeStyles((theme) => ({
   },
   tagIcon: {
     display: "inline-block",
-    marginRight: "10px",
+    marginRight: "5px",
+    marginBottom:"5px",
     color: "#fff",
     lineHeight: "2rem",
     padding: "0 1rem",
@@ -184,7 +185,7 @@ const Main = (props) => {
     if (list.matches === true) {
       return 3;
     } else {
-      return 1.7;
+      return 1.2;
     }
   };
   const [slidesPerView, setSlidesPerView] = useState(initialSlideNum);
@@ -208,7 +209,7 @@ const Main = (props) => {
       if (list.matches === true) {
         setSlidesPerView(3);
       } else {
-        setSlidesPerView(1.7);
+        setSlidesPerView(1.2);
       }
     }
     window.addEventListener("resize", handleResize);
@@ -295,7 +296,7 @@ const Main = (props) => {
           함께해요 <b>요가요 커뮤니티</b>
         </Typography>
         <br />
-        <div>
+        <div className={classes.tagsContainer}>
           <span className={classes.tagIcon} onClick={() => tagClick("전체")}>
             {" "}
             전체
