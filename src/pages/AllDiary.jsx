@@ -7,7 +7,7 @@ import DiaryModal from "../components/modal/DiaryModal";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import { isUserAuthenticated } from "../utils/authUtils";
-import { Link as RouterLink} from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
 const AllDiary = (props) => {
   const [contents, setContents] = useState([]);
@@ -98,32 +98,37 @@ const AllDiary = (props) => {
         오늘 올라온 다른 <b>요가요 회원들의 수련 후기</b>를 구경해보세요.
       </Typography>
       <br />
-      {!isUserAuthenticated() ? (<><RouterLink to="/login">
-      <Button
-        variant="contained"
-        color="primary"
-        size="large"
-        style={{
-          position: "relative",
-          marginTop: "1rem",
-        }}
-      >
-        <b>수련일기</b>&nbsp;쓰러가기
-      </Button>
-  </RouterLink></>)
-: (<>
-  <Button
-        onClick={() => props.history.push("/diary/mydiary")}
-        variant="contained"
-        color="primary"
-        size="large"
-        style={{
-          position: "relative",
-          marginTop: "1rem",
-        }}
-      >
-        <b>수련일기</b>&nbsp;쓰러가기
-  </Button></>
+      {!isUserAuthenticated() ? (
+        <>
+          <RouterLink to="/login">
+            <Button
+              variant="contained"
+              color="primary"
+              size="large"
+              style={{
+                position: "relative",
+                marginTop: "1rem",
+              }}
+            >
+              <b>수련일기</b>&nbsp;쓰러가기
+            </Button>
+          </RouterLink>
+        </>
+      ) : (
+        <>
+          <Button
+            onClick={() => props.history.push("/diary/mydiary")}
+            variant="contained"
+            color="primary"
+            size="large"
+            style={{
+              position: "relative",
+              marginTop: "1rem",
+            }}
+          >
+            <b>수련일기</b>&nbsp;쓰러가기
+          </Button>
+        </>
       )}
       <br />
       <br />

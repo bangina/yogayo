@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
   tagIcon: {
     display: "inline-block",
     marginRight: "5px",
-    marginBottom:"5px",
+    marginBottom: "5px",
     color: "#fff",
     lineHeight: "2rem",
     padding: "0 1rem",

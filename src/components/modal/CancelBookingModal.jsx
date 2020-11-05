@@ -4,7 +4,6 @@ import { closeCancelModal, nextCancelModal } from "../../redux/modal";
 import axios from "axios";
 import { Cookies } from "react-cookie";
 import styled from "styled-components";
-import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import Typography from "@material-ui/core/Typography";
 import SuccessMsg from "../SuccessMsg";
@@ -63,7 +62,8 @@ const CancelBookingModal = (props) => {
           <Typography variant="h4" gutterBottom>
             {selectedLesson.name} 수업
           </Typography>
-          {selectedLesson.date.slice(5,7)}월 {selectedLesson.date.slice(8,10)}일 • {selectedLesson.time.slice(0,5)}
+          {selectedLesson.date.slice(5, 7)}월 {selectedLesson.date.slice(8, 10)}
+          일 • {selectedLesson.time.slice(0, 5)}
         </DialogTitle>
         <DialogContent>
           {isCancelModalOpen && !isCancelResultOpen && (
@@ -76,7 +76,10 @@ const CancelBookingModal = (props) => {
           )}
 
           {isCancelModalOpen && isCancelResultOpen && (
-            <SuccessMsg message="수강신청 취소가 완료되었습니다." status={true}/>
+            <SuccessMsg
+              message="수강신청 취소가 완료되었습니다."
+              status={true}
+            />
           )}
         </DialogContent>
         <DialogActions>

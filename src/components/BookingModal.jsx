@@ -160,7 +160,9 @@ const BookingModal = (props) => {
           <Typography component={"div"} variant="h4" gutterBottom>
             {globalSelectedLesson.name}
           </Typography>
-          {globalSelectedLesson.date.slice(5, 7)}월 {globalSelectedLesson.date.slice(8, 10)}일 {globalSelectedLesson.time.slice(0, 5)}
+          {globalSelectedLesson.date.slice(5, 7)}월{" "}
+          {globalSelectedLesson.date.slice(8, 10)}일{" "}
+          {globalSelectedLesson.time.slice(0, 5)}
           {/* {session.date.slice(5, 7)}월 {session.date.slice(8, 10)} */}
         </DialogTitle>
 
@@ -222,7 +224,8 @@ const BookingModal = (props) => {
               <>
                 <Typography component={"div"} gutterBottom>
                   <PlaceIcon fontSize="small"></PlaceIcon>
-                  현재 회원권 잔여횟수 : {activeVoucher[0].limit - activeVoucher[0].used}회
+                  현재 회원권 잔여횟수 :{" "}
+                  {activeVoucher[0].limit - activeVoucher[0].used}회
                 </Typography>
                 <Typography component={"div"} gutterBottom>
                   수업 예약 취소/변경 기한 : 수업 1일전까지

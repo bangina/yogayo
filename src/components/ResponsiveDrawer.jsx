@@ -195,7 +195,10 @@ function ResponsiveDrawer(props) {
           </>
         ) : (
           <RouterLink to="/login">
-          <ListItemText primary="로그인 해주세요!" style={{cursor:"pointer"}}/>
+            <ListItemText
+              primary="로그인 해주세요!"
+              style={{ cursor: "pointer" }}
+            />
           </RouterLink>
         )}
       </List>
@@ -211,54 +214,58 @@ function ResponsiveDrawer(props) {
             <ListItemText primary="Home" />
           </ListItem>
         </RouterLink>
-        {isUserAuthenticated()?
-        <RouterLink to="/booking">
-          <ListItem>
-            <SvgIcon
-              style={{ margin: "0 10px", transform: "translateY(3px)" }}
-              viewBox="0 0 32 32"
-            >
-              <CalendarIcon />
-            </SvgIcon>
-            <ListItemText primary="수업 예약하기" />
-          </ListItem>
-        </RouterLink>
-:   
-        <RouterLink to="/login">
-        <ListItem>
-          <SvgIcon
-            style={{ margin: "0 10px", transform: "translateY(3px)" }}
-            viewBox="0 0 32 32"
-          >
-            <CalendarIcon />
-          </SvgIcon>
-          <ListItemText primary="수업 예약하기" />
-        </ListItem>
-        </RouterLink>
-        }
+        {isUserAuthenticated() ? (
+          <RouterLink to="/booking">
+            <ListItem>
+              <SvgIcon
+                style={{ margin: "0 10px", transform: "translateY(3px)" }}
+                viewBox="0 0 32 32"
+              >
+                <CalendarIcon />
+              </SvgIcon>
+              <ListItemText primary="수업 예약하기" />
+            </ListItem>
+          </RouterLink>
+        ) : (
+          <RouterLink to="/login">
+            <ListItem>
+              <SvgIcon
+                style={{ margin: "0 10px", transform: "translateY(3px)" }}
+                viewBox="0 0 32 32"
+              >
+                <CalendarIcon />
+              </SvgIcon>
+              <ListItemText primary="수업 예약하기" />
+            </ListItem>
+          </RouterLink>
+        )}
 
-{isUserAuthenticated()?<RouterLink to="/mybookings">
-          <ListItem>
-            <SvgIcon
-              style={{ margin: "0 10px", transform: "translateY(3px)" }}
-              viewBox="0 0 32 32"
-            >
-              <NotebookIcon />
-            </SvgIcon>
-            <ListItemText primary="내 스케쥴" />
-          </ListItem>
-        </RouterLink> : <RouterLink to="/login">
-          <ListItem>
-            <SvgIcon
-              style={{ margin: "0 10px", transform: "translateY(3px)" }}
-              viewBox="0 0 32 32"
-            >
-              <NotebookIcon />
-            </SvgIcon>
-            <ListItemText primary="내 스케쥴" />
-          </ListItem>
-        </RouterLink>}
-        
+        {isUserAuthenticated() ? (
+          <RouterLink to="/mybookings">
+            <ListItem>
+              <SvgIcon
+                style={{ margin: "0 10px", transform: "translateY(3px)" }}
+                viewBox="0 0 32 32"
+              >
+                <NotebookIcon />
+              </SvgIcon>
+              <ListItemText primary="내 스케쥴" />
+            </ListItem>
+          </RouterLink>
+        ) : (
+          <RouterLink to="/login">
+            <ListItem>
+              <SvgIcon
+                style={{ margin: "0 10px", transform: "translateY(3px)" }}
+                viewBox="0 0 32 32"
+              >
+                <NotebookIcon />
+              </SvgIcon>
+              <ListItemText primary="내 스케쥴" />
+            </ListItem>
+          </RouterLink>
+        )}
+
         <RouterLink to="/board">
           <ListItem>
             <SvgIcon
